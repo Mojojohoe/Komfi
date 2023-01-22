@@ -1,0 +1,5235 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Komfi - Profile Designer</title>
+</head>
+
+<style>
+#collapse-button,
+.container,
+html {
+  background: var(--greyLight-1);
+}
+
+[class^="checkbox__"] input:checked ~ label,
+[class^="radio__"] input:checked ~ label {
+  box-shadow: inset 0.2rem 0.2rem 0.5rem var(--greyLight-2);
+}
+#main-container,
+.container {
+  min-height: 100vh;
+  font-family: Poppins, sans-serif;
+}
+
+#fore-color-picker:after,
+.edittable td {
+  color: inherit;
+}
+
+@keyframes waves {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  to {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes fade-in-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+:root {
+  --primary-light: #8abdff;
+  --primary: #6d5dfc;
+  --primary-dark: #5b0eeb;
+  --white: #fff;
+  --greyLight-1: #e4ebf5;
+  --greyLight-2: #c8d0e7;
+  --greyLight-3: #bec8e4;
+  --greyDark: #9baacf;
+}
+
+*,
+::after,
+::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+}
+html,
+body {
+  height: 100vh;
+  padding: 0;
+}
+
+@media screen and (min-width: 900px) {
+  html {
+    font-size: 75%;
+  }
+}
+
+.edittable td {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.components h2 {
+  color: var(--greyDark);
+  text-shadow: 0 0 2px var(--greyDark);
+  font-size: 2rem;
+  display: inline-block;
+  margin: 1rem 0;
+}
+
+.components h3,
+[class^="checkbox__"] input:checked ~ label i,
+[class^="checkbox__"] label:hover i {
+  color: var(--primary);
+}
+
+.components h3 {
+  text-shadow: 0 0 2px var(--primary);
+  display: inline-block;
+}
+
+#sub-container h2,
+.components h3 {
+  font-size: 1.4rem;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+.container {
+  justify-content: left;
+  flex-direction: row;
+  align-items: flex-start;
+  width: 100%;
+  overflow: hidden;
+}
+
+.container,
+.sidebar {
+  display: flex;
+  height: 100%;
+}
+.sidebar {
+  position: fixed;
+  width: 100%;
+  pointer-events: none;
+}
+.spacer {
+  width: 33.333333%;
+  transition: 0.3s ease-in-out;
+}
+
+#collapse-button,
+.components {
+  height: 100vh;
+  transition: 0.3s ease-in-out;
+}
+
+.components {
+  width: 23%;
+  box-shadow: 0.8rem 0.8rem 1.4rem var(--greyLight-2),
+    -0.2rem -0.2rem 1.8rem var(--white);
+  padding: 4rem;
+  align-items: center;
+  overflow-y: scroll;
+  pointer-events: all;
+}
+#collapse-button:hover {
+  color: var(--primary);
+  background: var(--greyLight-2);
+}
+#find {
+  display: inherit;
+}
+#collapse-button {
+  border: 0;
+  padding: 0.8rem;
+  font-size: 1.5rem;
+  filter: drop-shadow(-0.2rem -0.2rem 0.2rem var(--white));
+  color: var(--greyDark);
+  cursor: pointer;
+  width: 2%;
+  pointer-events: all;
+}
+
+#sidebar.collapsed,
+.spacer.collapsed {
+  width: 0 !important;
+  padding: 0 !important;
+  overflow: hidden;
+}
+.spacer.collapsed {
+  margin-right: 2rem;
+}
+#collapse-button.collapsed {
+  left: 0;
+}
+
+.switch {
+  display: inline-block;
+  transform: translate(3px, 3px);
+}
+
+.checkbox input,
+.radio input,
+.segmented-control input,
+.switch input {
+  display: none;
+}
+
+[class^="switch__"] {
+  width: 4rem;
+}
+
+[class^="switch__"] label {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 2rem;
+  box-shadow: 0.3rem 0.3rem 0.6rem var(--greyLight-2),
+    -0.2rem -0.2rem 0.5rem var(--white);
+  background: 0 0;
+  position: relative;
+  cursor: pointer;
+  border-radius: 1.6rem;
+}
+
+[class^="checkbox__"] label,
+[class^="radio__"] label {
+  width: 2.8rem;
+  height: 2.8rem;
+  box-shadow: 0.3rem 0.3rem 0.6rem var(--greyLight-2),
+    -0.2rem -0.2rem 0.5rem var(--white);
+}
+
+[class^="switch__"] label::after {
+  content: "";
+  position: absolute;
+  left: 0.4rem;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
+  background: var(--greyDark);
+  transition: 0.4s;
+}
+
+[class^="switch__"] label::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(
+    330deg,
+    var(--primary-dark) 0,
+    var(--primary) 50%,
+    var(--primary-light) 100%
+  );
+  opacity: 0;
+  transition: 0.4s;
+}
+
+.switch input:checked ~ label::before {
+  opacity: 1;
+}
+
+.switch input:checked ~ label::after {
+  left: 57%;
+  background: var(--greyLight-1);
+}
+
+.btn__primary,
+.material-icon-picker .material-icons:hover,
+[class^="radio__"] input:checked ~ label::after,
+[class^="radio__"] label:hover::after {
+  background: var(--primary);
+}
+
+.checkbox,
+[class^="checkbox__"] {
+  justify-content: center;
+  display: inline-block;
+}
+
+[class^="checkbox__"] {
+  width: 2rem;
+}
+
+[class^="checkbox__"] label {
+  transition: 0.3s;
+  cursor: pointer;
+  z-index: 5;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5rem;
+  background: var(--greyLight-3);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.font-select span,
+.fs-results li {
+  transition: 0.2s ease-in;
+  cursor: pointer;
+}
+
+[class^="checkbox__"] label i {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--greyDark);
+  transition: 0.3s;
+  pointer-events: none;
+}
+
+[class^="checkbox__"] input:checked ~ label {
+  background: 0 0;
+}
+
+.radio {
+  grid-column: 0.6;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-items: center;
+}
+
+.btn,
+[class^="radio__"] label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+[class^="radio__"] label {
+  position: relative;
+  border-radius: 50%;
+}
+
+[class^="radio__"] label::after {
+  content: "";
+  position: absolute;
+  width: 1.4rem;
+  height: 1.4rem;
+  background: var(--greyDark);
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+.segmented-control p {
+  pointer-events: none;
+}
+
+.btn {
+  width: 15rem;
+  height: 4rem;
+  border-radius: 1rem;
+  justify-self: center;
+}
+.conspace {
+  width: 100%;
+  height: 100%;
+  background: pink;
+  position: fixed;
+}
+
+.btn__primary {
+  box-shadow: inset 0.2rem 0.2rem 1rem var(--primary-light),
+    inset -0.2rem -0.2rem 1rem var(--primary-dark);
+  color: var(--greyLight-1);
+}
+
+.icon,
+.search,
+.slider {
+  grid-column: 0.75;
+}
+
+.search__input,
+[class^="form__input"] {
+  box-shadow: inset 0.2rem 0.2rem 0.5rem var(--greyLight-2),
+    inset -0.2rem -0.2rem 0.5rem var(--white);
+  font-family: inherit;
+}
+
+.btn__primary:hover > p {
+  filter: brightness(1.2);
+}
+
+.btn__primary:active {
+  filter: contrast(1.3) brightness(1.1);
+}
+
+.btn p {
+  font-size: 1.6rem;
+}
+
+.form {
+  display: inline-flex;
+  margin: 0;
+}
+
+.form2 {
+  margin: 0;
+  width: 4rem;
+  height: 0;
+  display: none;
+  top: 40rem;
+  z-index: 1;
+  transform: translate(0, -0.6rem);
+}
+
+#5-tabs {
+  display: flex !important;
+  flex-direction: row;
+}
+
+[class^="form__input"] {
+  height: 4rem;
+  border: 0;
+  border-radius: 1rem;
+  font-size: 1.4rem;
+  background: 0 0;
+}
+
+.form__input {
+  width: 18rem;
+  padding-left: 1.4rem;
+  color: var(--greyDark);
+}
+
+.form__input2 {
+  width: 4rem;
+  padding-left: 0.2rem;
+  color: transparent;
+  cursor: pointer;
+  font-size: 0;
+}
+
+.grey {
+  background: var(--greyDark);
+  color: var(--greyLight-3);
+}
+
+.form__input::placeholder,
+.search__input::placeholder {
+  color: var(--greyLight-3);
+}
+
+.icon__:hover,
+.search__input:focus + .search__icon,
+[class^="segmented-control__"]:hover {
+  color: var(--primary);
+}
+
+.font-select span:focus,
+.form__input:focus,
+.search__input:focus {
+  outline: 0;
+  box-shadow: 0.3rem 0.3rem 0.6rem var(--greyLight-2),
+    -0.2rem -0.2rem 0.5rem var(--white);
+}
+
+.search {
+  grid-row: 0.6666666667;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search__input {
+  width: 27rem;
+  height: 4rem;
+  border: 0;
+  border-radius: 1rem;
+  font-size: 1.4rem;
+  padding-left: 0.5rem;
+  background: 0 0;
+  color: var(--greyDark);
+}
+
+.segmented-control {
+  grid-column: 0.75;
+  grid-row: 0.5;
+  width: 27.4rem;
+  height: 4rem;
+  box-shadow: 0.3rem 0.3rem 0.6rem var(--greyLight-2),
+    -0.2rem -0.2rem 0.5rem var(--white);
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.font-select span,
+.segmented-control__color,
+.slider__box,
+.slider__btn::after,
+[class^="icon__"]:active {
+  box-shadow: inset 0.2rem 0.2rem 0.5rem var(--greyLight-2),
+    inset -0.2rem -0.2rem 0.5rem var(--white);
+}
+.slider__box {
+  cursor: default;
+}
+.segmented-control > input:checked + label {
+  transition: 0.5s;
+  color: var(--primary);
+}
+
+[class^="segmented-control__"] {
+  width: 9rem;
+  height: 3.6rem;
+  font-size: 1.4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: var(--greyDark);
+  transition: 0.5s;
+}
+
+.segmented-control__color {
+  position: absolute;
+  height: 3.4rem;
+  width: 8.2rem;
+  margin-left: 0.3rem;
+  border-radius: 0.8rem;
+  pointer-events: none;
+}
+#main-wrapper {
+  overflow: hidden;
+  max-height: 100vh;
+  height: 100%;
+}
+#main-wrapper,
+.editTable {
+  width: 100%;
+}
+
+[id^="tab-1"]:checked ~ .segmented-control__color {
+  transform: translateX(0);
+  transition: transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+[id^="tab-2"]:checked ~ .segmented-control__color {
+  transform: translateX(9rem);
+  transition: transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+[id^="tab-3"]:checked ~ .segmented-control__color {
+  transform: translateX(18rem);
+}
+
+.icon {
+  grid-row: 0.8;
+  display: flex;
+  justify-content: space-between;
+}
+
+.editTable {
+  border-collapse: collapse;
+}
+
+.editTable td,
+.editTable th {
+  border: 1px dashed #a495a3;
+  overflow: hidden;
+  white-space: wrap;
+  text-overflow: ellipsis;
+  min-width: 50px;
+  min-height: 25px;
+  padding: 0.5rem;
+}
+
+.editor tr {
+  min-height: 2rem;
+  overflow-x: hidden;
+}
+
+.editor td {
+  min-width: 2rem;
+}
+
+#back-color-picker,
+#copy1,
+#copy2,
+#copy3,
+#fore-color-picker,
+.popup-close,
+[class^="icon__"] {
+  width: 4rem;
+  height: 4rem;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.popup-close,
+[class^="icon__"] {
+  border-radius: 50%;
+  filter: drop-shadow(5px 5px 3px rgba(17, 21, 28, 0.3));
+  display: inline-flex;
+  font-size: 2rem;
+  color: var(--greyDark);
+  transition: 0.5s;
+  background: var(--greyLight-2);
+  margin: 0.1rem;
+}
+
+[class^="icon__"]:active {
+  color: var(--primary);
+}
+
+.slider {
+  grid-row: 0.8333333333;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0;
+}
+
+.slider__box,
+.slider__btn {
+  display: flex;
+  justify-content: center;
+}
+
+.slider__box {
+  width: 27rem;
+  height: 1rem;
+  cursor: pointer;
+  border-radius: 1rem;
+  position: relative;
+  align-items: center;
+}
+
+.slider__btn,
+.slider__btn::after {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.slider__btn {
+  width: 2rem;
+  height: 2rem;
+  background: var(--white);
+  box-shadow: 0 0.1rem 0.3rem 0 var(--greyLight-3);
+  z-index: 200;
+  align-items: center;
+}
+
+.slider__tooltip,
+hr {
+  box-shadow: 0.3rem 0.3rem 0.6rem var(--greyLight-2),
+    -0.2rem -0.2rem 0.5rem var(--white);
+}
+
+#icon-menu,
+#menu-icon,
+#storage,
+#processing,
+.editor,
+.title {
+  display: none;
+}
+.title {
+  width: 100%;
+}
+
+.slider__btn:hover ~ .slider__tooltip {
+  opacity: 1;
+  display: inherit;
+}
+
+.nostart #find,
+.nostart .slider__tooltip {
+  left: -4px;
+}
+
+.slider__btn::after {
+  content: "";
+  width: 0.8rem;
+  height: 0.8rem;
+}
+
+.slider__color {
+  height: 100%;
+  width: 50%;
+  position: absolute;
+  left: 0;
+  z-index: 100;
+  border-radius: inherit;
+  background: var(--primary);
+  background: linear-gradient(
+    -1deg,
+    var(--primary-dark) 0,
+    var(--primary) 50%,
+    var(--primary-light) 100%
+  );
+}
+
+.slider__tooltip {
+  position: absolute;
+  top: 2.6rem;
+  height: 2.5rem;
+  width: 3rem;
+  z-index: 11;
+  border-radius: 0.6rem;
+  justify-content: center;
+
+  align-items: center;
+  font-size: 1.2rem;
+  color: var(--primary);
+  background: var(--white);
+  opacity: 0;
+  display: none;
+  transition: opacity 0.3s;
+}
+
+.picker {
+  -webkit-appearance: none;
+  border: 5px solid var(--primary);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  margin: 8px 5px 5px 5px;
+}
+
+input[type="color"] {
+  cursor: pointer;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+  border: 0;
+  border-radius: 50%;
+}
+
+span {
+  animation: 0.5s fade-in-left;
+}
+
+.font-select span {
+  display: inline-block;
+  width: 29.4rem;
+  height: 3rem;
+  border: 0;
+  border-radius: 1rem;
+  font-size: 1.4rem;
+  padding: 0.8rem 1.4rem;
+  background: 0 0;
+  font-family: inherit;
+  color: var(--greyDark);
+  appearance: none;
+}
+
+.font-select span::-ms-expand {
+  display: none;
+}
+
+.font-select span::before {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid var(--greyDark);
+  position: absolute;
+  left: 26.4rem;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.btn p i {
+  transform: translateY(0.3rem);
+}
+
+.prefpoint:before {
+  -webkit-user-select: all;
+  -ms-user-select: all;
+  user-select: all;
+}
+
+.font-select,
+.fs-drop {
+  position: relative;
+  z-index: 2;
+}
+#navbar .btn {
+  padding: 0rem;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+#navbar .btn p {
+  font-size: 2rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+#navbar {
+  background: var(--greyDark);
+  grid-column: 1 / 2;
+  grid-row: 1 / 3;
+}
+
+.smallstart #find,
+.smallstart .slider__tooltip {
+  left: 45px;
+}
+
+.fullstart #find,
+.fullstart .slider__tooltip {
+  left: 314px;
+}
+.nostart .slider__color {
+  width: 0%;
+}
+
+#body,
+.fullstart .slider__color,
+.header,
+div.material-icon-picker input[type="text"],
+hr {
+  width: 100%;
+}
+
+.smallstart .slider__color {
+  width: 20%;
+}
+	#takeout{
+		display:none;
+	}
+.fs-drop {
+  max-height: 50vh;
+  overflow-y: auto;
+  border: 0;
+  font-size: 1.4rem;
+  padding: 0 1.4rem;
+  left: 0;
+  top: 5px;
+  background-color: var(--greyLight-1);
+  border-radius: 1rem;
+  box-shadow: 0.8rem 0.8rem 1.4rem var(--greyLight-2),
+    -0.2rem -0.2rem 1.8rem var(--white);
+}
+
+.fs-results {
+  padding: 0;
+}
+
+.fs-results li {
+  list-style: none;
+  padding: 10px 15px;
+  border-bottom: 1px solid #e5e5e5;
+  color: var(--primary);
+  border-bottom: 1px solid var(--greyLight-3);
+}
+
+.fs-results li:hover {
+  background-color: var(--greyLight-2);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: var(--greyLight-1);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--primary);
+  border-radius: 10px;
+}
+
+.material-icon-picker {
+  position: absolute;
+  background: var(--greyLight-1);
+  text-align: center;
+  box-shadow: inset 0.2rem 0.2rem 0.5rem var(--greyLight-2),
+    inset -0.2rem -0.2rem 0.5rem var(--white);
+  padding: 20px;
+  z-index: 9999;
+  border-radius: 1rem;
+  transform: translate(30rem, 0);
+  height: 100%;
+}
+
+.material-icon-picker:focus {
+  outline: 0;
+  border: var(--primary);
+}
+
+.material-icon-picker .icons {
+  width: 20rem;
+  max-height: 100%;
+  overflow: scroll;
+}
+
+.material-icon-picker .material-icons {
+  font-size: 36px;
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 10px;
+  margin: 3px;
+  transition: 0.2s;
+  color: var(--greyDark);
+}
+
+.material-icon-picker-prefix {
+  transform: translate(0.7rem, 3.4rem);
+  color: var(--primary);
+  pointer-events: none;
+  font-size: 32px;
+}
+
+.editor,
+.title {
+  backdrop-filter: blur(3px);
+  margin: 0;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  transform-origin: 0% 50%;
+  overflow-x: none;
+  overflow-wrap: break-word;
+}
+.editor {
+  width: fit-content;
+}
+
+a {
+  cursor: pointer;
+}
+
+.editor {
+  min-height: 150px;
+  padding: 0.2em 1rem 2rem;
+  resize: none;
+  outline: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+#navbar {
+  height: 100%;
+  width: 100%;
+}
+#back-color-picker,
+#copy1,
+#copy2,
+#copy3,
+#fore-color-picker {
+  border-radius: 50%;
+  filter: drop-shadow(5px 5px 3px rgba(17, 21, 28, 0.3));
+  display: inline-flex;
+  font-size: 2rem;
+  position: relative;
+}
+
+#main-container {
+  width: 100%;
+  padding: 5rem 0 0 0;
+  color: var(--primary);
+  display: grid;
+  grid-template-columns: 15% 85%;
+  grid-template-rows: 1fr 1fr;
+  overflow: hidden;
+  background-position: center;
+  background-attachment: fixed;
+  height: 100%;
+  max-height: 100vh;
+}
+
+.navspace {
+  grid-column: 1 / 2;
+  grid-row: 1 / 3;
+}
+
+#sub-container {
+  grid-column: 2 / 3;
+  grid-row: 1 / 3;
+  overflow-y: auto;
+  overflow-x:hidden;
+}
+
+#icon-menu {
+  background: 0 0;
+  z-index: 9999;
+  transition: 2s;
+  backdrop-filter: blur(3px);
+}
+
+#sub-container {
+  width: 100%;
+  min-width: 10rem;
+  margin: 0 auto;
+  height: 100%;
+}
+
+.editor img {
+  height: 20rem;
+  width: auto;
+  box-sizing: content-box;
+  display: inline-block;
+}
+
+.title {
+  padding: 1rem 1rem 0 0.5rem;
+}
+
+#editor-1,
+#h1-1 {
+  display: block;
+}
+
+#main-container h1 {
+  color: var(--greyDark);
+}
+
+.toolbar {
+  display: flex;
+  position: fixed;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 3rem 0.5rem;
+  width: 118rem;
+  transition: 0.3s ease-in-out;
+  z-index: 9998;
+  width: calc(100% - 2.5rem - 37rem);
+  background: var(--greyLight-1);
+}
+
+#5-tabs,
+.toolbar {
+  flex-wrap: wrap;
+}
+
+.back-wrapper:hover,
+.fore-wrapper:hover,
+.toolbar a:hover {
+  background: var(--greyLight-1);
+  border-color: var(--greyDark);
+}
+
+.popup {
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  background: var(--white);
+  justify-content: center;
+  align-items: center;
+  z-index: 9997;
+  display: none;
+}
+
+#body {
+  vertical-align: top;
+  overflow: hidden;
+  height: 100%;
+  max-height: 100vh;
+}
+
+.popup-inner {
+  display: block;
+  align-items: top;
+  width: 49%;
+  height: 95%;
+  max-width: 75rem;
+  padding: 3rem;
+  border-radius: 3rem;
+  box-shadow: 0.8rem 0.8rem 1.4rem var(--greyLight-2),
+    -0.2rem -0.2rem 1.8rem var(--white);
+  overflow: scroll;
+}
+
+#copy1,
+#copy2,
+#copy3 {
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 2rem;
+  z-index: 9999;
+  color: var(--primary);
+  background: var(--greyLight-2);
+  animation: none;
+}
+
+#copy1:hover,
+#copy2:hover,
+#copy3:hover {
+  filter: brightness(1.1) contrast(1.2);
+}
+
+#copy1:active,
+#copy2:active,
+#copy3:active {
+  filter: invert(100%);
+}
+
+.popup-inner:before:hover {
+  filter: brightness(2);
+}
+
+hr {
+  height: 0.2rem;
+  border: 0;
+}
+
+.popup-close {
+  position: absolute;
+  z-index: 9999;
+  top: 1rem;
+  right: 2rem;
+  display: flex;
+}
+
+.popup-close:hover {
+  color: var(--primary);
+  background: var(--primary-light);
+}
+
+#back-color-picker,
+#fore-color-picker {
+  color: #bc5da8;
+  transition: 0.5s;
+  -webkit-appearance: none;
+  border: 0;
+}
+
+#fore-color-picker::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background: var(--greyLight-1);
+  box-shadow: 1px 1px 0 var(--greyLight-2), 1px 1px 0 var(--white);
+}
+
+a[data-command="InsertPref"],
+a[data-command="InsertUmbrella"],
+a[data-command="ProfileImage"] {
+  background: var(--primary-light);
+  color: var(--primary-dark);
+}
+
+.components .btn {
+  margin: auto;
+}
+
+#prefpoint,
+#imgpoint {
+  font-size: 3rem;
+  color: var(--primary-dark);
+}
+
+#back-color-picker:after,
+#fore-color-picker:after {
+  content: "A";
+  font-family: Poppins, sans-serif;
+  font-weight: 600;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2.4rem;
+}
+
+#back-color-picker:after {
+  color: var(--greyLight-2);
+}
+
+.triangle i,
+.triangle-container {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'  width='40' height='48' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>☂️</text></svg>")
+      16 0,
+    auto;
+}
+
+.triangle-container {
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  -webkit-clip-path: polygon(0 0, 0 50px, 50px 50px);
+  clip-path: polygon(0 0, 0 50px, 50px 50px);
+  opacity: 0;
+  transition: 0.3s ease-in-out;
+  transition-delay: 1s;
+  overflow: hidden;
+  pointer-events: none;
+}
+.triangle-container:before {
+  color: white;
+  content: "\f0e9";
+  position: relative;
+  top: 32px;
+  left: 4px;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+}
+.triangle-container svg {
+  pointer-events: all;
+}
+.triangle-text {
+  background-color: transparent;
+  padding: 0.5rem;
+  transform: scaleX(0);
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: max-content;
+  max-height: 2rem;
+  color: #fff;
+  visibility: hidden;
+  min-width: 6rem;
+  transform-origin: 0% 50%;
+  pointer-events: none;
+}
+.triangle-container:hover {
+  -webkit-clip-path: none;
+  clip-path: none;
+  opacity: 1;
+}
+
+.triangle-container:hover .triangle-text {
+  transition-property: all;
+  transition-delay: 3s;
+  transition-duration: 2s;
+  color: #fff;
+}
+
+.triangle-container:hover .triangle-text {
+  background-color: #000;
+  visibility: visible;
+  transform: scaleX(1);
+}
+
+.scale-out {
+  transform: scaleX(0);
+}
+
+.scale-in {
+  transform: scaleX(1) !important;
+}
+
+.fade-in {
+  opacity: 1 !important;
+}
+
+.fade-out {
+  opacity: 0;
+}
+
+.slide-in {
+  transform: translateX(0) !important;
+}
+
+.slide-out {
+  transform: translateX(+2000px);
+}
+.picker:hover {
+  animation-name: squash;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-iteration-count: infinite;
+  animation-fill-mode: forwards;
+}
+@keyframes squash {
+  0%,
+  100% {
+    transition-time-function: ease-in;
+    transform-origin: 50% 100%;
+  }
+  0% {
+    transform: translate(0%, -2%) scaleX(1) scaleY(0.9);
+  }
+  10% {
+    transform: translate(0%, 2%) scaleX(0.9) scaleY(0.8);
+  }
+  34% {
+    transform: translate(0%, 2%) scaleX(0.8) scaleY(1.2);
+  }
+  56% {
+    transform: translate(0%, 0%) scaleX(1.2) scaleY(0.8);
+  }
+  78% {
+    transform: translate(0%, 0%) scaleX(0.95) scaleY(1.05);
+  }
+  100% {
+    transform: inherit;
+  }
+}
+#charname {
+  display: none;
+}
+#pref-sliders table {
+  background-color: transparent;
+  color: inherit !important;
+}
+	
+</style>
+<body>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<div id="deps">
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/webfont/1.6.28/webfontloader.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</div>
+<div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css">
+<link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/interact.js/1.10.17/interact.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.4.2/chroma.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/colresizable/1.6.0/colResizable-1.6.js"></script>
+</div>
+<div class="container">
+  <div class="spacer"></div>
+  <div class="sidebar">
+    <div class="components" id="sidebar">
+      <h2>BACKGROUND</h2>
+      <div class="switch">
+        <div class="switch__1">
+          <input id="switch-1" type="checkbox" checked>
+          <label for="switch-1" class="clk" id="t-0-Xbg"></label>
+        </div>
+      </div><br>
+      <span id="0-Xbg">
+        <h3>I want my background to be a<span id="1-n">n</span>...</h3>
+        <div class="segmented-control">
+
+          <input type="radio" name="radio1" value="1" id="tab-1" checked />
+          <label for="tab-1" class="segmented-control__1 clk show-n" id="s-1-img">
+            <p>Image</p>
+          </label>
+
+          <input type="radio" name="radio1" value="2" id="tab-2" />
+          <label for="tab-2" class="segmented-control__2 clk" id="s-1-grd">
+            <p>Gradient</p>
+          </label>
+
+          <input type="radio" name="radio1" value="3" id="tab-3" />
+          <label for="tab-3" class="segmented-control__3 clk" id="s-1-clr">
+            <p>Color</p>
+          </label>
+          <div class="segmented-control__color"></div>
+        </div>
+        <span id="1-img">
+          <h3>with this URL...</h3>
+          <div class="search"><input type="text" class="search__input" placeholder="https://i.imgur.com/oYP7mRi.jpg" id="imgurl">
+          </div>
+          <h3>...and <span id="9-fix">don't</span> fix the background...</h3>
+          <div class="checkbox">
+            <div class="checkbox__2">
+              <input type="checkbox" id="fixbg" checked>
+              <label for="fixbg" class="clk" id="t-9-fix">
+                <i class="material-icons">done</i></label>
+            </div>
+
+          </div><br>
+          <h3>the image should...</h3>
+          <div class="segmented-control">
+
+            <input type="radio" name="radio2" value="4" id="tab-1a" checked />
+            <label for="tab-1a" class="segmented-control__4 clk" id="s-2-tle">
+              <p>Tile</p>
+            </label>
+
+            <input type="radio" name="radio2" value="5" id="tab-2a" />
+            <label for="tab-2a" class="segmented-control__5 clk" id="s-2-fit">
+              <p>Fit</p>
+            </label>
+
+            <input type="radio" name="radio2" value="6" id="tab-3a" />
+            <label for="tab-3a" class="segmented-control__6 clk" id="s-2-cvr">
+              <p>Cover</p>
+            </label>
+
+            <div class="segmented-control__color"></div>
+          </div>
+          <span id="2-tle">
+            <h3>at this % of its size...</h3>
+            <div class="slider">
+              <div class="slider__box">
+                <span class="slider__btn" id="find"></span>
+                <span class="slider__color"></span>
+                <span class="slider__tooltip double__tooltip" id="imgsize" data-value="10">100%</span>
+              </div>
+            </div>
+          </span>
+        </span>
+        <span id="1-grd">
+          <h3>with these two colors...</h3>
+          <input type=color value="#5E7CC5" id="clr1" class="picker"><input type=color value="#BC5DA8" id="clr2" class="picker">
+          <h3>at this angle...</h3>
+          <div class="slider">
+            <div class="slider__box">
+              <span class="slider__btn" id="find"></span>
+              <span class="slider__color"></span>
+              <span class="slider__tooltip angle__tooltip" id="grdang" data-value="180">180°</span>
+            </div>
+          </div>
+        </span>
+        <span id="1-clr">
+          <h3>this one in fact...</h3>
+          <input type=color value="#5E7CC5" id="clr3" class="picker">
+        </span>
+      </span><br>
+      <h2>FONT</h2>
+      <div class="switch">
+        <div class="switch__2">
+          <input id="switch-2" type="checkbox" checked>
+          <label for="switch-2" class="clk" id="t-3-fnt"></label>
+        </div>
+      </div><br>
+      <span id="3-fnt">
+        <h3>I want my font to be...</h3>
+        <input class="font-selector" type="text" id="fnt1" />
+        <h3>in this color...</h3>
+        <input type=color value="#5E7CC5" id="clr4" class="picker">
+        <h3>...and in <i>this</i> size...</h3>
+        <div class="slider smallstart">
+          <div class="slider__box">
+            <span class="slider__btn" id="find"></span>
+            <span class="slider__color"></span>
+            <span class="slider__tooltip slider__fontText" id="Fontsize" data-value="2">2</span>
+          </div>
+        </div> <br>
+        <h3>and I want my titles to be...</h3>
+        <input class="font-selector" type="text" id="fnt2" />
+        <h3>in this color...</h3>
+        <input type=color value="#5E7CC5" id="clr5" class="picker">
+        <h3>... and... this size...</h3>
+        <div class="slider smallstart">
+          <div class="slider__box">
+            <span class="slider__btn" id="find"></span>
+            <span class="slider__color"></span>
+            <span class="slider__tooltip slider__fontH1" id="H1size" data-value="2">2</span>
+          </div>
+        </div> <br>
+        <h3>my sub-titles should be...</h3>
+        <input class="font-selector" type="text" id="fnt4" />
+        <h3>in this color...</h3>
+        <input type=color value="#5E7CC5" id="clr12" class="picker">
+        <h3>... and this size...</h3>
+        <div class="slider smallstart">
+          <div class="slider__box">
+            <span class="slider__btn" id="find"></span>
+            <span class="slider__color"></span>
+            <span class="slider__tooltip slider__fontH2" id="H2size" data-value="2">2</span>
+          </div>
+        </div> <br>
+      </span>
+      <h2>LAYOUT</h2>
+      <div class="switch">
+        <div class="switch__3">
+          <input id="switch-3" type="checkbox" checked>
+          <label for="switch-3" class="clk" id="t-4-fnt"></label>
+        </div>
+      </div><br>
+      <span id="4-lyo">
+        <h3>I <span id="5-not">don't</span> want multiple tabs...</h3>
+
+        <div class="checkbox">
+          <div class="checkbox__1">
+            <input type="checkbox" id="taboff" checked>
+            <label for="taboff" class="clk" id="t-5-not">
+              <i class="material-icons">done</i></label>
+          </div>
+
+        </div>
+<br>
+        <span id="5-tabs">
+          <h3>I <span id="15-not">don't</span> want tab animation...</h3>
+
+          <div class="checkbox">
+            <div class="checkbox__10">
+              <input type="checkbox" id="animoff" checked>
+              <label for="animoff" class="clk" id="t-15-not">
+                <i class="material-icons">done</i></label>
+            </div>
+
+          </div><br>
+          <span id="15-anim">
+            <h3>my tabs should animate with a...</h3>
+            <div class="segmented-control">
+
+              <input type="radio" name="radio2" value="11" id="tab-1d" checked />
+              <label for="tab-1d" class="segmented-control__13 clk" id="s-13-anim1">
+                <p>Wipe</p>
+              </label>
+
+              <input type="radio" name="radio2" value="12" id="tab-2d" />
+              <label for="tab-2d" class="segmented-control__14 clk" id="s-13-anim2">
+                <p>Slide</p>
+              </label>
+
+              <input type="radio" name="radio2" value="13" id="tab-3d" />
+              <label for="tab-3d" class="segmented-control__15 clk" id="s-13-anim3">
+                <p>Fade</p>
+              </label>
+
+              <div class="segmented-control__color"></div>
+            </div>
+          </span>
+          <h3>I want to navigate by...</h3><br>
+          <div class="segmented-control">
+
+            <input type="radio" name="radio5" value="6" id="tab-1b" checked />
+            <label for="tab-1b" class="segmented-control__7 clk menu-button" id="s-7-ico">
+              <p>Buttons</p>
+            </label>
+
+            <input type="radio" name="radio5" value="7" id="tab-2b" />
+            <label for="tab-2b" class="segmented-control__8 clk menu-icon" id="x-7-ico">
+              <p>Icons</p>
+            </label>
+
+            <input type="radio" name="radio5" value="8" id="tab-3b" />
+            <label for="tab-3b" class="segmented-control__9 clk" id="s-7-scr">
+              <p>Scrolling</p>
+            </label>
+
+            <div class="segmented-control__color"></div>
+          </div>
+          <span id="7-scr">
+            <h3>i'd like the tabs to space by this much...</h3>
+            <div class="slider nostart">
+              <div class="slider__box">
+                <span class="slider__btn" id="find"></span>
+                <span class="slider__color"></span>
+                <span class="slider__tooltip slider__space" id="gapSize" data-value="0">0</span>
+              </div>
+            </div>
+          </span>
+          <h3>and my tabs are...</h3><br>
+          <div class="form">
+            <input type="text" class="form__input" value="Intro" id="6-tab1" placeholder="Intro">
+          </div>
+          <div class="form2" id="7-tab1">
+            <input type="text" class="form__input2 use-material-icon-picker" value="home" placeholder="" id="bIcon1">
+          </div><br>
+          <div class="form">
+            <input type="text" class="form__input" id="6-tab2" placeholder="Pictures">
+          </div>
+          <div class="form2" id="7-tab2">
+            <input type="text" class="form__input2 use-material-icon-picker" value="palette" placeholder="" id="bIcon2">
+          </div>
+          <div class="checkbox">
+            <div class="checkbox__3">
+              <input type="checkbox" id="tabOn-2" checked>
+              <label for="tabOn-2" class="clk" id="a-6-tab2">
+                <i class="material-icons">done</i></label>
+            </div>
+          </div><br>
+          <div class="form">
+            <input type="text" class="form__input grey" id="6-tab3" placeholder="Preferences">
+          </div>
+          <div class="form2" id="7-tab3">
+            <input type="text" class="form__input2 use-material-icon-picker" value="sentiment_very_satisfied" id="bIcon3" placeholder="">
+          </div>
+          <div class="checkbox">
+            <div class="checkbox__4">
+              <input type="checkbox" id="tabOn-3">
+              <label for="tabOn-3" class="clk" id="a-6-tab3">
+                <i class="material-icons">done</i></label>
+            </div>
+          </div><br>
+          <div class="form">
+            <input type="text" class="form__input grey" id="6-tab4" placeholder="OOC">
+          </div>
+          <div class="form2" id="7-tab4">
+            <input type="text" class="form__input2 use-material-icon-picker" value="announcement" id="bIcon4" placeholder="">
+          </div>
+          <div class="checkbox">
+            <div class="checkbox__5">
+              <input type="checkbox" id="tabOn-4">
+              <label for="tabOn-4" class="clk" id="a-6-tab4">
+                <i class="material-icons">done</i></label>
+            </div>
+          </div><br>
+          <div class="form">
+            <input type="text" class="form__input grey" id="6-tab5" placeholder="My Umbrella">
+          </div>
+          <div class="form2" id="7-tab5">
+            <input type="text" class="form__input2 use-material-icon-picker" value="beach_access" id="bIcon5" placeholder="">
+          </div>
+          <div class="checkbox">
+            <div class="checkbox__6">
+              <input type="checkbox" id="tabOn-5">
+              <label for="tabOn-5" class="clk" id="a-6-tab5">
+                <i class="material-icons">done</i></label>
+            </div>
+          </div><br>
+          <div class="form">
+            <input type="text" class="form__input grey" id="6-tab6" placeholder="Events ✨">
+          </div>
+          <div class="form2" id="7-tab6">
+            <input type="text" class="form__input2 use-material-icon-picker" value="cake" id="bIcon6" placeholder="">
+          </div>
+          <div class="checkbox">
+            <div class="checkbox__7">
+              <input type="checkbox" id="tabOn-6">
+              <label for="tabOn-6" class="clk" id="a-6-tab6">
+                <i class="material-icons">done</i></label>
+            </div>
+          </div><br>
+          <div class="form">
+            <input type="text" class="form__input grey" id="6-tab7" placeholder="Dice Games">
+          </div>
+          <div class="form2" id="7-tab7">
+            <input type="text" class="form__input2 use-material-icon-picker" value="casino" id="bIcon7" placeholder="">
+          </div>
+          <div class="checkbox">
+            <div class="checkbox__8">
+              <input type="checkbox" id="tabOn-7">
+              <label for="tabOn-7" class="clk" id="a-6-tab7">
+                <i class="material-icons">done</i></label>
+            </div>
+          </div><br>
+        </span>
+        <h3>the content width should be...</h3>
+        <div class="slider fullstart">
+          <div class="slider__box">
+            <span class="slider__btn" id="find"></span>
+            <span class="slider__color"></span>
+            <span class="slider__tooltip slider_cntWidth" id="cntSizeW" data-value="100">100%</span>
+          </div>
+        </div>
+        <h3>and this padded...</h3>
+        <div class="slider nostart">
+          <div class="slider__box">
+            <span class="slider__btn" id="find"></span>
+            <span class="slider__color"></span>
+            <span class="slider__tooltip slider__cntPad" id="cntPad" data-value="5">5%</span>
+          </div>
+        </div>
+        <h3>in this color...</h3><input type=color value="#5E7CC5" id="clr8" class="picker"><br>
+        <h3>and this opaque...</h3>
+        <div class="slider nostart">
+          <div class="slider__box">
+            <span class="slider__btn" id="find"></span>
+            <span class="slider__color"></span>
+            <span class="slider__tooltip slider__opacity" id="cntOpacity" data-value="50">50%</span>
+          </div>
+        </div>
+        <h3>and this rounded...</h3>
+        <div class="slider nostart">
+          <div class="slider__box">
+            <span class="slider__btn" id="find"></span>
+            <span class="slider__color"></span>
+            <span class="slider__tooltip slider__round" id="cntRound" data-value="0">0</span>
+          </div>
+        </div>
+      </span>
+      <span id="menu-icon">
+      </span>
+      <h2><span id="txtButtons">BUTTONS</span><span id="txtIcons">ICONS</span></h2>
+      <div class="switch">
+        <div class="switch__6">
+          <input id="switch-6" type="checkbox" checked>
+          <label for="switch-6" id="x-swch"></label>
+        </div>
+      </div><br>
+      <span id="x-swch-ico">
+        <span id="menu-button">
+          <h3>the button font should be...</h3>
+          <input class="font-selector" type="text" id="fnt3" />
+        </span>
+        <span id="7-ico">
+          <h3>I want the menu to be...</h3>
+          <div class="segmented-control">
+            <input type="radio" name="radio3" value="6" id="tab-1c" checked />
+            <label for="tab-1c" class="segmented-control__10" id="mnu-left">
+              <p>Left</p>
+            </label>
+
+            <input type="radio" name="radio3" value="7" id="tab-2c" />
+            <label for="tab-2c" class="segmented-control__11" id="mnu-right">
+              <p>Right</p>
+            </label>
+
+            <input type="radio" name="radio3" value="8" id="tab-3c" />
+            <label for="tab-3c" class="segmented-control__12" id="mnu-top">
+              <p>Top</p>
+            </label>
+
+            <div class="segmented-control__color"></div>
+          </div>
+          <h3>push the menu right this much...</h3>
+          <div class="slider nostart">
+            <div class="slider__box">
+              <span class="slider__btn" id="find"></span>
+              <span class="slider__color"></span>
+              <span class="slider__tooltip slider__padLeft" id="padLeft" data-value="0">0</span>
+            </div>
+          </div>
+          <h3>and left this much...</h3>
+          <div class="slider nostart">
+            <div class="slider__box">
+              <span class="slider__btn" id="find"></span>
+              <span class="slider__color"></span>
+              <span class="slider__tooltip slider__padRight" id="padRight" data-value="0">0</span>
+            </div>
+          </div>
+          <span id="btnPadding">
+            <h3>and space them this much...</h3>
+            <div class="slider nostart">
+              <div class="slider__box">
+                <span class="slider__btn" id="find"></span>
+                <span class="slider__color"></span>
+                <span class="slider__tooltip slider__padBtn" id="padBtn" data-value="0">0</span>
+              </div>
+            </div>
+          </span>
+          <h3>and pad this much from the top...</h3>
+          <div class="slider nostart">
+            <div class="slider__box">
+              <span class="slider__btn" id="find"></span>
+              <span class="slider__color"></span>
+              <span class="slider__tooltip slider__mnuTop" id="mnuTop" data-value="0">0</span>
+            </div>
+          </div>
+          <h3>I <span id="16-not">don't</span> want my menu to be a bar ...</h3>
+          <div class="checkbox">
+            <div class="checkbox__16">
+              <input type="checkbox" id="mnuBar" checked>
+              <label for="mnuBar" id="t-16-not">
+                <i class="material-icons">done</i></label>
+            </div>
+          </div><br>
+          <span id="mnuClr">
+            <h3>in this color...</h3>
+            <input type=color value="#5E7CC5" id="clr11" class="picker"><br>
+          </span>
+          <h3>the font size of my <span id="17-not">buttons</span><span id="18-not">icons</span> is...</h3>
+          <div class="slider smallstart">
+            <div class="slider__box">
+              <span class="slider__btn" id="find"></span>
+              <span class="slider__color"></span>
+              <span class="slider__tooltip slider__font" id="menusize" data-value="2">2</span>
+            </div>
+          </div> <br>
+          <h3>in this color...</h3>
+          <input type=color value="#5E7CC5" id="clr6" class="picker"><br>
+          <h3>align the button text...</h3>
+          <div class="segmented-control">
+            <input type="radio" name="radio3" value="20" id="tab-6e" checked />
+            <label for="tab-1e" class="segmented-control__20" id="txt-left">
+              <p>Left</p>
+            </label>
+
+            <input type="radio" name="radio3" value="21" id="tab-2e" />
+            <label for="tab-2e" class="segmented-control__21" id="txt-right">
+              <p>Right</p>
+            </label>
+
+            <input type="radio" name="radio3" value="22" id="tab-3e" />
+            <label for="tab-3e" class="segmented-control__22" id="txt-mid">
+              <p>Center</p>
+            </label>
+
+            <div class="segmented-control__color"></div>
+          </div>
+          <h3>my menu items should be this wide...</h3>
+          <div class="slider smallstart">
+            <div class="slider__box">
+              <span class="slider__btn" id="find"></span>
+              <span class="slider__color"></span>
+              <span class="slider__tooltip slider__btnW" id="btnSizeW" data-value="2">2</span>
+            </div>
+          </div><br>
+          <h3>and this high...</h3>
+          <div class="slider smallstart">
+            <div class="slider__box">
+              <span class="slider__btn" id="find"></span>
+              <span class="slider__color"></span>
+              <span class="slider__tooltip slider__btnH" id="btnSizeH" data-value="2">2</span>
+            </div>
+          </div><br>
+          <h3>they should be this rounded...</h3>
+          <div class="slidert">
+            <div class="slider__box">
+              <span class="slider__btn" id="find"></span>
+              <span class="slider__color"></span>
+              <span class="slider__tooltip slider__btnBvl" id="btnSizeBvl" data-value="1">1</span>
+            </div>
+          </div><br>
+          <h3>and in this color...</h3>
+          <input type=color value="#5E7CC5" id="clr7" class="picker"><br>
+          <h3>I <span id="11-not">don't</span> want button bevel ...</h3>
+
+          <div class="checkbox">
+            <div class="checkbox__0">
+              <input type="checkbox" id="btnShade" checked>
+              <label for="btnShade" class="clk" id="t-11-not">
+                <i class="material-icons">done</i></label>
+            </div>
+
+          </div>
+
+        </span>
+      </span>
+      <br>
+      <h2>OTHER</h2>
+      <div class="switch">
+        <div class="switch__4">
+          <input id="switch-4" type="checkbox" checked>
+          <label for="switch-4" class="clk" id="t-13-fnt"></label>
+        </div>
+      </div><br>
+      <span id="13-lyo">
+        <h3>...<span id="12-fix">don't</span> limit the image height...</h3>
+        <div class="checkbox">
+          <div class="checkbox__12">
+            <input type="checkbox" id="imgCap" checked>
+            <label for="imgCap" class="clk" id="t-12-fix">
+              <i class="material-icons">done</i></label>
+          </div>
+        </div><br>
+
+        <h3>My table border thickness is...</h3>
+        <div class="slider nostart">
+          <div class="slider__box">
+            <span class="slider__btn" id="find"></span>
+            <span class="slider__color"></span>
+            <span class="slider__tooltip slider__border" id="tblBorder" data-value="0">0</span>
+          </div>
+        </div>
+        <h3>...in this color...</h3><input type=color value="#5E7CC5" id="clr9" class="picker"><br>
+        <h3>...and this background...</h3><input type=color value="#5E7CC5" id="clr10" class="picker"><br>
+        <h3>and this opaque...</h3>
+        <div class="slider nostart">
+          <div class="slider__box">
+            <span class="slider__btn" id="find"></span>
+            <span class="slider__color"></span>
+            <span class="slider__tooltip slider__opacity2" id="tblOpacity" data-value="50">50%</span>
+          </div>
+        </div>
+      </span>
+      <div class="btn btn__primary" id="getcode">
+
+        <p>Get Code</p>
+      </div>
+
+    </div>
+    <button id="collapse-button"><i class="fas fa-angle-double-left"></i></button>
+  </div>
+  <div id="body">
+    <div class="toolbar" id="toolbar">
+      <a href="#" data-command='undo' class="icon__"><i class='fa fa-undo' title="Undo"></i></a>
+      <a href="#" data-command='redo' class="icon__"><i class='fa fa-repeat' title="Redo"></i></a>
+      <input type="color" id="fore-color-picker" class="back-pallet" value="#BC5DA8" title="Font color">
+      <input type="color" id="back-color-picker" class="fore-pallet" value="#BC5DA8" title="Font highlight">
+      <a href="#" data-command='bold' class="icon__"><i class='fa fa-bold' title="Bold"></i></a>
+      <a href="#" data-command='italic' class="icon__"><i class='fa fa-italic' title="Italic"></i></a>
+      <a href="#" data-command='underline' class="icon__"><i class='fa fa-underline' title="Underline"></i></a>
+      <a href="#" data-command='strikeThrough' class="icon__"><i class='fa fa-strikethrough' title="Strikethrough"></i></a>
+      <a href="#" data-command='justifyLeft' class="icon__"><i class='fa fa-align-left' title="Align left"></i></a>
+      <a href="#" data-command='justifyCenter' class="icon__"><i class='fa fa-align-center' title="Align center"></i></a>
+      <a href="#" data-command='justifyRight' class="icon__"><i class='fa fa-align-right' title="Align Right"></i></a>
+      <a href="#" data-command='justifyFull' class="icon__"><i class='fa fa-align-justify' title="Justify"></i></a>
+      <a href="#" data-command='indent' class="icon__"><i class='fa fa-indent' title="Indent"></i></a>
+      <a href="#" data-command='outdent' class="icon__"><i class='fa fa-outdent' title="Outdent"></i></a>
+      <a href="#" data-command='insertUnorderedList' class="icon__"><i class='fa fa-list-ul' title="Bullet points"></i></a>
+      <a href="#" data-command='insertOrderedList' class="icon__" title="Numbered list"><i class='fa fa-list-ol'></i></a>
+      <a href="#" data-command='h1' class="icon__" title="Header">H1</a>
+      <a href="#" data-command='h2' class="icon__" title="Sub-header">H2</a>
+      <a href="#" data-command='p' class="icon__" title="Paragraph">P</a>
+      <a href="#" data-command='createlink' class="icon__"><i class='fa fa-link' title="Insert hyperlink"></i></a>
+      <a href="#" data-command='unlink' class="icon__"><i class='fa fa-unlink' title="Remove hyperink"></i></a>
+      <a href="#" data-command='insertimage' class="icon__"><i class='fa fa-image' title="Insert image"></i></a>
+      <a href="#" data-command='InsertTable' class="icon__"><i class='fa-solid fa-table' title="Insert Table"></i></a>
+      <a href="#" data-command='subscript' class="icon__"><i class='fa fa-subscript' title="Subscript"></i></a>
+      <a href="#" data-command='superscript' class="icon__"><i class='fa fa-superscript' title="Superscript"></i></a>
+      <a href="#" data-command='InsertPref' class="icon__"><i class='fa fa-sliders' title="Insert preferences"></i></a>
+      <a href="#" data-command='InsertUmbrella' class="icon__"><i class='fa fa-umbrella' title="Conceal under umbrella"></i></a>
+      <a href="#" data-command='ProfileImage' class="icon__"><i class='fa fa-id-badge' title="Insert profile image"></i></a>
+    </div>
+    <div id="main-wrapper">
+      <div id="main-container">
+        <div id="navbar">
+          <div class="btn btn__primary" id="nvbtn1">
+            <p>Intro</p>
+          </div>
+          <div class="btn btn__primary" id="nvbtn2">
+            <p>Pictures</p>
+          </div>
+        </div>
+        <div id="sub-container">
+          <h1 id=h1-1 class="title shown">Intro</h1>
+          <div id='editor-1' class="editor shown" contenteditable>
+            <h2>Editor Box</h2>
+            <p>Here you can write the content for your profile. Edit and format it with the buttons above.<br>
+              The editor buttons and sidebar will not be visible in the final result. So remember that things will look slightly different.<br><br>
+              There's 7 possible content boxes you can enable. So hopefully that should be enough, but these content boxes can be a as long as you like. Just keep writing and the box will keep expanding.<br><br>
+              You can also insert tables to help with formatting.<br>
+            <table class="editTable" id="firstTable">
+              <tr>
+                <td width="120px">
+                  <img class="placeholder" src="https://i.imgur.com/sf26k2G.png">
+                </td>
+                <td style="text-align: center">By using a table you have more control over the way your content is displayed. The inner columns can be clicked and dragged to specify their width.</td>
+              </tr>
+              <tr>
+                <td style="text-align: center">Dr Squazzo Banjo</td>
+                <td></td>
+              </tr>
+            </table>
+
+            Now, just select this and delete! That's right, delete ALL of it!<br><br>... Why are you still reading? Delete me! DELETE ME! I WANT TO DIE! DELETE ME! <b>DELETE ME COWARD!</b> STOP READING ME AND JUST PURGE ME ALREADY!<br><br>
+            Fine. You leave me choice. <br><br>
+            owo what's dwis? Owh noew a bwig hwungwie pwedatwor lwookwing wite at mwe. I swure hwope dwey dwon't vwore up awl dwis twexy wexty! uwo!!
+          </div>
+          <h1 id=h1-2 class="title">Pictures</h1>
+          <div id='editor-2' class="editor" contenteditable>
+            Here's an example of what inserting lots of images here will look like. Images will automatically hyperlink to the image.<br>
+            <img class="placeholder" src="https://i.imgur.com/FGGDXDO.png">
+            <img class="placeholder" src="https://i.imgur.com/adVlnWc.png">
+            <img class="placeholder" src="https://i.imgur.com/sf26k2G.png">
+            <img class="placeholder" src="https://i.imgur.com/FGGDXDO.png">
+            <img class="placeholder" src="https://i.imgur.com/adVlnWc.png">
+            <img class="placeholder" src="https://i.imgur.com/sf26k2G.png">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="triangle-container" id="tri">
+      <svg viewBox="0 0 50 50">
+        <polygon points="50,50 0,50 0,0" style="fill:black;stroke:none;" />
+      </svg>
+      <div class="triangle-text">☂️You can stand under my umbrella You can stand under my umbrella, ella, ella, eh, eh, eh Under my umbrella, ella, ella, eh, eh, eh Under my umbrella, ella, ella, eh, eh, eh Under my umbrella, ella, ella, eh, eh, eh, eh, eh, eh 🌂</div>
+    </div>
+  </div>
+</div>
+<div id="processing"></div>
+<div id="storage">
+
+  <h1 id=h1-3 class="title">Preferences</h1>
+  <div id='editor-3' class="editor" contenteditable>
+    Preferences are moved wherever the icon is placed. Use the "insert preferences" button to add it. Can be anywhere you like.
+  </div>
+  <h1 id=h1-4 class="title">OOC</h1>
+  <div id='editor-4' class="editor" contenteditable>
+  </div>
+  <h1 id=h1-5 class="title">My Umbrella</h1>
+  <div id='editor-5' class="editor" contenteditable>
+    <h1>Umbrellas?</h1>
+    Online roleplay and BDSM culture often have special phrases and secret codes that participants use. For Example, one phrase is "Paper Tiger," which means a person who portrays themselves as a dom but is actually submissive.<br><br>
+    The phrase “My Umbrella” (or these days more commonly the emoji ☂️), comes from Victorian times when women used parasols to communicate their more promiscuous intent without the fear of chastising men, much like <a href="https://www.sothebys.com/en/articles/the-secret-language-of-fans">fans<a>. <br><br>
+        It's used in some roleplaying communities to invert the meaning of certain key words. “Umbrella dom” effectively being an alternative use for the word “paper dom”.
+        <br><br>
+        Komfi has taken this a little further and as an additional feature. By clicking the umbrella editor icon on the top toolbar, you can insert a word, or multiple words that will be hidden at the bottom left of the page. When moused over they will display these words prefaced by the umbrella emoji. These words (to those in the know) will mean the opposite.
+        <br><br>
+        For example ☂️“Pred” would mean prey. ☂️“Unwilling for men” would mean “Willing for women”. etc.<br>
+        It's recommended you keep it simple, but you can also insert a closed umbrella 🌂 to signify the word is normal. ☂️“Hate🌂Vore”
+
+        Hiding words under the secret umbrella is not required.
+        <br>(You can remove this text like all the other content boxes and put your own text in.)
+  </div>
+  <h1 id=h1-6 class="title">Events ✨</h1>
+  <div id='editor-6' class="editor" contenteditable>
+    It doesn't necessarily need to be for events, put anything you like here!✨<br><br>
+    Did you know, you can create rough chat logs from the public chat? Just filter by the characters involved and then copy the URL!
+
+  </div>
+  <h1 id=h1-7 class="title">Dice Games</h1>
+  <div id='editor-7' class="editor" contenteditable>
+    It doesn't necessarily need to be for dice games, put anything you like here!✨
+  </div>
+
+  <div class="btn btn__primary" id="nvbtn3">
+    <p>Preferences</p>
+  </div>
+  <div class="btn btn__primary" id="nvbtn4">
+    <p>OOC</p>
+  </div>
+  <div class="btn btn__primary" id="nvbtn5">
+    <p>Umbrellas</p>
+  </div>
+  <div class="btn btn__primary" id="nvbtn6">
+    <p>Events ✨</p>
+  </div>
+  <div class="btn btn__primary" id="nvbtn7">
+    <p>Dice Games</p>
+  </div>
+</div>
+<div class="popup" id="icon-menu">
+  <div class="material-icon-picker" id="pickerWindow" tabindex="-1" style=""><input type="text" class="form__input" placeholder="Search..." id="pickerSearch">
+    <div class="icons"><i class="material-icons">3d_rotation</i><i class="material-icons">ac_unit</i><i class="material-icons">access_alarm</i><i class="material-icons">access_alarms</i><i class="material-icons">access_time</i><i class="material-icons">accessibility</i><i class="material-icons">accessible</i><i class="material-icons">account_balance</i><i class="material-icons">account_balance_wallet</i><i class="material-icons">account_box</i><i class="material-icons">account_circle</i><i class="material-icons">adb</i><i class="material-icons">add</i><i class="material-icons">add_a_photo</i><i class="material-icons">add_alarm</i><i class="material-icons">add_alert</i><i class="material-icons">add_box</i><i class="material-icons">add_circle</i><i class="material-icons">add_circle_outline</i><i class="material-icons">add_location</i><i class="material-icons">add_shopping_cart</i><i class="material-icons">add_to_photos</i><i class="material-icons">add_to_queue</i><i class="material-icons">adjust</i><i class="material-icons">airline_seat_flat</i><i class="material-icons">airline_seat_flat_angled</i><i class="material-icons">airline_seat_individual_suite</i><i class="material-icons">airline_seat_legroom_extra</i><i class="material-icons">airline_seat_legroom_normal</i><i class="material-icons">airline_seat_legroom_reduced</i><i class="material-icons">airline_seat_recline_extra</i><i class="material-icons">airline_seat_recline_normal</i><i class="material-icons">airplanemode_active</i><i class="material-icons">airplanemode_inactive</i><i class="material-icons">airplay</i><i class="material-icons">airport_shuttle</i><i class="material-icons">alarm</i><i class="material-icons">alarm_add</i><i class="material-icons">alarm_off</i><i class="material-icons">alarm_on</i><i class="material-icons">album</i><i class="material-icons">all_inclusive</i><i class="material-icons">all_out</i><i class="material-icons">android</i><i class="material-icons">announcement</i><i class="material-icons">apps</i><i class="material-icons">archive</i><i class="material-icons">arrow_back</i><i class="material-icons">arrow_downward</i><i class="material-icons">arrow_drop_down</i><i class="material-icons">arrow_drop_down_circle</i><i class="material-icons">arrow_drop_up</i><i class="material-icons">arrow_forward</i><i class="material-icons">arrow_upward</i><i class="material-icons">art_track</i><i class="material-icons">aspect_ratio</i><i class="material-icons">assessment</i><i class="material-icons">assignment</i><i class="material-icons">assignment_ind</i><i class="material-icons">assignment_late</i><i class="material-icons">assignment_return</i><i class="material-icons">assignment_returned</i><i class="material-icons">assignment_turned_in</i><i class="material-icons">assistant</i><i class="material-icons">assistant_photo</i><i class="material-icons">attach_file</i><i class="material-icons">attach_money</i><i class="material-icons">attachment</i><i class="material-icons">audiotrack</i><i class="material-icons">autorenew</i><i class="material-icons">av_timer</i><i class="material-icons">backspace</i><i class="material-icons">backup</i><i class="material-icons">battery_alert</i><i class="material-icons">battery_charging_full</i><i class="material-icons">battery_full</i><i class="material-icons">battery_std</i><i class="material-icons">battery_unknown</i><i class="material-icons">beach_access</i><i class="material-icons">beenhere</i><i class="material-icons">block</i><i class="material-icons">bluetooth</i><i class="material-icons">bluetooth_audio</i><i class="material-icons">bluetooth_connected</i><i class="material-icons">bluetooth_disabled</i><i class="material-icons">bluetooth_searching</i><i class="material-icons">blur_circular</i><i class="material-icons">blur_linear</i><i class="material-icons">blur_off</i><i class="material-icons">blur_on</i><i class="material-icons">book</i><i class="material-icons">bookmark</i><i class="material-icons">bookmark_border</i><i class="material-icons">border_all</i><i class="material-icons">border_bottom</i><i class="material-icons">border_clear</i><i class="material-icons">border_color</i><i class="material-icons">border_horizontal</i><i class="material-icons">border_inner</i><i class="material-icons">border_left</i><i class="material-icons">border_outer</i><i class="material-icons">border_right</i><i class="material-icons">border_style</i><i class="material-icons">border_top</i><i class="material-icons">border_vertical</i><i class="material-icons">branding_watermark</i><i class="material-icons">brightness_1</i><i class="material-icons">brightness_2</i><i class="material-icons">brightness_3</i><i class="material-icons">brightness_4</i><i class="material-icons">brightness_5</i><i class="material-icons">brightness_6</i><i class="material-icons">brightness_7</i><i class="material-icons">brightness_auto</i><i class="material-icons">brightness_high</i><i class="material-icons">brightness_low</i><i class="material-icons">brightness_medium</i><i class="material-icons">broken_image</i><i class="material-icons">brush</i><i class="material-icons">bubble_chart</i><i class="material-icons">bug_report</i><i class="material-icons">build</i><i class="material-icons">burst_mode</i><i class="material-icons">business</i><i class="material-icons">business_center</i><i class="material-icons">cached</i><i class="material-icons">cake</i><i class="material-icons">call</i><i class="material-icons">call_end</i><i class="material-icons">call_made</i><i class="material-icons">call_merge</i><i class="material-icons">call_missed</i><i class="material-icons">call_missed_outgoing</i><i class="material-icons">call_received</i><i class="material-icons">call_split</i><i class="material-icons">call_to_action</i><i class="material-icons">camera</i><i class="material-icons">camera_alt</i><i class="material-icons">camera_enhance</i><i class="material-icons">camera_front</i><i class="material-icons">camera_rear</i><i class="material-icons">camera_roll</i><i class="material-icons">cancel</i><i class="material-icons">card_giftcard</i><i class="material-icons">card_membership</i><i class="material-icons">card_travel</i><i class="material-icons">casino</i><i class="material-icons">cast</i><i class="material-icons">cast_connected</i><i class="material-icons">center_focus_strong</i><i class="material-icons">center_focus_weak</i><i class="material-icons">change_history</i><i class="material-icons">chat</i><i class="material-icons">chat_bubble</i><i class="material-icons">chat_bubble_outline</i><i class="material-icons">check</i><i class="material-icons">check_box</i><i class="material-icons">check_box_outline_blank</i><i class="material-icons">check_circle</i><i class="material-icons">chevron_left</i><i class="material-icons">chevron_right</i><i class="material-icons">child_care</i><i class="material-icons">child_friendly</i><i class="material-icons">chrome_reader_mode</i><i class="material-icons">class</i><i class="material-icons">clear</i><i class="material-icons">clear_all</i><i class="material-icons">close</i><i class="material-icons">closed_caption</i><i class="material-icons">cloud</i><i class="material-icons">cloud_circle</i><i class="material-icons">cloud_done</i><i class="material-icons">cloud_download</i><i class="material-icons">cloud_off</i><i class="material-icons">cloud_queue</i><i class="material-icons">cloud_upload</i><i class="material-icons">code</i><i class="material-icons">collections</i><i class="material-icons">collections_bookmark</i><i class="material-icons">color_lens</i><i class="material-icons">colorize</i><i class="material-icons">comment</i><i class="material-icons">compare</i><i class="material-icons">compare_arrows</i><i class="material-icons">computer</i><i class="material-icons">confirmation_number</i><i class="material-icons">contact_mail</i><i class="material-icons">contact_phone</i><i class="material-icons">contacts</i><i class="material-icons">content_copy</i><i class="material-icons">content_cut</i><i class="material-icons">content_paste</i><i class="material-icons">control_point</i><i class="material-icons">control_point_duplicate</i><i class="material-icons">copyright</i><i class="material-icons">create</i><i class="material-icons">create_new_folder</i><i class="material-icons">credit_card</i><i class="material-icons">crop</i><i class="material-icons">crop_16_9</i><i class="material-icons">crop_3_2</i><i class="material-icons">crop_5_4</i><i class="material-icons">crop_7_5</i><i class="material-icons">crop_din</i><i class="material-icons">crop_free</i><i class="material-icons">crop_landscape</i><i class="material-icons">crop_original</i><i class="material-icons">crop_portrait</i><i class="material-icons">crop_rotate</i><i class="material-icons">crop_square</i><i class="material-icons">dashboard</i><i class="material-icons">data_usage</i><i class="material-icons">date_range</i><i class="material-icons">dehaze</i><i class="material-icons">delete</i><i class="material-icons">delete_forever</i><i class="material-icons">delete_sweep</i><i class="material-icons">description</i><i class="material-icons">desktop_mac</i><i class="material-icons">desktop_windows</i><i class="material-icons">details</i><i class="material-icons">developer_board</i><i class="material-icons">developer_mode</i><i class="material-icons">device_hub</i><i class="material-icons">devices</i><i class="material-icons">devices_other</i><i class="material-icons">dialer_sip</i><i class="material-icons">dialpad</i><i class="material-icons">directions</i><i class="material-icons">directions_bike</i><i class="material-icons">directions_boat</i><i class="material-icons">directions_bus</i><i class="material-icons">directions_car</i><i class="material-icons">directions_railway</i><i class="material-icons">directions_run</i><i class="material-icons">directions_subway</i><i class="material-icons">directions_transit</i><i class="material-icons">directions_walk</i><i class="material-icons">disc_full</i><i class="material-icons">dns</i><i class="material-icons">do_not_disturb</i><i class="material-icons">do_not_disturb_alt</i><i class="material-icons">do_not_disturb_off</i><i class="material-icons">do_not_disturb_on</i><i class="material-icons">dock</i><i class="material-icons">domain</i><i class="material-icons">done</i><i class="material-icons">done_all</i><i class="material-icons">donut_large</i><i class="material-icons">donut_small</i><i class="material-icons">drafts</i><i class="material-icons">drag_handle</i><i class="material-icons">drive_eta</i><i class="material-icons">dvr</i><i class="material-icons">edit</i><i class="material-icons">edit_location</i><i class="material-icons">eject</i><i class="material-icons">email</i><i class="material-icons">enhanced_encryption</i><i class="material-icons">equalizer</i><i class="material-icons">error</i><i class="material-icons">error_outline</i><i class="material-icons">euro_symbol</i><i class="material-icons">ev_station</i><i class="material-icons">event</i><i class="material-icons">event_available</i><i class="material-icons">event_busy</i><i class="material-icons">event_note</i><i class="material-icons">event_seat</i><i class="material-icons">exit_to_app</i><i class="material-icons">expand_less</i><i class="material-icons">expand_more</i><i class="material-icons">explicit</i><i class="material-icons">explore</i><i class="material-icons">exposure</i><i class="material-icons">exposure_neg_1</i><i class="material-icons">exposure_neg_2</i><i class="material-icons">exposure_plus_1</i><i class="material-icons">exposure_plus_2</i><i class="material-icons">exposure_zero</i><i class="material-icons">extension</i><i class="material-icons">face</i><i class="material-icons">fast_forward</i><i class="material-icons">fast_rewind</i><i class="material-icons">favorite</i><i class="material-icons">favorite_border</i><i class="material-icons">featured_play_list</i><i class="material-icons">featured_video</i><i class="material-icons">feedback</i><i class="material-icons">fiber_dvr</i><i class="material-icons">fiber_manual_record</i><i class="material-icons">fiber_new</i><i class="material-icons">fiber_pin</i><i class="material-icons">fiber_smart_record</i><i class="material-icons">file_download</i><i class="material-icons">file_upload</i><i class="material-icons">filter</i><i class="material-icons">filter_1</i><i class="material-icons">filter_2</i><i class="material-icons">filter_3</i><i class="material-icons">filter_4</i><i class="material-icons">filter_5</i><i class="material-icons">filter_6</i><i class="material-icons">filter_7</i><i class="material-icons">filter_8</i><i class="material-icons">filter_9</i><i class="material-icons">filter_9_plus</i><i class="material-icons">filter_b_and_w</i><i class="material-icons">filter_center_focus</i><i class="material-icons">filter_drama</i><i class="material-icons">filter_frames</i><i class="material-icons">filter_hdr</i><i class="material-icons">filter_list</i><i class="material-icons">filter_none</i><i class="material-icons">filter_tilt_shift</i><i class="material-icons">filter_vintage</i><i class="material-icons">find_in_page</i><i class="material-icons">find_replace</i><i class="material-icons">fingerprint</i><i class="material-icons">first_page</i><i class="material-icons">fitness_center</i><i class="material-icons">flag</i><i class="material-icons">flare</i><i class="material-icons">flash_auto</i><i class="material-icons">flash_off</i><i class="material-icons">flash_on</i><i class="material-icons">flight</i><i class="material-icons">flight_land</i><i class="material-icons">flight_takeoff</i><i class="material-icons">flip</i><i class="material-icons">flip_to_back</i><i class="material-icons">flip_to_front</i><i class="material-icons">folder</i><i class="material-icons">folder_open</i><i class="material-icons">folder_shared</i><i class="material-icons">folder_special</i><i class="material-icons">font_download</i><i class="material-icons">format_align_center</i><i class="material-icons">format_align_justify</i><i class="material-icons">format_align_left</i><i class="material-icons">format_align_right</i><i class="material-icons">format_bold</i><i class="material-icons">format_clear</i><i class="material-icons">format_color_fill</i><i class="material-icons">format_color_reset</i><i class="material-icons">format_color_text</i><i class="material-icons">format_indent_decrease</i><i class="material-icons">format_indent_increase</i><i class="material-icons">format_italic</i><i class="material-icons">format_line_spacing</i><i class="material-icons">format_list_bulleted</i><i class="material-icons">format_list_numbered</i><i class="material-icons">format_paint</i><i class="material-icons">format_quote</i><i class="material-icons">format_shapes</i><i class="material-icons">format_size</i><i class="material-icons">format_strikethrough</i><i class="material-icons">format_textdirection_l_to_r</i><i class="material-icons">format_textdirection_r_to_l</i><i class="material-icons">format_underlined</i><i class="material-icons">forum</i><i class="material-icons">forward</i><i class="material-icons">forward_10</i><i class="material-icons">forward_30</i><i class="material-icons">forward_5</i><i class="material-icons">free_breakfast</i><i class="material-icons">fullscreen</i><i class="material-icons">fullscreen_exit</i><i class="material-icons">functions</i><i class="material-icons">g_translate</i><i class="material-icons">gamepad</i><i class="material-icons">games</i><i class="material-icons">gavel</i><i class="material-icons">gesture</i><i class="material-icons">get_app</i><i class="material-icons">gif</i><i class="material-icons">golf_course</i><i class="material-icons">gps_fixed</i><i class="material-icons">gps_not_fixed</i><i class="material-icons">gps_off</i><i class="material-icons">grade</i><i class="material-icons">gradient</i><i class="material-icons">grain</i><i class="material-icons">graphic_eq</i><i class="material-icons">grid_off</i><i class="material-icons">grid_on</i><i class="material-icons">group</i><i class="material-icons">group_add</i><i class="material-icons">group_work</i><i class="material-icons">hd</i><i class="material-icons">hdr_off</i><i class="material-icons">hdr_on</i><i class="material-icons">hdr_strong</i><i class="material-icons">hdr_weak</i><i class="material-icons">headset</i><i class="material-icons">headset_mic</i><i class="material-icons">healing</i><i class="material-icons">hearing</i><i class="material-icons">help</i><i class="material-icons">help_outline</i><i class="material-icons">high_quality</i><i class="material-icons">highlight</i><i class="material-icons">highlight_off</i><i class="material-icons">history</i><i class="material-icons">home</i><i class="material-icons">hot_tub</i><i class="material-icons">hotel</i><i class="material-icons">hourglass_empty</i><i class="material-icons">hourglass_full</i><i class="material-icons">http</i><i class="material-icons">https</i><i class="material-icons">image</i><i class="material-icons">image_aspect_ratio</i><i class="material-icons">import_contacts</i><i class="material-icons">import_export</i><i class="material-icons">important_devices</i><i class="material-icons">inbox</i><i class="material-icons">indeterminate_check_box</i><i class="material-icons">info</i><i class="material-icons">info_outline</i><i class="material-icons">input</i><i class="material-icons">insert_chart</i><i class="material-icons">insert_comment</i><i class="material-icons">insert_drive_file</i><i class="material-icons">insert_emoticon</i><i class="material-icons">insert_invitation</i><i class="material-icons">insert_link</i><i class="material-icons">insert_photo</i><i class="material-icons">invert_colors</i><i class="material-icons">invert_colors_off</i><i class="material-icons">iso</i><i class="material-icons">keyboard</i><i class="material-icons">keyboard_arrow_down</i><i class="material-icons">keyboard_arrow_left</i><i class="material-icons">keyboard_arrow_right</i><i class="material-icons">keyboard_arrow_up</i><i class="material-icons">keyboard_backspace</i><i class="material-icons">keyboard_capslock</i><i class="material-icons">keyboard_hide</i><i class="material-icons">keyboard_return</i><i class="material-icons">keyboard_tab</i><i class="material-icons">keyboard_voice</i><i class="material-icons">kitchen</i><i class="material-icons">label</i><i class="material-icons">label_outline</i><i class="material-icons">landscape</i><i class="material-icons">language</i><i class="material-icons">laptop</i><i class="material-icons">laptop_chromebook</i><i class="material-icons">laptop_mac</i><i class="material-icons">laptop_windows</i><i class="material-icons">last_page</i><i class="material-icons">launch</i><i class="material-icons">layers</i><i class="material-icons">layers_clear</i><i class="material-icons">leak_add</i><i class="material-icons">leak_remove</i><i class="material-icons">lens</i><i class="material-icons">library_add</i><i class="material-icons">library_books</i><i class="material-icons">library_music</i><i class="material-icons">lightbulb_outline</i><i class="material-icons">line_style</i><i class="material-icons">line_weight</i><i class="material-icons">linear_scale</i><i class="material-icons">link</i><i class="material-icons">linked_camera</i><i class="material-icons">list</i><i class="material-icons">live_help</i><i class="material-icons">live_tv</i><i class="material-icons">local_activity</i><i class="material-icons">local_airport</i><i class="material-icons">local_atm</i><i class="material-icons">local_bar</i><i class="material-icons">local_cafe</i><i class="material-icons">local_car_wash</i><i class="material-icons">local_convenience_store</i><i class="material-icons">local_dining</i><i class="material-icons">local_drink</i><i class="material-icons">local_florist</i><i class="material-icons">local_gas_station</i><i class="material-icons">local_grocery_store</i><i class="material-icons">local_hospital</i><i class="material-icons">local_hotel</i><i class="material-icons">local_laundry_service</i><i class="material-icons">local_library</i><i class="material-icons">local_mall</i><i class="material-icons">local_movies</i><i class="material-icons">local_offer</i><i class="material-icons">local_parking</i><i class="material-icons">local_pharmacy</i><i class="material-icons">local_phone</i><i class="material-icons">local_pizza</i><i class="material-icons">local_play</i><i class="material-icons">local_post_office</i><i class="material-icons">local_printshop</i><i class="material-icons">local_see</i><i class="material-icons">local_shipping</i><i class="material-icons">local_taxi</i><i class="material-icons">location_city</i><i class="material-icons">location_disabled</i><i class="material-icons">location_off</i><i class="material-icons">location_on</i><i class="material-icons">location_searching</i><i class="material-icons">lock</i><i class="material-icons">lock_open</i><i class="material-icons">lock_outline</i><i class="material-icons">looks</i><i class="material-icons">looks_3</i><i class="material-icons">looks_4</i><i class="material-icons">looks_5</i><i class="material-icons">looks_6</i><i class="material-icons">looks_one</i><i class="material-icons">looks_two</i><i class="material-icons">loop</i><i class="material-icons">loupe</i><i class="material-icons">low_priority</i><i class="material-icons">loyalty</i><i class="material-icons">mail</i><i class="material-icons">mail_outline</i><i class="material-icons">map</i><i class="material-icons">markunread</i><i class="material-icons">markunread_mailbox</i><i class="material-icons">memory</i><i class="material-icons">menu</i><i class="material-icons">merge_type</i><i class="material-icons">message</i><i class="material-icons">mic</i><i class="material-icons">mic_none</i><i class="material-icons">mic_off</i><i class="material-icons">mms</i><i class="material-icons">mode_comment</i><i class="material-icons">mode_edit</i><i class="material-icons">monetization_on</i><i class="material-icons">money_off</i><i class="material-icons">monochrome_photos</i><i class="material-icons">mood</i><i class="material-icons">mood_bad</i><i class="material-icons">more</i><i class="material-icons">more_horiz</i><i class="material-icons">more_vert</i><i class="material-icons">motorcycle</i><i class="material-icons">mouse</i><i class="material-icons">move_to_inbox</i><i class="material-icons">movie</i><i class="material-icons">movie_creation</i><i class="material-icons">movie_filter</i><i class="material-icons">multiline_chart</i><i class="material-icons">music_note</i><i class="material-icons">music_video</i><i class="material-icons">my_location</i><i class="material-icons">nature</i><i class="material-icons">nature_people</i><i class="material-icons">navigate_before</i><i class="material-icons">navigate_next</i><i class="material-icons">navigation</i><i class="material-icons">near_me</i><i class="material-icons">network_cell</i><i class="material-icons">network_check</i><i class="material-icons">network_locked</i><i class="material-icons">network_wifi</i><i class="material-icons">new_releases</i><i class="material-icons">next_week</i><i class="material-icons">nfc</i><i class="material-icons">no_encryption</i><i class="material-icons">no_sim</i><i class="material-icons">not_interested</i><i class="material-icons">note</i><i class="material-icons">note_add</i><i class="material-icons">notifications</i><i class="material-icons">notifications_active</i><i class="material-icons">notifications_none</i><i class="material-icons">notifications_off</i><i class="material-icons">notifications_paused</i><i class="material-icons">offline_pin</i><i class="material-icons">ondemand_video</i><i class="material-icons">opacity</i><i class="material-icons">open_in_browser</i><i class="material-icons">open_in_new</i><i class="material-icons">open_with</i><i class="material-icons">pages</i><i class="material-icons">pageview</i><i class="material-icons">palette</i><i class="material-icons">pan_tool</i><i class="material-icons">panorama</i><i class="material-icons">panorama_fish_eye</i><i class="material-icons">panorama_horizontal</i><i class="material-icons">panorama_vertical</i><i class="material-icons">panorama_wide_angle</i><i class="material-icons">party_mode</i><i class="material-icons">pause</i><i class="material-icons">pause_circle_filled</i><i class="material-icons">pause_circle_outline</i><i class="material-icons">payment</i><i class="material-icons">people</i><i class="material-icons">people_outline</i><i class="material-icons">perm_camera_mic</i><i class="material-icons">perm_contact_calendar</i><i class="material-icons">perm_data_setting</i><i class="material-icons">perm_device_information</i><i class="material-icons">perm_identity</i><i class="material-icons">perm_media</i><i class="material-icons">perm_phone_msg</i><i class="material-icons">perm_scan_wifi</i><i class="material-icons">person</i><i class="material-icons">person_add</i><i class="material-icons">person_outline</i><i class="material-icons">person_pin</i><i class="material-icons">person_pin_circle</i><i class="material-icons">personal_video</i><i class="material-icons">pets</i><i class="material-icons">phone</i><i class="material-icons">phone_android</i><i class="material-icons">phone_bluetooth_speaker</i><i class="material-icons">phone_forwarded</i><i class="material-icons">phone_in_talk</i><i class="material-icons">phone_iphone</i><i class="material-icons">phone_locked</i><i class="material-icons">phone_missed</i><i class="material-icons">phone_paused</i><i class="material-icons">phonelink</i><i class="material-icons">phonelink_erase</i><i class="material-icons">phonelink_lock</i><i class="material-icons">phonelink_off</i><i class="material-icons">phonelink_ring</i><i class="material-icons">phonelink_setup</i><i class="material-icons">photo</i><i class="material-icons">photo_album</i><i class="material-icons">photo_camera</i><i class="material-icons">photo_filter</i><i class="material-icons">photo_library</i><i class="material-icons">photo_size_select_actual</i><i class="material-icons">photo_size_select_large</i><i class="material-icons">photo_size_select_small</i><i class="material-icons">picture_as_pdf</i><i class="material-icons">picture_in_picture</i><i class="material-icons">picture_in_picture_alt</i><i class="material-icons">pie_chart</i><i class="material-icons">pie_chart_outlined</i><i class="material-icons">pin_drop</i><i class="material-icons">place</i><i class="material-icons">play_arrow</i><i class="material-icons">play_circle_filled</i><i class="material-icons">play_circle_outline</i><i class="material-icons">play_for_work</i><i class="material-icons">playlist_add</i><i class="material-icons">playlist_add_check</i><i class="material-icons">playlist_play</i><i class="material-icons">plus_one</i><i class="material-icons">poll</i><i class="material-icons">polymer</i><i class="material-icons">pool</i><i class="material-icons">portable_wifi_off</i><i class="material-icons">portrait</i><i class="material-icons">power</i><i class="material-icons">power_input</i><i class="material-icons">power_settings_new</i><i class="material-icons">pregnant_woman</i><i class="material-icons">present_to_all</i><i class="material-icons">print</i><i class="material-icons">priority_high</i><i class="material-icons">public</i><i class="material-icons">publish</i><i class="material-icons">query_builder</i><i class="material-icons">question_answer</i><i class="material-icons">queue</i><i class="material-icons">queue_music</i><i class="material-icons">queue_play_next</i><i class="material-icons">radio</i><i class="material-icons">radio_button_checked</i><i class="material-icons">radio_button_unchecked</i><i class="material-icons">rate_review</i><i class="material-icons">receipt</i><i class="material-icons">recent_actors</i><i class="material-icons">record_voice_over</i><i class="material-icons">redeem</i><i class="material-icons">redo</i><i class="material-icons">refresh</i><i class="material-icons">remove</i><i class="material-icons">remove_circle</i><i class="material-icons">remove_circle_outline</i><i class="material-icons">remove_from_queue</i><i class="material-icons">remove_red_eye</i><i class="material-icons">remove_shopping_cart</i><i class="material-icons">reorder</i><i class="material-icons">repeat</i><i class="material-icons">repeat_one</i><i class="material-icons">replay</i><i class="material-icons">replay_10</i><i class="material-icons">replay_30</i><i class="material-icons">replay_5</i><i class="material-icons">reply</i><i class="material-icons">reply_all</i><i class="material-icons">report</i><i class="material-icons">report_problem</i><i class="material-icons">restaurant</i><i class="material-icons">restaurant_menu</i><i class="material-icons">restore</i><i class="material-icons">restore_page</i><i class="material-icons">ring_volume</i><i class="material-icons">room</i><i class="material-icons">room_service</i><i class="material-icons">rotate_90_degrees_ccw</i><i class="material-icons">rotate_left</i><i class="material-icons">rotate_right</i><i class="material-icons">rounded_corner</i><i class="material-icons">router</i><i class="material-icons">rowing</i><i class="material-icons">rss_feed</i><i class="material-icons">rv_hookup</i><i class="material-icons">satellite</i><i class="material-icons">save</i><i class="material-icons">scanner</i><i class="material-icons">schedule</i><i class="material-icons">school</i><i class="material-icons">screen_lock_landscape</i><i class="material-icons">screen_lock_portrait</i><i class="material-icons">screen_lock_rotation</i><i class="material-icons">screen_rotation</i><i class="material-icons">screen_share</i><i class="material-icons">sd_card</i><i class="material-icons">sd_storage</i><i class="material-icons">search</i><i class="material-icons">security</i><i class="material-icons">select_all</i><i class="material-icons">send</i><i class="material-icons">sentiment_dissatisfied</i><i class="material-icons">sentiment_neutral</i><i class="material-icons">sentiment_satisfied</i><i class="material-icons">sentiment_very_dissatisfied</i><i class="material-icons">sentiment_very_satisfied</i><i class="material-icons">settings</i><i class="material-icons">settings_applications</i><i class="material-icons">settings_backup_restore</i><i class="material-icons">settings_bluetooth</i><i class="material-icons">settings_brightness</i><i class="material-icons">settings_cell</i><i class="material-icons">settings_ethernet</i><i class="material-icons">settings_input_antenna</i><i class="material-icons">settings_input_component</i><i class="material-icons">settings_input_composite</i><i class="material-icons">settings_input_hdmi</i><i class="material-icons">settings_input_svideo</i><i class="material-icons">settings_overscan</i><i class="material-icons">settings_phone</i><i class="material-icons">settings_power</i><i class="material-icons">settings_remote</i><i class="material-icons">settings_system_daydream</i><i class="material-icons">settings_voice</i><i class="material-icons">share</i><i class="material-icons">shop</i><i class="material-icons">shop_two</i><i class="material-icons">shopping_basket</i><i class="material-icons">shopping_cart</i><i class="material-icons">short_text</i><i class="material-icons">show_chart</i><i class="material-icons">shuffle</i><i class="material-icons">signal_cellular_4_bar</i><i class="material-icons">signal_cellular_connected_no_internet_4_bar</i><i class="material-icons">signal_cellular_no_sim</i><i class="material-icons">signal_cellular_null</i><i class="material-icons">signal_cellular_off</i><i class="material-icons">signal_wifi_4_bar</i><i class="material-icons">signal_wifi_4_bar_lock</i><i class="material-icons">signal_wifi_off</i><i class="material-icons">sim_card</i><i class="material-icons">sim_card_alert</i><i class="material-icons">skip_next</i><i class="material-icons">skip_previous</i><i class="material-icons">slideshow</i><i class="material-icons">slow_motion_video</i><i class="material-icons">smartphone</i><i class="material-icons">smoke_free</i><i class="material-icons">smoking_rooms</i><i class="material-icons">sms</i><i class="material-icons">sms_failed</i><i class="material-icons">snooze</i><i class="material-icons">sort</i><i class="material-icons">sort_by_alpha</i><i class="material-icons">spa</i><i class="material-icons">space_bar</i><i class="material-icons">speaker</i><i class="material-icons">speaker_group</i><i class="material-icons">speaker_notes</i><i class="material-icons">speaker_notes_off</i><i class="material-icons">speaker_phone</i><i class="material-icons">spellcheck</i><i class="material-icons">star</i><i class="material-icons">star_border</i><i class="material-icons">star_half</i><i class="material-icons">stars</i><i class="material-icons">stay_current_landscape</i><i class="material-icons">stay_current_portrait</i><i class="material-icons">stay_primary_landscape</i><i class="material-icons">stay_primary_portrait</i><i class="material-icons">stop</i><i class="material-icons">stop_screen_share</i><i class="material-icons">storage</i><i class="material-icons">store</i><i class="material-icons">store_mall_directory</i><i class="material-icons">straighten</i><i class="material-icons">streetview</i><i class="material-icons">strikethrough_s</i><i class="material-icons">style</i><i class="material-icons">subdirectory_arrow_left</i><i class="material-icons">subdirectory_arrow_right</i><i class="material-icons">subject</i><i class="material-icons">subscriptions</i><i class="material-icons">subtitles</i><i class="material-icons">subway</i><i class="material-icons">supervisor_account</i><i class="material-icons">surround_sound</i><i class="material-icons">swap_calls</i><i class="material-icons">swap_horiz</i><i class="material-icons">swap_vert</i><i class="material-icons">swap_vertical_circle</i><i class="material-icons">switch_camera</i><i class="material-icons">switch_video</i><i class="material-icons">sync</i><i class="material-icons">sync_disabled</i><i class="material-icons">sync_problem</i><i class="material-icons">system_update</i><i class="material-icons">system_update_alt</i><i class="material-icons">tab</i><i class="material-icons">tab_unselected</i><i class="material-icons">tablet</i><i class="material-icons">tablet_android</i><i class="material-icons">tablet_mac</i><i class="material-icons">tag_faces</i><i class="material-icons">tap_and_play</i><i class="material-icons">terrain</i><i class="material-icons">text_fields</i><i class="material-icons">text_format</i><i class="material-icons">textsms</i><i class="material-icons">texture</i><i class="material-icons">theaters</i><i class="material-icons">thumb_down</i><i class="material-icons">thumb_up</i><i class="material-icons">thumbs_up_down</i><i class="material-icons">time_to_leave</i><i class="material-icons">timelapse</i><i class="material-icons">timeline</i><i class="material-icons">timer</i><i class="material-icons">timer_10</i><i class="material-icons">timer_3</i><i class="material-icons">timer_off</i><i class="material-icons">title</i><i class="material-icons">toc</i><i class="material-icons">today</i><i class="material-icons">toll</i><i class="material-icons">tonality</i><i class="material-icons">touch_app</i><i class="material-icons">toys</i><i class="material-icons">track_changes</i><i class="material-icons">traffic</i><i class="material-icons">train</i><i class="material-icons">tram</i><i class="material-icons">transfer_within_a_station</i><i class="material-icons">transform</i><i class="material-icons">translate</i><i class="material-icons">trending_down</i><i class="material-icons">trending_flat</i><i class="material-icons">trending_up</i><i class="material-icons">tune</i><i class="material-icons">turned_in</i><i class="material-icons">turned_in_not</i><i class="material-icons">tv</i><i class="material-icons">unarchive</i><i class="material-icons">undo</i><i class="material-icons">unfold_less</i><i class="material-icons">unfold_more</i><i class="material-icons">update</i><i class="material-icons">usb</i><i class="material-icons">verified_user</i><i class="material-icons">vertical_align_bottom</i><i class="material-icons">vertical_align_center</i><i class="material-icons">vertical_align_top</i><i class="material-icons">vibration</i><i class="material-icons">video_call</i><i class="material-icons">video_label</i><i class="material-icons">video_library</i><i class="material-icons">videocam</i><i class="material-icons">videocam_off</i><i class="material-icons">videogame_asset</i><i class="material-icons">view_agenda</i><i class="material-icons">view_array</i><i class="material-icons">view_carousel</i><i class="material-icons">view_column</i><i class="material-icons">view_comfy</i><i class="material-icons">view_compact</i><i class="material-icons">view_day</i><i class="material-icons">view_headline</i><i class="material-icons">view_list</i><i class="material-icons">view_module</i><i class="material-icons">view_quilt</i><i class="material-icons">view_stream</i><i class="material-icons">view_week</i><i class="material-icons">vignette</i><i class="material-icons">visibility</i><i class="material-icons">visibility_off</i><i class="material-icons">voice_chat</i><i class="material-icons">voicemail</i><i class="material-icons">volume_down</i><i class="material-icons">volume_mute</i><i class="material-icons">volume_off</i><i class="material-icons">volume_up</i><i class="material-icons">vpn_key</i><i class="material-icons">vpn_lock</i><i class="material-icons">wallpaper</i><i class="material-icons">warning</i><i class="material-icons">watch</i><i class="material-icons">watch_later</i><i class="material-icons">wb_auto</i><i class="material-icons">wb_cloudy</i><i class="material-icons">wb_incandescent</i><i class="material-icons">wb_iridescent</i><i class="material-icons">wb_sunny</i><i class="material-icons">wc</i><i class="material-icons">web</i><i class="material-icons">web_asset</i><i class="material-icons">weekend</i><i class="material-icons">whatshot</i><i class="material-icons">widgets</i><i class="material-icons">wifi</i><i class="material-icons">wifi_lock</i><i class="material-icons">wifi_tethering</i><i class="material-icons">work</i><i class="material-icons">wrap_text</i><i class="material-icons">youtube_searched_for</i><i class="material-icons">zoom_in</i><i class="material-icons">zoom_out</i><i class="material-icons">zoom_out_map</i></div>
+  </div>
+
+</div>
+</div>
+<div class="popup" id="code">
+  <div class="popup-inner">
+    <span id="copy1"><i class='fa fa-copy'></i></span>
+    <h3>HTML / Profile Body</h3>
+    <br>
+    <hr>
+    <div id="code-html"></div>
+
+  </div>
+  <div class="popup-inner">
+    <span id="copy2"><i class='fa fa-copy'></i></span>
+    <h3>CSS / Stylesheet</h3>
+    <br>
+    <hr>
+    <div id="code-css"></div>
+
+  </div>
+  <!--<div class="popup-inner">
+    <span id="copy3"><i class='fa fa-copy'></i></span>
+    <h3>Javascript</h3>
+    <br>
+    <hr>
+    <div id="code-js"></div>-->
+
+  </div>
+  <span class="popup-close">X</span>
+
+</div>
+</body>
+<div id="takeout">
+<script>
+$("[id^='nvbtn']").on("click", function () {
+  var number = this.id.slice(-1);
+  var h1Id = "#h1-" + number;
+  var editorId = "#editor-" + number;
+  var anim = $("#main-container").attr("anim");
+  var delay;
+  if (anim === 0) {
+    delay = 0;
+  } else {
+    delay = 300;
+  }
+  if ($(editorId).hasClass("shown")) {
+  } else {
+    $(".shown").removeClass("slide-in scale-in fade-in");
+    $(h1Id).removeClass("slide-in scale-in fade-in");
+    $(editorId).removeClass("slide-in scale-in fade-in");
+
+    setTimeout(function () {
+      $(".shown").hide();
+      $(".shown").removeClass("shown");
+      $(h1Id).show();
+      $(editorId).show();
+      setTimeout(function () {
+        $(h1Id).addClass("shown");
+        $(h1Id).addClass(anim + "-in");
+        $(editorId).addClass(anim + "-in");
+        $(editorId).addClass("shown");
+      }, delay / 10);
+    }, delay);
+  }
+});
+WebFont.load({
+  google: {
+    families: [
+      "Poppins:400,600,700",
+      "Poppins:400,600,700",
+      "Poppins:400,600,700",
+      "Poppins:400,600,700"
+    ]
+  }
+});
+window.onload = function () {
+  if ($("#pref-sliders").length) {
+    var prefpoint = $("#prefpoint");
+    $("#pref-sliders").insertAfter(prefpoint);
+    prefpoint.remove();
+  }
+  if ($(".profile-image").length) {
+    var imgpoint = $("#imgpoint");
+    $(".profile-image").insertAfter(imgpoint);
+    imgpoint.remove();
+  }
+};
+</script>
+</div>
+<script>
+// Please don't go any further! I'm cleaning it I swear! No... no please it's a mess! Let me clean it before you look at it! That's not suppose to go there. I swear... and the recursive if statements... the if statements are just temporary until I have time to do it properly. I swear!
+
+//Add cookies
+// bar menu color not hidden when we want to remove menu bar
+
+var imgWidth;
+var imgSize = 100;
+var gradAngle = 180;
+var btnFont = 2;
+var tabSpace = 0;
+var storedPicker = "";
+var btnW = 15;
+var btnH = 4;
+var btnBvl = 50;
+var btnClr = 0;
+var tgl = 0;
+var imgLimit = "20rem";
+var tblLineThick;
+var anim = "scale";
+var font1 = "Poppins:400,600,700";
+var font2 = "Poppins:400,600,700";
+var font3 = "Poppins:400,600,700";
+var font4 = "Poppins:400,600,700";
+var mnuPos = 1;
+var btnPad;
+var wdthStore;
+
+$(document).ready(function () {
+  const hueRotate = () => {
+    let angle = Math.floor(Math.random() * 360);
+    while (angle > 30 && angle < 200) {
+      angle = Math.floor(Math.random() * 360);
+    }
+    let initialPrimary = getComputedStyle(
+      document.documentElement
+    ).getPropertyValue("--primary");
+    initialPrimary = initialPrimary.substring(1);
+    const primaryLight = chroma(`hsl(${angle}, 50%, 75% )`);
+    const primary = chroma(`hsl(${angle}, 50%, 65%)`);
+    const primaryDark = chroma(`hsl(${angle}, 50%, 55%)`);
+    const initialHue = chroma(initialPrimary).hsl()[0];
+    const newHue = primary.hsl()[0];
+    const rotation = newHue - initialHue;
+    document.documentElement.style.setProperty(
+      "--primary-light",
+      primaryLight.css()
+    );
+    document.documentElement.style.setProperty("--primary", primary.css());
+    document.documentElement.style.setProperty(
+      "--primary-dark",
+      primaryDark.css()
+    );
+    $(".placeholder").css({ filter: `hue-rotate(${rotation}deg)` });
+    $("style").each(function () {
+      $(this).html(
+        $(this)
+          .html()
+          .replace(
+            "--primary-light: #8abdff;",
+            "--primary-light: " + primaryLight + ";"
+          )
+      );
+      $(this).html(
+        $(this)
+          .html()
+          .replace("--primary: #6d5dfc;", "--primary: " + primary + ";")
+      );
+      $(this).html(
+        $(this)
+          .html()
+          .replace(
+            "--primary-dark: #5b0eeb;",
+            "--primary-dark: " + primaryDark + ";"
+          )
+      );
+    });
+  };
+  hueRotate();
+});
+
+// Function to set the BG image to cover.
+function setCover() {
+  $("#main-container").css("background-size", "cover");
+  $("#main-container").css("background-repeat", "no-repeat");
+}
+// Function to set the BG image to contain.
+function setContain() {
+  $("#main-container").css("background-size", "contain");
+  $("#main-container").css("background-repeat", "no-repeat");
+}
+// Function to update the background img url.
+$("#imgurl").on("change", function () {
+  var img = new Image();
+  var imgUrl = $(this).val();
+  if (imgUrl == "") imgUrl = $("#imgurl").attr("placeholder");
+  img.src = imgUrl;
+  img.onload = function () {
+    imgWidth = img.naturalWidth;
+    var imgSize = $("#imgsize").data("value");
+    var percent = (imgSize / 100) * imgWidth;
+    $("#main-container").css("background-image", "url(" + imgUrl + ")");
+    $("#main-container").css("background-size", percent + "px");
+    setTile();
+  };
+});
+// We're lazy so we're going to just trigger the background image change on load.
+window.onload = function () {
+  $("#imgurl").trigger("change");
+  $("#firstTable").colResizable({
+    resizeMode: "flex"
+  });
+};
+// Function to set the background image to tile.
+function setTile() {
+  var percent = (imgSize / 100) * imgWidth;
+
+  $("#main-container").css("background-size", percent + "px");
+  $("#main-container").css("background-repeat", "repeat");
+}
+// On load we get the placeholder and set that up. Again becase I'm lazy.
+
+var imgUrl = $("#imgurl").val();
+if (imgUrl == "") imgUrl = $("#imgurl").attr("placeholder");
+$("#main-container").css("background-image", "url(" + imgUrl + ")");
+//This will check the state of the #tab-1a, #tab-2a, #tab-3a on page load, and trigger the corresponding function.
+$("#tab-3a").click(function () {
+  setCover();
+});
+$("#tab-2a").click(function () {
+  setContain();
+});
+$("#tab-1a").click(function () {
+  setTile();
+});
+$("#x-7-ico").click(function () {
+  $("#18-not").css("display", "inline-block");
+  $("#17-not").css("display", "none");
+  $("#txtIcons").css("display", "inline-block");
+  $("#txtButtons").css("display", "none");
+});
+$("#s-7-ico").click(function () {
+  $("#17-not").css("display", "inline-block");
+  $("#18-not").css("display", "none");
+  $("#txtButtons").css("display", "inline-block");
+  $("#txtIcons").css("display", "none");
+});
+$("#x-swch").click(function () {
+  if ($("#x-swch-ico").css("display") === "none") {
+    $("#x-swch-ico").css("display", "inline-block");
+  } else {
+    $("#x-swch-ico").css("display", "none");
+  }
+});
+// tab 1 is the selection for having a bg img. We do that here when it's clicked.
+$("#tab-1").click(function () {
+  var imgUrl = $("#imgurl").val();
+  if (imgUrl == "") imgUrl = $("#imgurl").attr("placeholder");
+  $("#main-container").css("background-image", "url(" + imgUrl + ")");
+
+  if ($("#tab-3a").is(":checked")) {
+    setCover();
+  } else if ($("#tab-2a").is(":checked")) {
+    setContain();
+  } else if ($("#tab-1a").is(":checked")) {
+    setTile();
+  }
+});
+// tab 2 is the selection for having a bg gradient.
+$("#tab-2").on("click", function () {
+  var color1 = $("#clr1").val();
+  var color2 = $("#clr2").val();
+  var angle = $("#grdang").data("value") + "deg";
+  var gradient =
+    "linear-gradient(" + angle + ", " + color1 + ", " + color2 + ")";
+  $("#main-container").css("background-image", gradient);
+  $("#main-container").css("background-repeat", "no-repeat");
+  $("#main-container").css("background-size", "unset");
+});
+// Updating the gradient color.
+$("#clr1, #clr2").on("input", function () {
+  var color1 = $("#clr1").val();
+  var color2 = $("#clr2").val();
+  var angle = $("#grdang").data("value") + "deg";
+  var gradient =
+    "linear-gradient(" + angle + ", " + color1 + ", " + color2 + ")";
+  $("#main-container").css("background-image", gradient);
+});
+$("#clr11").on("input", function () {
+  $("#navbar").css("background-color", $("#clr11").val());
+});
+// This sets the font size of buttons (or icons)
+function setMenuSize() {
+  $("#navbar .btn p").css("font-size", btnFont + "rem");
+  $("#storage .btn p").css("font-size", btnFont + "rem");
+  $("#navbar .btn p i").css("font-size", btnFont + "rem");
+  $("#storage .btn p i").css("font-size", btnFont + "rem");
+}
+function setBtnPad() {
+  if (mnuPos === 3) {
+    $("#navbar .btn, #storage .btn").css("margin-left", btnPad + "rem");
+    $("#navbar .btn, #storage .btn").css("margin-right", btnPad + "rem");
+    $("#navbar .btn, #storage .btn").css("margin-top", "0rem");
+    $("#navbar .btn, #storage .btn").css("margin-bottom", "0rem");
+  } else {
+    $("#navbar .btn, #storage .btn").css("margin-top", btnPad + "rem");
+    $("#navbar .btn, #storage .btn").css("margin-bottom", btnPad + "rem");
+    $("#navbar .btn, #storage .btn").css("margin-left", "0rem");
+    $("#navbar .btn, #storage .btn").css("margin-right", "0rem");
+  }
+}
+function setBtnSize() {
+  $("#navbar .btn").css("height", btnH + "rem");
+  $("#storage .btn").css("height", btnH + "rem");
+  $("#navbar .btn").css("border-radius", btnBvl + "rem");
+  $("#storage .btn").css("border-radius", btnBvl + "rem");
+  var menuSize = btnW.toFixed(2);
+  console.log(menuSize);
+  var contSize = 100 - menuSize;
+  if (mnuPos === 1) {
+    $("#main-container").css(
+      "grid-template-columns",
+      menuSize + "% " + contSize + "%"
+    );
+    $("#navbar .btn").css("width", "100%");
+    $("#navbar").css("height", "100%");
+  } else if (mnuPos === 2) {
+    var temp = contSize;
+    contSize = menuSize;
+    menuSize = temp;
+    $("#main-container").css(
+      "grid-template-columns",
+      menuSize + "% " + contSize + "%"
+
+    );
+    $("#navbar .btn").css("width", "100%");
+    $("#navbar").css("height", "100%");
+  } else if (mnuPos === 3) {
+    $("#navbar .btn").css("width", menuSize + "%");
+    $("#navbar").css("height", "auto");
+  }
+}
+// The sliders control a few different things. Here I lazily just shoehorn in cases for different sliders.
+$(".slider__box").each(function () {
+  $(this).on("mousedown", function (e) {
+    if (!$(e.target).hasClass("slider__btn")) return;
+
+    let angle;
+    let $btn = $(e.target);
+    let $container = $btn.closest(".slider__box");
+    let $color = $container.find(".slider__color");
+    let $tooltip = $container.find(".slider__tooltip");
+
+    $btn.on("mouseover", function () {
+      $tooltip.css("opacity", 1);
+    });
+
+    $btn.on("mouseout", function () {
+      $tooltip.css("opacity", 0);
+    });
+
+    function onMouseMove(e) {
+      e.preventDefault();
+      let targetRect = $container[0].getBoundingClientRect();
+      let x = e.pageX - targetRect.left + 10;
+      if (x > targetRect.width) {
+        x = targetRect.width;
+      }
+      if (x < 0) {
+        x = 0;
+      }
+      $btn.css("left", x - 10 + "px");
+
+      // get the position of the button inside the container (%)
+      let percentPosition = ((x + 10) / targetRect.width) * 100;
+
+      // color width = position of button (%)
+      $color.css("width", percentPosition + "%");
+
+      // move the tooltip when button moves, and show the tooltip
+      $tooltip.css("left", x - 5 + "px");
+      $tooltip.css("opacity", 1);
+
+      // show the percentage or angle in the tooltip
+      if ($tooltip.hasClass("angle__tooltip")) {
+        // show the angle in the tooltip
+        angle = Math.round((percentPosition * 360) / 100); // update angle here
+        $tooltip.text(angle + "°");
+        $tooltip.data("value", angle);
+        var currentGradient =
+          "linear-gradient(" +
+          angle +
+          "deg, " +
+          $("#clr1").val() +
+          ", " +
+          $("#clr2").val() +
+          ")";
+        $("#main-container").css("background-image", currentGradient);
+      } else {
+        // show the percentage in the tooltip
+        if ($tooltip.hasClass("double__tooltip")) {
+          $tooltip.text(Math.round(percentPosition * 2) + "%");
+          $tooltip.attr("data-value", Math.round(percentPosition * 2));
+          imgSize = Math.round(percentPosition * 2);
+          setTile();
+        } else if ($tooltip.hasClass("slider__font")) {
+          percentPosition = percentPosition / 10 / 2 + 1;
+          $tooltip.text(percentPosition.toFixed(2));
+          $tooltip.attr("data-value", percentPosition.toFixed(2));
+          btnFont = percentPosition;
+          setMenuSize();
+        } else if ($tooltip.hasClass("slider__padLeft")) {
+          percentPosition = percentPosition - 3.09;
+          $tooltip.text(percentPosition.toFixed(2));
+          $tooltip.attr("data-value", percentPosition.toFixed(2) + "%");
+          $("#navbar").css("padding-left", percentPosition + "%");
+        } else if ($tooltip.hasClass("slider__padRight")) {
+          percentPosition = percentPosition - 3.09;
+          $tooltip.text(percentPosition.toFixed(2));
+          $tooltip.attr("data-value", percentPosition.toFixed(2) + "%");
+          $("#navbar").css("padding-right", percentPosition + "%");
+        } else if ($tooltip.hasClass("slider__mnuTop")) {
+          percentPosition = percentPosition - 3.09;
+          $tooltip.text(percentPosition.toFixed(2));
+          $tooltip.attr("data-value", percentPosition.toFixed(2) + "%");
+          $("#navbar").css("padding-top", percentPosition + "%");
+        } else if ($tooltip.hasClass("slider__padBtn")) {
+          percentPosition = percentPosition / 10 / 2 - 0.15;
+          $tooltip.text(percentPosition.toFixed(2));
+          $tooltip.attr("data-value", percentPosition.toFixed(2));
+          btnPad = percentPosition;
+          if (mnuPos === 3) {
+            $("#navbar .btn, #storage .btn").css(
+              "margin-left",
+              percentPosition + "rem"
+            );
+            $("#navbar .btn, #storage .btn").css(
+              "margin-right",
+              percentPosition + "rem"
+            );
+            $("#navbar .btn, #storage .btn").css("margin-top", "0rem");
+            $("#navbar .btn, #storage .btn").css("margin-bottom", "0rem");
+          } else {
+            $("#navbar .btn, #storage .btn").css(
+              "margin-top",
+              percentPosition + "rem"
+            );
+            $("#navbar .btn, #storage .btn").css(
+              "margin-bottom",
+              percentPosition + "rem"
+            );
+            $("#navbar .btn, #storage .btn").css("margin-left", "0rem");
+            $("#navbar .btn, #storage .btn").css("margin-right", "0rem");
+          }
+        } else if ($tooltip.hasClass("slider__fontText")) {
+          percentPosition = percentPosition / 10 / 3 + 0.5;
+          $tooltip.text(percentPosition.toFixed(2));
+          $tooltip.attr("data-value", percentPosition.toFixed(2));
+          $(".editor").css("font-size", percentPosition + "rem");
+        } else if ($tooltip.hasClass("slider__fontH1")) {
+          percentPosition = percentPosition / 10 / 2 + 1;
+          $tooltip.text(percentPosition.toFixed(2));
+          $tooltip.attr("data-value", percentPosition.toFixed(2));
+          $("#sub-container h1").css("font-size", percentPosition + "rem");
+        } else if ($tooltip.hasClass("slider__fontH2")) {
+          percentPosition = percentPosition / 10 / 3 + 1;
+          $tooltip.text(percentPosition.toFixed(2));
+          $tooltip.attr("data-value", percentPosition.toFixed(2));
+          $(".editor h2").css("font-size", percentPosition + "rem");
+        } else if ($tooltip.hasClass("slider__border")) {
+          percentPosition = percentPosition / 5 - 0.62;
+          $tooltip.text(percentPosition.toFixed(2));
+          $tooltip.attr("data-value", percentPosition.toFixed(2));
+          tblLineThick = percentPosition;
+          if (percentPosition <= 0) {
+            $(".editTable td, .editTable th").css(
+              "border",
+              "1px dashed #a495a3"
+            );
+          } else {
+            $(".editTable td, .editTable th").css(
+              "border",
+              percentPosition + "px solid " + $("#clr9").val()
+            );
+          }
+        } else if ($tooltip.hasClass("slider__round")) {
+          percentPosition = percentPosition / 10 / 2 - 0.15;
+          $tooltip.text(percentPosition.toFixed(2));
+          $tooltip.attr("data-value", percentPosition.toFixed(2));
+          $(".title").css(
+            "border-radius",
+            percentPosition + "rem " + percentPosition + "rem 0 0"
+          );
+          $(".editor").css(
+            "border-radius",
+            "0 0 " + percentPosition + "rem " + percentPosition + "rem"
+          );
+        } else if ($tooltip.hasClass("slider__cntPad")) {
+          percentPosition = percentPosition - 3;
+          percentPosition = percentPosition / 4;
+          $tooltip.text(Math.round(percentPosition) + "%");
+          $tooltip.attr("data-value", Math.round(percentPosition));
+          $(".editor").css("padding-left", percentPosition + "%");
+          $(".editor").css("padding-right", percentPosition + "%");
+          percentPosition = Math.max(0, percentPosition - 1);
+          $(".title").css("padding-left", percentPosition + "%");
+          $(".title").css("padding-right", percentPosition + "%");
+        } else if ($tooltip.hasClass("slider__btnW")) {
+          percentPosition = percentPosition / 3 + 1;
+          $tooltip.text(percentPosition.toFixed(2));
+          $tooltip.attr("data-value", percentPosition.toFixed(2));
+          btnW = percentPosition;
+          setBtnSize();
+        } else if ($tooltip.hasClass("slider__opacity")) {
+          percentPosition = percentPosition - 3;
+          $tooltip.text(Math.round(percentPosition) + "%");
+          $tooltip.attr("data-value", Math.round(percentPosition));
+          var colorRGB = chroma($("#clr8").val()).rgb();
+          var alpha = percentPosition / 100;
+          var color =
+            "rgba(" +
+            colorRGB[0] +
+            "," +
+            colorRGB[1] +
+            "," +
+            colorRGB[2] +
+            "," +
+            alpha +
+            ")";
+          $(".title").css("background-color", color);
+          $(".editor").css("background-color", color);
+        } else if ($tooltip.hasClass("slider__opacity2")) {
+          percentPosition = percentPosition - 3;
+          $tooltip.text(Math.round(percentPosition) + "%");
+          $tooltip.attr("data-value", Math.round(percentPosition));
+          var colorRGB = chroma($("#clr10").val()).rgb();
+          var alpha = percentPosition / 100;
+          var color =
+            "rgba(" +
+            colorRGB[0] +
+            "," +
+            colorRGB[1] +
+            "," +
+            colorRGB[2] +
+            "," +
+            alpha +
+            ")";
+          $(".editor table").css("background-color", color);
+        } else if ($tooltip.hasClass("slider_cntWidth")) {
+          percentPosition = percentPosition - 3;
+          $tooltip.text(Math.round(percentPosition) + "%");
+          $tooltip.attr("data-value", Math.round(percentPosition));
+          $("#sub-container").css("width", percentPosition + "%");
+        } else if ($tooltip.hasClass("slider__btnH")) {
+          percentPosition = percentPosition / 8 + 1;
+          $tooltip.text(percentPosition.toFixed(2));
+          $tooltip.attr("data-value", percentPosition.toFixed(2));
+          btnH = percentPosition;
+          setBtnSize();
+        } else if ($tooltip.hasClass("slider__btnBvl")) {
+          percentPosition = percentPosition / 10 - 0.31;
+          $tooltip.text(percentPosition.toFixed(2));
+          $tooltip.attr("data-value", percentPosition.toFixed(2));
+          btnBvl = percentPosition;
+          setBtnSize();
+        } else if ($tooltip.hasClass("slider__space")) {
+          percentPosition = percentPosition / 3 - 1.03;
+          $tooltip.text(percentPosition.toFixed(2));
+          $tooltip.attr("data-value", percentPosition.toFixed(2));
+          tabSpace = percentPosition;
+          $(".editor").css("margin-bottom", tabSpace + "rem");
+        } else {
+          $tooltip.text(Math.round(percentPosition) + "%");
+          $tooltip.attr("data-value", Math.round(percentPosition));
+        }
+      }
+    }
+    $(document).on("mousemove", onMouseMove);
+    $(document).on("mouseup", function () {
+      $(document).off("mousemove", onMouseMove);
+    });
+  });
+});
+// This uses a method to relate id references to buttons so we can more easily add and hide content based on what the user is choosing.
+$(document).ready(function () {
+  $(".clk").on("click", function (event) {
+    const $target = $(event.target);
+    const id = $target.attr("id");
+    const focus = id.substring(2);
+    const idParts = id.split("-");
+    const behavior = idParts[0];
+    const group = idParts[1];
+    const reference = idParts[2];
+
+    if (behavior === "t") {
+      $(`[id^="${group}-"]`).each(function () {
+        if ($(this).css("display") === "none") {
+          if ($(this).attr("id") === "5-tabs") {
+            $(this).css("display", "flex");
+            $(this).css("flex-wrap", "wrap");
+          } else {
+            $(this).css("display", "inline-block");
+          }
+        } else {
+          $(this).css("display", "none");
+        }
+      });
+    } else if (behavior === "s") {
+      if ($(this).hasClass("show-n")) {
+        $("#1-n").css("display", "inline-block");
+      }
+      if ($(this).hasClass("menu-button")) {
+        $("#menu-button").css("display", "inline-block");
+        $("#menu-icon").css("display", "none");
+      }
+      $(`[id^="${group}-"]`).each(function () {
+        if ($(this).attr("id") === focus) {
+          $(this).css("display", "inline-block");
+        } else {
+          $(this).css("display", "none");
+        }
+      });
+    } else if (behavior === "x") {
+      if ($(this).hasClass("menu-icon")) {
+        $("#menu-icon").css("display", "inline-block");
+        $("#menu-button").css("display", "none");
+      }
+      $(".form2").css("display", "inline-block");
+      $("#7-ico").css("display", "inline-block");
+    } else if (behavior === "a") {
+      if ($("#" + focus).hasClass("grey")) {
+        $("#" + focus).removeClass("grey");
+      } else {
+        $("#" + focus).addClass("grey");
+      }
+    }
+  });
+
+  ["1-n", "1-img", "0-Xbg"].forEach(function (idValue) {
+    $(`[id^="${idValue}"]`).css("display", "inline-block");
+  });
+
+  [
+    "1-clr",
+    "1-grd",
+    "5-not",
+    "15-not",
+    "7-scr",
+    "11-not",
+    "12-fix",
+    "9-fix",
+    "16-not",
+    "18-not",
+    "txtIcons"
+  ].forEach(function (idValue) {
+    $(`[id^="${idValue}"]`).css("display", "none");
+  });
+
+  $("#font")
+    .fontselect()
+    .change(function () {
+      // replace + signs with spaces for css
+      const font = $(this).val().replace(/\+/g, " ");
+      // set the font for the body
+      $("body").css("font-family", font);
+      // set the font for the fontselect dropdown
+      $(this).css("font-family", font);
+    });
+});
+// Here we preload a bovine udder tonne of fonts for no other reason than making the user not have to wait for them to load when they click the font dropdown. Everything below until the next comment is font selection guff. Not mine.
+WebFont.load({
+  google: {
+    families: [
+      "Aclonica",
+      "Allan",
+      "Annie+Use+Your+Telescope",
+      "Anonymous+Pro",
+      "Allerta+Stencil",
+      "Allerta",
+      "Amaranth",
+      "Anton",
+      "Architects+Daughter",
+      "Arimo",
+      "Artifika",
+      "Arvo",
+      "Asset",
+      "Astloch",
+      "Bangers",
+      "Bentham",
+      "Bevan",
+      "Bigshot+One",
+      "Bowlby+One",
+      "Bowlby+One+SC",
+      "Brawler",
+      "Buda:300",
+      "Cabin",
+      "Calligraffitti",
+      "Candal",
+      "Cantarell",
+      "Cardo",
+      "Carter One",
+      "Caudex",
+      "Cedarville+Cursive",
+      "Cherry+Cream+Soda",
+      "Chewy",
+      "Coda",
+      "Coming+Soon",
+      "Copse",
+      "Corben:700",
+      "Cousine",
+      "Covered+By+Your+Grace",
+      "Crafty+Girls",
+      "Crimson+Text",
+      "Crushed",
+      "Cuprum",
+      "Damion",
+      "Dancing+Script",
+      "Dawning+of+a+New+Day",
+      "Didact+Gothic",
+      "Droid+Sans",
+      "Droid+Sans+Mono",
+      "Droid+Serif",
+      "EB+Garamond",
+      "Expletus+Sans",
+      "Fontdiner+Swanky",
+      "Forum",
+      "Francois+One",
+      "Geo",
+      "Give+You+Glory",
+      "Goblin+One",
+      "Goudy+Bookletter+1911",
+      "Gravitas+One",
+      "Gruppo",
+      "Hammersmith+One",
+      "Holtwood+One+SC",
+      "Homemade+Apple",
+      "Inconsolata",
+      "Indie+Flower",
+      "IM+Fell+DW+Pica",
+      "IM+Fell+DW+Pica+SC",
+      "IM+Fell+Double+Pica",
+      "IM+Fell+Double+Pica+SC",
+      "IM+Fell+English",
+      "IM+Fell+English+SC",
+      "IM+Fell+French+Canon",
+      "IM+Fell+French+Canon+SC",
+      "IM+Fell+Great+Primer",
+      "IM+Fell+Great+Primer+SC",
+      "Irish+Grover",
+      "Irish+Growler",
+      "Istok+Web",
+      "Josefin+Sans",
+      "Josefin+Slab",
+      "Judson",
+      "Jura",
+      "Jura:500",
+      "Jura:600",
+      "Just+Another+Hand",
+      "Just+Me+Again+Down+Here",
+      "Kameron",
+      "Kenia",
+      "Kranky",
+      "Kreon",
+      "Kristi",
+      "La+Belle+Aurore",
+      "Lato:100",
+      "Lato:100italic",
+      "Lato:300",
+      "Lato",
+      "Lato:bold",
+      "Lato:900",
+      "League+Script",
+      "Lekton",
+      "Limelight",
+      "Lobster",
+      "Lobster Two",
+      "Lora",
+      "Love+Ya+Like+A+Sister",
+      "Loved+by+the+King",
+      "Luckiest+Guy",
+      "Maiden+Orange",
+      "Mako",
+      "Maven+Pro",
+      "Maven+Pro:500",
+      "Maven+Pro:700",
+      "Maven+Pro:900",
+      "Meddon",
+      "MedievalSharp",
+      "Megrim",
+      "Merriweather",
+      "Metrophobic",
+      "Michroma",
+      "Miltonian Tattoo",
+      "Miltonian",
+      "Modern Antiqua",
+      "Monofett",
+      "Molengo",
+      "Mountains of Christmas",
+      "Muli:300",
+      "Muli",
+      "Neucha",
+      "Neuton",
+      "News+Cycle",
+      "Nixie+One",
+      "Nobile",
+      "Nova+Cut",
+      "Nova+Flat",
+      "Nova+Mono",
+      "Nova+Oval",
+      "Nova+Round",
+      "Nova+Script",
+      "Nova+Slim",
+      "Nova+Square",
+      "Nunito:light",
+      "Nunito",
+      "OFL+Sorts+Mill+Goudy+TT",
+      "Old+Standard+TT",
+      "Open+Sans:300",
+      "Open+Sans",
+      "Open+Sans:600",
+      "Open+Sans:800",
+      "Open+Sans+Condensed:300",
+      "Orbitron",
+      "Orbitron:500",
+      "Orbitron:700",
+      "Orbitron:900",
+      "Oswald",
+      "Over+the+Rainbow",
+      "Reenie+Beanie",
+      "Pacifico",
+      "Patrick+Hand",
+      "Paytone+One",
+      "Permanent+Marker",
+      "Philosopher",
+      "Play",
+      "Playfair+Display",
+      "Podkova",
+      "PT+Sans",
+      "PT+Sans+Narrow",
+      "PT+Sans+Narrow:regular,bold",
+      "PT+Serif",
+      "PT+Serif Caption",
+      "Puritan",
+      "Quattrocento",
+      "Quattrocento+Sans",
+      "Radley",
+      "Raleway:100",
+      "Redressed",
+      "Rock+Salt",
+      "Rokkitt",
+      "Ruslan+Display",
+      "Schoolbell",
+      "Shadows+Into+Light",
+      "Shanti",
+      "Sigmar+One",
+      "Six+Caps",
+      "Slackey",
+      "Smythe",
+      "Sniglet:800",
+      "Special+Elite",
+      "Stardos+Stencil",
+      "Sue+Ellen+Francisco",
+      "Sunshiney",
+      "Swanky+and+Moo+Moo",
+      "Syncopate",
+      "Tangerine",
+      "Tenor+Sans",
+      "Terminal+Dosis+Light",
+      "The+Girl+Next+Door",
+      "Tinos",
+      "Ubuntu",
+      "Ultra",
+      "Unkempt",
+      "UnifrakturCook:bold",
+      "UnifrakturMaguntia",
+      "Varela",
+      "Varela Round",
+      "Vibur",
+      "Vollkorn",
+      "VT323",
+      "Waiting+for+the+Sunrise",
+      "Wallpoet",
+      "Walter+Turncoat",
+      "Wire+One",
+      "Yanone+Kaffeesatz",
+      "Yanone+Kaffeesatz:300",
+      "Yanone+Kaffeesatz:400",
+      "Yanone+Kaffeesatz:700",
+      "Yeseva+One",
+      "Zeyada"
+    ]
+  }
+});
+/*
+ * jQuery.fontselect - A font selector for the Google Web Fonts api
+ * Tom Moor, http://tommoor.com
+ * Copyright (c) 2011 Tom Moor
+ * MIT Licensed
+ * @version 0.1
+ */
+var fontSelectCounter = 0;
+(function ($) {
+  $.fn.fontselect = function (options) {
+    var __bind = function (fn, me) {
+      return function () {
+        return fn.apply(me, arguments);
+      };
+    };
+
+    var fonts = [
+      "Aclonica",
+      "Allan",
+      "Annie+Use+Your+Telescope",
+      "Anonymous+Pro",
+      "Allerta+Stencil",
+      "Allerta",
+      "Amaranth",
+      "Anton",
+      "Architects+Daughter",
+      "Arimo",
+      "Artifika",
+      "Arvo",
+      "Asset",
+      "Astloch",
+      "Bangers",
+      "Bentham",
+      "Bevan",
+      "Bigshot+One",
+      "Bowlby+One",
+      "Bowlby+One+SC",
+      "Brawler",
+      "Buda:300",
+      "Cabin",
+      "Calligraffitti",
+      "Candal",
+      "Cantarell",
+      "Cardo",
+      "Carter One",
+      "Caudex",
+      "Cedarville+Cursive",
+      "Cherry+Cream+Soda",
+      "Chewy",
+      "Coda",
+      "Coming+Soon",
+      "Copse",
+      "Corben:700",
+      "Cousine",
+      "Covered+By+Your+Grace",
+      "Crafty+Girls",
+      "Crimson+Text",
+      "Crushed",
+      "Cuprum",
+      "Damion",
+      "Dancing+Script",
+      "Dawning+of+a+New+Day",
+      "Didact+Gothic",
+      "Droid+Sans",
+      "Droid+Sans+Mono",
+      "Droid+Serif",
+      "EB+Garamond",
+      "Expletus+Sans",
+      "Fontdiner+Swanky",
+      "Forum",
+      "Francois+One",
+      "Geo",
+      "Give+You+Glory",
+      "Goblin+One",
+      "Goudy+Bookletter+1911",
+      "Gravitas+One",
+      "Gruppo",
+      "Hammersmith+One",
+      "Holtwood+One+SC",
+      "Homemade+Apple",
+      "Inconsolata",
+      "Indie+Flower",
+      "IM+Fell+DW+Pica",
+      "IM+Fell+DW+Pica+SC",
+      "IM+Fell+Double+Pica",
+      "IM+Fell+Double+Pica+SC",
+      "IM+Fell+English",
+      "IM+Fell+English+SC",
+      "IM+Fell+French+Canon",
+      "IM+Fell+French+Canon+SC",
+      "IM+Fell+Great+Primer",
+      "IM+Fell+Great+Primer+SC",
+      "Irish+Grover",
+      "Irish+Growler",
+      "Istok+Web",
+      "Josefin+Sans",
+      "Josefin+Slab",
+      "Judson",
+      "Jura",
+      "Jura:500",
+      "Jura:600",
+      "Just+Another+Hand",
+      "Just+Me+Again+Down+Here",
+      "Kameron",
+      "Kenia",
+      "Kranky",
+      "Kreon",
+      "Kristi",
+      "La+Belle+Aurore",
+      "Lato:100",
+      "Lato:100italic",
+      "Lato:300",
+      "Lato",
+      "Lato:bold",
+      "Lato:900",
+      "League+Script",
+      "Lekton",
+      "Limelight",
+      "Lobster",
+      "Lobster Two",
+      "Lora",
+      "Love+Ya+Like+A+Sister",
+      "Loved+by+the+King",
+      "Luckiest+Guy",
+      "Maiden+Orange",
+      "Mako",
+      "Maven+Pro",
+      "Maven+Pro:500",
+      "Maven+Pro:700",
+      "Maven+Pro:900",
+      "Meddon",
+      "MedievalSharp",
+      "Megrim",
+      "Merriweather",
+      "Metrophobic",
+      "Michroma",
+      "Miltonian Tattoo",
+      "Miltonian",
+      "Modern Antiqua",
+      "Monofett",
+      "Molengo",
+      "Mountains of Christmas",
+      "Muli:300",
+      "Muli",
+      "Neucha",
+      "Neuton",
+      "News+Cycle",
+      "Nixie+One",
+      "Nobile",
+      "Nova+Cut",
+      "Nova+Flat",
+      "Nova+Mono",
+      "Nova+Oval",
+      "Nova+Round",
+      "Nova+Script",
+      "Nova+Slim",
+      "Nova+Square",
+      "Nunito:light",
+      "Nunito",
+      "OFL+Sorts+Mill+Goudy+TT",
+      "Old+Standard+TT",
+      "Open+Sans:300",
+      "Open+Sans",
+      "Open+Sans:600",
+      "Open+Sans:800",
+      "Open+Sans+Condensed:300",
+      "Orbitron",
+      "Orbitron:500",
+      "Orbitron:700",
+      "Orbitron:900",
+      "Oswald",
+      "Over+the+Rainbow",
+      "Reenie+Beanie",
+      "Pacifico",
+      "Patrick+Hand",
+      "Paytone+One",
+      "Permanent+Marker",
+      "Philosopher",
+      "Play",
+      "Playfair+Display",
+      "Podkova",
+      "PT+Sans",
+      "PT+Sans+Narrow",
+      "PT+Sans+Narrow:regular,bold",
+      "PT+Serif",
+      "PT+Serif Caption",
+      "Puritan",
+      "Quattrocento",
+      "Quattrocento+Sans",
+      "Radley",
+      "Raleway:100",
+      "Redressed",
+      "Rock+Salt",
+      "Rokkitt",
+      "Ruslan+Display",
+      "Schoolbell",
+      "Shadows+Into+Light",
+      "Shanti",
+      "Sigmar+One",
+      "Six+Caps",
+      "Slackey",
+      "Smythe",
+      "Sniglet:800",
+      "Special+Elite",
+      "Stardos+Stencil",
+      "Sue+Ellen+Francisco",
+      "Sunshiney",
+      "Swanky+and+Moo+Moo",
+      "Syncopate",
+      "Tangerine",
+      "Tenor+Sans",
+      "Terminal+Dosis+Light",
+      "The+Girl+Next+Door",
+      "Tinos",
+      "Ubuntu",
+      "Ultra",
+      "Unkempt",
+      "UnifrakturCook:bold",
+      "UnifrakturMaguntia",
+      "Varela",
+      "Varela Round",
+      "Vibur",
+      "Vollkorn",
+      "VT323",
+      "Waiting+for+the+Sunrise",
+      "Wallpoet",
+      "Walter+Turncoat",
+      "Wire+One",
+      "Yanone+Kaffeesatz",
+      "Yanone+Kaffeesatz:300",
+      "Yanone+Kaffeesatz:400",
+      "Yanone+Kaffeesatz:700",
+      "Yeseva+One",
+      "Zeyada"
+    ];
+
+    var settings = {
+      style: "font-select",
+      placeholder: "Select a font",
+      lookahead: 2,
+      api: "https://fonts.googleapis.com/css?family="
+    };
+
+    var Fontselect = (function () {
+      function Fontselect(original, o) {
+        this.$original = $(original);
+        this.options = o;
+        this.active = false;
+        this.setupHtml();
+        this.getVisibleFonts();
+        this.bindEvents();
+
+        var font = this.$original.val();
+        if (font) {
+          this.updateSelected();
+          this.addFontLink(font);
+        }
+      }
+
+      Fontselect.prototype.bindEvents = function () {
+        var self = this;
+        // Close dropdown automatically on clicks outside dropdown
+        $(document).click(function (event) {
+          if (
+            self.active &&
+            !$(event.target).parents("#" + self.$element.attr("id")).length
+          ) {
+            self.toggleDrop();
+          }
+        });
+
+        $("li", this.$results)
+          .click(__bind(this.selectFont, this))
+          .mouseenter(__bind(this.activateFont, this))
+          .mouseleave(__bind(this.deactivateFont, this));
+
+        $("span", this.$select).click(__bind(this.toggleDrop, this));
+        this.$arrow.click(__bind(this.toggleDrop, this));
+      };
+
+      Fontselect.prototype.toggleDrop = function (ev) {
+        if (this.active) {
+          this.$element.removeClass("font-select-active");
+          this.$drop.hide();
+          clearInterval(this.visibleInterval);
+        } else {
+          this.$element.addClass("font-select-active");
+          this.$drop.show();
+          this.moveToSelected();
+          this.visibleInterval = setInterval(
+            __bind(this.getVisibleFonts, this),
+            500
+          );
+        }
+
+        this.active = !this.active;
+      };
+
+      Fontselect.prototype.selectFont = function () {
+        var font = $("li.active", this.$results).data("value");
+        this.$original.val(font).change();
+        this.updateSelected();
+        this.toggleDrop();
+      };
+
+      Fontselect.prototype.moveToSelected = function () {
+        var $li,
+          font = this.$original.val();
+
+        if (font) {
+          $li = $("li[data-value='" + font + "']", this.$results);
+        } else {
+          $li = $("li", this.$results).first();
+        }
+
+        this.$results.scrollTop($li.addClass("active")[0].offsetTop);
+      };
+
+      Fontselect.prototype.activateFont = function (ev) {
+        $("li.active", this.$results).removeClass("active");
+        $(ev.currentTarget).addClass("active");
+      };
+
+      Fontselect.prototype.deactivateFont = function (ev) {
+        $(ev.currentTarget).removeClass("active");
+      };
+
+      Fontselect.prototype.updateSelected = function () {
+        var font = this.$original.val();
+        $("span", this.$element)
+          .text(this.toReadable(font))
+          .css(this.toStyle(font));
+      };
+
+      Fontselect.prototype.setupHtml = function () {
+        this.$original.empty().hide();
+
+        this.$element = $("<div>", {
+          id: "fontSelect-" + fontSelectCounter,
+          class: this.options.style
+        });
+
+        this.$arrow = $("<div><b></b></div>");
+        this.$select = $(
+          "<a><span>" + this.options.placeholder + "</span></a>"
+        );
+        this.$drop = $("<div>", { class: "fs-drop" });
+        this.$results = $("<ul>", { class: "fs-results" });
+        this.$original.after(
+          this.$element
+            .append(this.$select.append(this.$arrow))
+            .append(this.$drop)
+        );
+        this.$drop.append(this.$results.append(this.fontsAsHtml())).hide();
+      };
+
+      Fontselect.prototype.fontsAsHtml = function () {
+        var l = fonts.length;
+        var r,
+          s,
+          h = "";
+
+        for (var i = 0; i < l; i++) {
+          r = this.toReadable(fonts[i]);
+          s = this.toStyle(fonts[i]);
+          h +=
+            '<li data-value="' +
+            fonts[i] +
+            '" style="font-family: ' +
+            s["font-family"] +
+            "; font-weight: " +
+            s["font-weight"] +
+            '">' +
+            r +
+            "</li>";
+        }
+
+        return h;
+      };
+
+      Fontselect.prototype.toReadable = function (font) {
+        return font.replace(/[\+|:]/g, " ");
+      };
+
+      Fontselect.prototype.toStyle = function (font) {
+        var t = font.split(":");
+        return {
+          "font-family": this.toReadable(t[0]),
+          "font-weight": t[1] || 400
+        };
+      };
+
+      Fontselect.prototype.getVisibleFonts = function () {
+        if (this.$results.is(":hidden")) return;
+
+        var fs = this;
+        var top = this.$results.scrollTop();
+        var bottom = top + this.$results.height();
+
+        if (this.options.lookahead) {
+          var li = $("li", this.$results).first().height();
+          bottom += li * this.options.lookahead;
+        }
+
+        $("li", this.$results).each(function () {
+          var ft = $(this).position().top + top;
+          var fb = ft + $(this).height();
+
+          if (fb >= top && ft <= bottom) {
+            var font = $(this).data("value");
+            fs.addFontLink(font);
+          }
+        });
+      };
+
+      Fontselect.prototype.addFontLink = function (font) {
+        var link = this.options.api + font;
+
+        if ($("link[href*='" + font + "']").length === 0) {
+          $("link:last").after(
+            '<link href="' + link + '" rel="stylesheet" type="text/css">'
+          );
+        }
+      };
+
+      return Fontselect;
+    })();
+
+    return this.each(function () {
+      // If options exist, lets merge them
+      if (options) $.extend(settings, options);
+
+      return new Fontselect(this, settings);
+    });
+    fontSelectCounter += 1;
+  };
+})(jQuery);
+$(document).ready(function () {
+  $(".font-selector")
+    .fontselect()
+    .change(function () {
+      // ...
+    });
+});
+(function () {
+  var material_icons = [
+    "3d_rotation",
+    "ac_unit",
+    "access_alarm",
+    "access_alarms",
+    "access_time",
+    "accessibility",
+    "accessible",
+    "account_balance",
+    "account_balance_wallet",
+    "account_box",
+    "account_circle",
+    "adb",
+    "add",
+    "add_a_photo",
+    "add_alarm",
+    "add_alert",
+    "add_box",
+    "add_circle",
+    "add_circle_outline",
+    "add_location",
+    "add_shopping_cart",
+    "add_to_photos",
+    "add_to_queue",
+    "adjust",
+    "airline_seat_flat",
+    "airline_seat_flat_angled",
+    "airline_seat_individual_suite",
+    "airline_seat_legroom_extra",
+    "airline_seat_legroom_normal",
+    "airline_seat_legroom_reduced",
+    "airline_seat_recline_extra",
+    "airline_seat_recline_normal",
+    "airplanemode_active",
+    "airplanemode_inactive",
+    "airplay",
+    "airport_shuttle",
+    "alarm",
+    "alarm_add",
+    "alarm_off",
+    "alarm_on",
+    "album",
+    "all_inclusive",
+    "all_out",
+    "android",
+    "announcement",
+    "apps",
+    "archive",
+    "arrow_back",
+    "arrow_downward",
+    "arrow_drop_down",
+    "arrow_drop_down_circle",
+    "arrow_drop_up",
+    "arrow_forward",
+    "arrow_upward",
+    "art_track",
+    "aspect_ratio",
+    "assessment",
+    "assignment",
+    "assignment_ind",
+    "assignment_late",
+    "assignment_return",
+    "assignment_returned",
+    "assignment_turned_in",
+    "assistant",
+    "assistant_photo",
+    "attach_file",
+    "attach_money",
+    "attachment",
+    "audiotrack",
+    "autorenew",
+    "av_timer",
+    "backspace",
+    "backup",
+    "battery_alert",
+    "battery_charging_full",
+    "battery_full",
+    "battery_std",
+    "battery_unknown",
+    "beach_access",
+    "beenhere",
+    "block",
+    "bluetooth",
+    "bluetooth_audio",
+    "bluetooth_connected",
+    "bluetooth_disabled",
+    "bluetooth_searching",
+    "blur_circular",
+    "blur_linear",
+    "blur_off",
+    "blur_on",
+    "book",
+    "bookmark",
+    "bookmark_border",
+    "border_all",
+    "border_bottom",
+    "border_clear",
+    "border_color",
+    "border_horizontal",
+    "border_inner",
+    "border_left",
+    "border_outer",
+    "border_right",
+    "border_style",
+    "border_top",
+    "border_vertical",
+    "branding_watermark",
+    "brightness_1",
+    "brightness_2",
+    "brightness_3",
+    "brightness_4",
+    "brightness_5",
+    "brightness_6",
+    "brightness_7",
+    "brightness_auto",
+    "brightness_high",
+    "brightness_low",
+    "brightness_medium",
+    "broken_image",
+    "brush",
+    "bubble_chart",
+    "bug_report",
+    "build",
+    "burst_mode",
+    "business",
+    "business_center",
+    "cached",
+    "cake",
+    "call",
+    "call_end",
+    "call_made",
+    "call_merge",
+    "call_missed",
+    "call_missed_outgoing",
+    "call_received",
+    "call_split",
+    "call_to_action",
+    "camera",
+    "camera_alt",
+    "camera_enhance",
+    "camera_front",
+    "camera_rear",
+    "camera_roll",
+    "cancel",
+    "card_giftcard",
+    "card_membership",
+    "card_travel",
+    "casino",
+    "cast",
+    "cast_connected",
+    "center_focus_strong",
+    "center_focus_weak",
+    "change_history",
+    "chat",
+    "chat_bubble",
+    "chat_bubble_outline",
+    "check",
+    "check_box",
+    "check_box_outline_blank",
+    "check_circle",
+    "chevron_left",
+    "chevron_right",
+    "child_care",
+    "child_friendly",
+    "chrome_reader_mode",
+    "class",
+    "clear",
+    "clear_all",
+    "close",
+    "closed_caption",
+    "cloud",
+    "cloud_circle",
+    "cloud_done",
+    "cloud_download",
+    "cloud_off",
+    "cloud_queue",
+    "cloud_upload",
+    "code",
+    "collections",
+    "collections_bookmark",
+    "color_lens",
+    "colorize",
+    "comment",
+    "compare",
+    "compare_arrows",
+    "computer",
+    "confirmation_number",
+    "contact_mail",
+    "contact_phone",
+    "contacts",
+    "content_copy",
+    "content_cut",
+    "content_paste",
+    "control_point",
+    "control_point_duplicate",
+    "copyright",
+    "create",
+    "create_new_folder",
+    "credit_card",
+    "crop",
+    "crop_16_9",
+    "crop_3_2",
+    "crop_5_4",
+    "crop_7_5",
+    "crop_din",
+    "crop_free",
+    "crop_landscape",
+    "crop_original",
+    "crop_portrait",
+    "crop_rotate",
+    "crop_square",
+    "dashboard",
+    "data_usage",
+    "date_range",
+    "dehaze",
+    "delete",
+    "delete_forever",
+    "delete_sweep",
+    "description",
+    "desktop_mac",
+    "desktop_windows",
+    "details",
+    "developer_board",
+    "developer_mode",
+    "device_hub",
+    "devices",
+    "devices_other",
+    "dialer_sip",
+    "dialpad",
+    "directions",
+    "directions_bike",
+    "directions_boat",
+    "directions_bus",
+    "directions_car",
+    "directions_railway",
+    "directions_run",
+    "directions_subway",
+    "directions_transit",
+    "directions_walk",
+    "disc_full",
+    "dns",
+    "do_not_disturb",
+    "do_not_disturb_alt",
+    "do_not_disturb_off",
+    "do_not_disturb_on",
+    "dock",
+    "domain",
+    "done",
+    "done_all",
+    "donut_large",
+    "donut_small",
+    "drafts",
+    "drag_handle",
+    "drive_eta",
+    "dvr",
+    "edit",
+    "edit_location",
+    "eject",
+    "email",
+    "enhanced_encryption",
+    "equalizer",
+    "error",
+    "error_outline",
+    "euro_symbol",
+    "ev_station",
+    "event",
+    "event_available",
+    "event_busy",
+    "event_note",
+    "event_seat",
+    "exit_to_app",
+    "expand_less",
+    "expand_more",
+    "explicit",
+    "explore",
+    "exposure",
+    "exposure_neg_1",
+    "exposure_neg_2",
+    "exposure_plus_1",
+    "exposure_plus_2",
+    "exposure_zero",
+    "extension",
+    "face",
+    "fast_forward",
+    "fast_rewind",
+    "favorite",
+    "favorite_border",
+    "featured_play_list",
+    "featured_video",
+    "feedback",
+    "fiber_dvr",
+    "fiber_manual_record",
+    "fiber_new",
+    "fiber_pin",
+    "fiber_smart_record",
+    "file_download",
+    "file_upload",
+    "filter",
+    "filter_1",
+    "filter_2",
+    "filter_3",
+    "filter_4",
+    "filter_5",
+    "filter_6",
+    "filter_7",
+    "filter_8",
+    "filter_9",
+    "filter_9_plus",
+    "filter_b_and_w",
+    "filter_center_focus",
+    "filter_drama",
+    "filter_frames",
+    "filter_hdr",
+    "filter_list",
+    "filter_none",
+    "filter_tilt_shift",
+    "filter_vintage",
+    "find_in_page",
+    "find_replace",
+    "fingerprint",
+    "first_page",
+    "fitness_center",
+    "flag",
+    "flare",
+    "flash_auto",
+    "flash_off",
+    "flash_on",
+    "flight",
+    "flight_land",
+    "flight_takeoff",
+    "flip",
+    "flip_to_back",
+    "flip_to_front",
+    "folder",
+    "folder_open",
+    "folder_shared",
+    "folder_special",
+    "font_download",
+    "format_align_center",
+    "format_align_justify",
+    "format_align_left",
+    "format_align_right",
+    "format_bold",
+    "format_clear",
+    "format_color_fill",
+    "format_color_reset",
+    "format_color_text",
+    "format_indent_decrease",
+    "format_indent_increase",
+    "format_italic",
+    "format_line_spacing",
+    "format_list_bulleted",
+    "format_list_numbered",
+    "format_paint",
+    "format_quote",
+    "format_shapes",
+    "format_size",
+    "format_strikethrough",
+    "format_textdirection_l_to_r",
+    "format_textdirection_r_to_l",
+    "format_underlined",
+    "forum",
+    "forward",
+    "forward_10",
+    "forward_30",
+    "forward_5",
+    "free_breakfast",
+    "fullscreen",
+    "fullscreen_exit",
+    "functions",
+    "g_translate",
+    "gamepad",
+    "games",
+    "gavel",
+    "gesture",
+    "get_app",
+    "gif",
+    "golf_course",
+    "gps_fixed",
+    "gps_not_fixed",
+    "gps_off",
+    "grade",
+    "gradient",
+    "grain",
+    "graphic_eq",
+    "grid_off",
+    "grid_on",
+    "group",
+    "group_add",
+    "group_work",
+    "hd",
+    "hdr_off",
+    "hdr_on",
+    "hdr_strong",
+    "hdr_weak",
+    "headset",
+    "headset_mic",
+    "healing",
+    "hearing",
+    "help",
+    "help_outline",
+    "high_quality",
+    "highlight",
+    "highlight_off",
+    "history",
+    "home",
+    "hot_tub",
+    "hotel",
+    "hourglass_empty",
+    "hourglass_full",
+    "http",
+    "https",
+    "image",
+    "image_aspect_ratio",
+    "import_contacts",
+    "import_export",
+    "important_devices",
+    "inbox",
+    "indeterminate_check_box",
+    "info",
+    "info_outline",
+    "input",
+    "insert_chart",
+    "insert_comment",
+    "insert_drive_file",
+    "insert_emoticon",
+    "insert_invitation",
+    "insert_link",
+    "insert_photo",
+    "invert_colors",
+    "invert_colors_off",
+    "iso",
+    "keyboard",
+    "keyboard_arrow_down",
+    "keyboard_arrow_left",
+    "keyboard_arrow_right",
+    "keyboard_arrow_up",
+    "keyboard_backspace",
+    "keyboard_capslock",
+    "keyboard_hide",
+    "keyboard_return",
+    "keyboard_tab",
+    "keyboard_voice",
+    "kitchen",
+    "label",
+    "label_outline",
+    "landscape",
+    "language",
+    "laptop",
+    "laptop_chromebook",
+    "laptop_mac",
+    "laptop_windows",
+    "last_page",
+    "launch",
+    "layers",
+    "layers_clear",
+    "leak_add",
+    "leak_remove",
+    "lens",
+    "library_add",
+    "library_books",
+    "library_music",
+    "lightbulb_outline",
+    "line_style",
+    "line_weight",
+    "linear_scale",
+    "link",
+    "linked_camera",
+    "list",
+    "live_help",
+    "live_tv",
+    "local_activity",
+    "local_airport",
+    "local_atm",
+    "local_bar",
+    "local_cafe",
+    "local_car_wash",
+    "local_convenience_store",
+    "local_dining",
+    "local_drink",
+    "local_florist",
+    "local_gas_station",
+    "local_grocery_store",
+    "local_hospital",
+    "local_hotel",
+    "local_laundry_service",
+    "local_library",
+    "local_mall",
+    "local_movies",
+    "local_offer",
+    "local_parking",
+    "local_pharmacy",
+    "local_phone",
+    "local_pizza",
+    "local_play",
+    "local_post_office",
+    "local_printshop",
+    "local_see",
+    "local_shipping",
+    "local_taxi",
+    "location_city",
+    "location_disabled",
+    "location_off",
+    "location_on",
+    "location_searching",
+    "lock",
+    "lock_open",
+    "lock_outline",
+    "looks",
+    "looks_3",
+    "looks_4",
+    "looks_5",
+    "looks_6",
+    "looks_one",
+    "looks_two",
+    "loop",
+    "loupe",
+    "low_priority",
+    "loyalty",
+    "mail",
+    "mail_outline",
+    "map",
+    "markunread",
+    "markunread_mailbox",
+    "memory",
+    "menu",
+    "merge_type",
+    "message",
+    "mic",
+    "mic_none",
+    "mic_off",
+    "mms",
+    "mode_comment",
+    "mode_edit",
+    "monetization_on",
+    "money_off",
+    "monochrome_photos",
+    "mood",
+    "mood_bad",
+    "more",
+    "more_horiz",
+    "more_vert",
+    "motorcycle",
+    "mouse",
+    "move_to_inbox",
+    "movie",
+    "movie_creation",
+    "movie_filter",
+    "multiline_chart",
+    "music_note",
+    "music_video",
+    "my_location",
+    "nature",
+    "nature_people",
+    "navigate_before",
+    "navigate_next",
+    "navigation",
+    "near_me",
+    "network_cell",
+    "network_check",
+    "network_locked",
+    "network_wifi",
+    "new_releases",
+    "next_week",
+    "nfc",
+    "no_encryption",
+    "no_sim",
+    "not_interested",
+    "note",
+    "note_add",
+    "notifications",
+    "notifications_active",
+    "notifications_none",
+    "notifications_off",
+    "notifications_paused",
+    "offline_pin",
+    "ondemand_video",
+    "opacity",
+    "open_in_browser",
+    "open_in_new",
+    "open_with",
+    "pages",
+    "pageview",
+    "palette",
+    "pan_tool",
+    "panorama",
+    "panorama_fish_eye",
+    "panorama_horizontal",
+    "panorama_vertical",
+    "panorama_wide_angle",
+    "party_mode",
+    "pause",
+    "pause_circle_filled",
+    "pause_circle_outline",
+    "payment",
+    "people",
+    "people_outline",
+    "perm_camera_mic",
+    "perm_contact_calendar",
+    "perm_data_setting",
+    "perm_device_information",
+    "perm_identity",
+    "perm_media",
+    "perm_phone_msg",
+    "perm_scan_wifi",
+    "person",
+    "person_add",
+    "person_outline",
+    "person_pin",
+    "person_pin_circle",
+    "personal_video",
+    "pets",
+    "phone",
+    "phone_android",
+    "phone_bluetooth_speaker",
+    "phone_forwarded",
+    "phone_in_talk",
+    "phone_iphone",
+    "phone_locked",
+    "phone_missed",
+    "phone_paused",
+    "phonelink",
+    "phonelink_erase",
+    "phonelink_lock",
+    "phonelink_off",
+    "phonelink_ring",
+    "phonelink_setup",
+    "photo",
+    "photo_album",
+    "photo_camera",
+    "photo_filter",
+    "photo_library",
+    "photo_size_select_actual",
+    "photo_size_select_large",
+    "photo_size_select_small",
+    "picture_as_pdf",
+    "picture_in_picture",
+    "picture_in_picture_alt",
+    "pie_chart",
+    "pie_chart_outlined",
+    "pin_drop",
+    "place",
+    "play_arrow",
+    "play_circle_filled",
+    "play_circle_outline",
+    "play_for_work",
+    "playlist_add",
+    "playlist_add_check",
+    "playlist_play",
+    "plus_one",
+    "poll",
+    "polymer",
+    "pool",
+    "portable_wifi_off",
+    "portrait",
+    "power",
+    "power_input",
+    "power_settings_new",
+    "pregnant_woman",
+    "present_to_all",
+    "print",
+    "priority_high",
+    "public",
+    "publish",
+    "query_builder",
+    "question_answer",
+    "queue",
+    "queue_music",
+    "queue_play_next",
+    "radio",
+    "radio_button_checked",
+    "radio_button_unchecked",
+    "rate_review",
+    "receipt",
+    "recent_actors",
+    "record_voice_over",
+    "redeem",
+    "redo",
+    "refresh",
+    "remove",
+    "remove_circle",
+    "remove_circle_outline",
+    "remove_from_queue",
+    "remove_red_eye",
+    "remove_shopping_cart",
+    "reorder",
+    "repeat",
+    "repeat_one",
+    "replay",
+    "replay_10",
+    "replay_30",
+    "replay_5",
+    "reply",
+    "reply_all",
+    "report",
+    "report_problem",
+    "restaurant",
+    "restaurant_menu",
+    "restore",
+    "restore_page",
+    "ring_volume",
+    "room",
+    "room_service",
+    "rotate_90_degrees_ccw",
+    "rotate_left",
+    "rotate_right",
+    "rounded_corner",
+    "router",
+    "rowing",
+    "rss_feed",
+    "rv_hookup",
+    "satellite",
+    "save",
+    "scanner",
+    "schedule",
+    "school",
+    "screen_lock_landscape",
+    "screen_lock_portrait",
+    "screen_lock_rotation",
+    "screen_rotation",
+    "screen_share",
+    "sd_card",
+    "sd_storage",
+    "search",
+    "security",
+    "select_all",
+    "send",
+    "sentiment_dissatisfied",
+    "sentiment_neutral",
+    "sentiment_satisfied",
+    "sentiment_very_dissatisfied",
+    "sentiment_very_satisfied",
+    "settings",
+    "settings_applications",
+    "settings_backup_restore",
+    "settings_bluetooth",
+    "settings_brightness",
+    "settings_cell",
+    "settings_ethernet",
+    "settings_input_antenna",
+    "settings_input_component",
+    "settings_input_composite",
+    "settings_input_hdmi",
+    "settings_input_svideo",
+    "settings_overscan",
+    "settings_phone",
+    "settings_power",
+    "settings_remote",
+    "settings_system_daydream",
+    "settings_voice",
+    "share",
+    "shop",
+    "shop_two",
+    "shopping_basket",
+    "shopping_cart",
+    "short_text",
+    "show_chart",
+    "shuffle",
+    "signal_cellular_4_bar",
+    "signal_cellular_connected_no_internet_4_bar",
+    "signal_cellular_no_sim",
+    "signal_cellular_null",
+    "signal_cellular_off",
+    "signal_wifi_4_bar",
+    "signal_wifi_4_bar_lock",
+    "signal_wifi_off",
+    "sim_card",
+    "sim_card_alert",
+    "skip_next",
+    "skip_previous",
+    "slideshow",
+    "slow_motion_video",
+    "smartphone",
+    "smoke_free",
+    "smoking_rooms",
+    "sms",
+    "sms_failed",
+    "snooze",
+    "sort",
+    "sort_by_alpha",
+    "spa",
+    "space_bar",
+    "speaker",
+    "speaker_group",
+    "speaker_notes",
+    "speaker_notes_off",
+    "speaker_phone",
+    "spellcheck",
+    "star",
+    "star_border",
+    "star_half",
+    "stars",
+    "stay_current_landscape",
+    "stay_current_portrait",
+    "stay_primary_landscape",
+    "stay_primary_portrait",
+    "stop",
+    "stop_screen_share",
+    "storage",
+    "store",
+    "store_mall_directory",
+    "straighten",
+    "streetview",
+    "strikethrough_s",
+    "style",
+    "subdirectory_arrow_left",
+    "subdirectory_arrow_right",
+    "subject",
+    "subscriptions",
+    "subtitles",
+    "subway",
+    "supervisor_account",
+    "surround_sound",
+    "swap_calls",
+    "swap_horiz",
+    "swap_vert",
+    "swap_vertical_circle",
+    "switch_camera",
+    "switch_video",
+    "sync",
+    "sync_disabled",
+    "sync_problem",
+    "system_update",
+    "system_update_alt",
+    "tab",
+    "tab_unselected",
+    "tablet",
+    "tablet_android",
+    "tablet_mac",
+    "tag_faces",
+    "tap_and_play",
+    "terrain",
+    "text_fields",
+    "text_format",
+    "textsms",
+    "texture",
+    "theaters",
+    "thumb_down",
+    "thumb_up",
+    "thumbs_up_down",
+    "time_to_leave",
+    "timelapse",
+    "timeline",
+    "timer",
+    "timer_10",
+    "timer_3",
+    "timer_off",
+    "title",
+    "toc",
+    "today",
+    "toll",
+    "tonality",
+    "touch_app",
+    "toys",
+    "track_changes",
+    "traffic",
+    "train",
+    "tram",
+    "transfer_within_a_station",
+    "transform",
+    "translate",
+    "trending_down",
+    "trending_flat",
+    "trending_up",
+    "tune",
+    "turned_in",
+    "turned_in_not",
+    "tv",
+    "unarchive",
+    "undo",
+    "unfold_less",
+    "unfold_more",
+    "update",
+    "usb",
+    "verified_user",
+    "vertical_align_bottom",
+    "vertical_align_center",
+    "vertical_align_top",
+    "vibration",
+    "video_call",
+    "video_label",
+    "video_library",
+    "videocam",
+    "videocam_off",
+    "videogame_asset",
+    "view_agenda",
+    "view_array",
+    "view_carousel",
+    "view_column",
+    "view_comfy",
+    "view_compact",
+    "view_day",
+    "view_headline",
+    "view_list",
+    "view_module",
+    "view_quilt",
+    "view_stream",
+    "view_week",
+    "vignette",
+    "visibility",
+    "visibility_off",
+    "voice_chat",
+    "voicemail",
+    "volume_down",
+    "volume_mute",
+    "volume_off",
+    "volume_up",
+    "vpn_key",
+    "vpn_lock",
+    "wallpaper",
+    "warning",
+    "watch",
+    "watch_later",
+    "wb_auto",
+    "wb_cloudy",
+    "wb_incandescent",
+    "wb_iridescent",
+    "wb_sunny",
+    "wc",
+    "web",
+    "web_asset",
+    "weekend",
+    "whatshot",
+    "widgets",
+    "wifi",
+    "wifi_lock",
+    "wifi_tethering",
+    "work",
+    "wrap_text",
+    "youtube_searched_for",
+    "zoom_in",
+    "zoom_out",
+    "zoom_out_map"
+  ];
+
+  $('input[type="text"].use-material-icon-picker').each(function () {
+    // Add the current icon as a prefix, and update when the field changes.
+    $(this).before(
+      '<i class="material-icons material-icon-picker-prefix prefix"></i>'
+    );
+    $(this).on("change keyup", function () {
+      $(this).prev().text($(this).val());
+    });
+    $(this).prev().text($(this).val());
+    // Append the picker and the search box.
+    var $picker = $("#pickerWindow");
+    var $search = $("#pickerSearch");
+    // Do simple filtering based on the search.
+    $search.on("keyup", function () {
+      var search = $search.val().toLowerCase();
+      var $icons = $(this).siblings(".icons");
+      $icons.find("i").css("display", "none");
+      $icons.find("i:contains(" + search + ")").css("display", "inline-block");
+    });
+    $(document).on("click", ".material-icons", function () {
+      $("#" + storedPicker)
+        .val($(this).text())
+        .trigger("change");
+      var number = $("#" + storedPicker)
+        .attr("id")
+        .split("bIcon")[1];
+      $("#nvbtn" + number + " p i").text($(this).text());
+      $("#icon-menu").fadeOut(200);
+    });
+    // Show the picker when the input field gets focus
+
+    $(this).on("focusin", function () {
+      storedPicker = $(this).attr("id");
+      $("#icon-menu").fadeIn(200);
+    });
+  });
+  // Hide any picker when it or the input field loses focus.
+  $(document).on("mousedown", function (e) {
+    var $picker = $(".material-icon-picker");
+    if (
+      $picker.length &&
+      !$picker.is(e.target) &&
+      !$(e.target).hasClass("use-material-icon-picker") &&
+      $picker.has(e.target).length === 0
+    ) {
+      $("#icon-menu").fadeOut(200);
+    }
+  });
+})();
+// This is the colour formatting code for the shamelessly stolen rich-text editor. But I didn't like how they limited you to a pallet so we recoded it to be a colour-picker.
+$(document).ready(function () {
+  // Get references to the color picker inputs
+  let backPicker = $("#back-color-picker");
+  let forePicker = $("#fore-color-picker");
+
+  // Listen for changes on the color picker inputs
+  backPicker.on("input", function () {
+    // Get the current selected color
+    let color = $(this).val();
+    // Create a command event to backcolor
+    $(this).data("command", "backcolor");
+    $(this).data("value", color);
+    //Trigger the click event
+    $(this).trigger("click");
+  });
+
+  forePicker.on("input", function () {
+    // Get the current selected color
+    let color = $(this).val();
+    // Create a command event to forecolor
+    $(this).data("command", "forecolor");
+    $(this).data("value", color);
+    //Trigger the click event
+    $(this).trigger("click");
+  });
+
+  // Keep the existing click event
+  $(".toolbar a, #back-color-picker, #fore-color-picker").click(function (e) {
+    var command = $(this).data("command");
+    if (command == "h1" || command == "h2" || command == "p") {
+      document.execCommand("formatBlock", false, command);
+    }
+    if (command == "forecolor" || command == "backcolor") {
+      document.execCommand(
+        $(this).data("command"),
+        false,
+        $(this).data("value")
+      );
+    }
+    if (command == "createlink") {
+      url = prompt("Enter the link here: ", "http://");
+      document.execCommand($(this).data("command"), false, url);
+    } else if (command == "insertimage") {
+    } else {
+      document.execCommand($(this).data("command"), false, null);
+    }
+  });
+});
+$(document).ready(function () {
+  $("#fore-color-picker,#back-color-picker").on("change", function () {
+    var selectedColor = $(this).val();
+    $(this).css("color", selectedColor);
+  });
+});
+// This unique peice of creative madness is because of the way the "contenteditiable" works. This is for inserting the preferences anchor for us to grab later.
+function getCaretCharacterOffsetWithin(element) {
+  var caretOffset = 0;
+  var doc = element.ownerDocument || element.document;
+  var win = doc.defaultView || doc.parentWindow;
+  var sel;
+  if (typeof win.getSelection != "undefined") {
+    sel = win.getSelection();
+    if (sel.rangeCount > 0) {
+      var range = win.getSelection().getRangeAt(0);
+      var preCaretRange = range.cloneRange();
+      preCaretRange.selectNodeContents(element);
+      preCaretRange.setEnd(range.endContainer, range.endOffset);
+      caretOffset = preCaretRange.toString().length;
+    }
+  } else if ((sel = doc.selection) && sel.type != "Control") {
+    var textRange = sel.createRange();
+    var preCaretTextRange = doc.body.createTextRange();
+    preCaretTextRange.moveToElementText(element);
+    preCaretTextRange.setEndPoint("EndToEnd", textRange);
+    caretOffset = preCaretTextRange.text.length;
+  }
+  return caretOffset;
+}
+$("a[data-command='InsertPref']").on("click", function () {
+  var sel = window.getSelection();
+  var range = sel.getRangeAt(0);
+  var editor = range.startContainer.parentNode;
+
+  if (!$(editor).hasClass("editor")) {
+    editor = $(editor).closest(".editor");
+  }
+  if (editor.length === 0) {
+    alert(
+      "Cannot find where you want the preferences to be placed. Please make sure you are selecting an area inside the editor window before pressing the button. Please try again."
+    );
+    return;
+  }
+
+  var prefpoint = $("#body i[class='fa fa-sliders'][id='prefpoint']");
+  if (prefpoint.length > 0) {
+    if (
+      confirm(
+        "You already have the preferences placeholder on the page. Would you like to move it to the newly selected location?"
+      )
+    ) {
+      prefpoint.remove();
+      var newRange = range.cloneRange();
+      var icon = document.createElement("i");
+      icon.classList.add("fa", "fa-sliders");
+      icon.setAttribute("id", "prefpoint");
+      icon.setAttribute(
+        "title",
+        "Preferences will be inserted wherever this icon is."
+      );
+      newRange.insertNode(icon);
+    }
+  } else {
+    var newRange = range.cloneRange();
+    var icon = document.createElement("i");
+    icon.classList.add("fa", "fa-sliders");
+    icon.setAttribute("id", "prefpoint");
+    icon.setAttribute(
+      "title",
+      "Preferences will be inserted wherever this icon is."
+    );
+    newRange.insertNode(icon);
+  }
+});
+$("a[data-command='insertimage']").on("click", function () {
+  var sel = window.getSelection();
+  var range = sel.getRangeAt(0);
+  var editor = range.startContainer.parentNode;
+
+  if (editor.length === 0) {
+    alert(
+      "Cannot find where you want the profile image to be placed. Please make sure you are selecting an area inside the editor window before pressing the button. Please try again."
+    );
+    return;
+  }
+  var url = prompt("Enter the link here: ", "http://");
+  var title = prompt(
+    "Enter any text you wish you have appear when the image is hovered over",
+    ""
+  );
+  var img = $("<img>").attr("src", url);
+  var newRange = range.cloneRange();
+  var img = document.createElement("img");
+  img.setAttribute("src", url);
+  img.setAttribute("title", title);
+  newRange.insertNode(img);
+  $(img).one("load", function () {});
+});
+
+$("a[data-command='ProfileImage']").on("click", function () {
+  var sel = window.getSelection();
+  var range = sel.getRangeAt(0);
+  var editor = range.startContainer.parentNode;
+
+  if (!$(editor).hasClass("editor")) {
+    editor = $(editor).closest(".editor");
+  }
+  if (editor.length === 0) {
+    alert(
+      "Cannot find where you want the profile image to be placed. Please make sure you are selecting an area inside the editor window before pressing the button. Please try again."
+    );
+    return;
+  }
+  var newRange = range.cloneRange();
+  var icon = document.createElement("i");
+  icon.classList.add("fa", "fa-id-badge");
+  icon.setAttribute(
+    "title",
+    "A copy of the image you uploaded to your profile will be inserted here."
+  );
+  icon.setAttribute("id", "imgpoint");
+  newRange.insertNode(icon);
+});
+$("a[data-command='InsertUmbrella']").on("click", function () {
+  if ($(".triangle-container").hasClass("user")) {
+    var previousText = $(".triangle-text").text();
+    var replace = confirm(
+      "Do you wish to replace your previous umbrella text? Your previous text was: " +
+        previousText
+    );
+    if (replace) {
+      url = prompt("Enter your word/s here." + "☂️", "Leave blank to remove");
+      if (url === "Leave blank to remove" || url === "") {
+        $(".triangle-container").removeClass("user");
+      } else {
+        $(".triangle-text").text(url);
+      }
+    }
+  } else {
+    url = prompt("Enter your word/s here." + "☂️", "Leave blank to remove");
+    $(".triangle-text").text(url);
+    $(".triangle-text").text("☂️" + url);
+  }
+  $(".triangle-container").addClass("user");
+});
+// Popup stuff for closing the code window.
+$(document).ready(function () {
+  // Select the popup-close button and the modal element
+  let $popupClose = $(".popup-close");
+  let $modal = $(".popup");
+
+  // Add a click event listener to the popup-close button
+  $popupClose.on("click", function () {
+    // Hide the modal by setting the display property to 'none'
+    $modal.css("display", "none");
+    $("#toolbar").css("display", "flex");
+  });
+});
+// Folding menu.
+$(document).ready(function () {
+  $("#collapse-button").click(function () {
+    if ($("#sidebar").hasClass("collapsed")) {
+      $("#collapse-button").html("<i class='fas fa-angle-double-left'></i>");
+      $("#sidebar").removeClass("collapsed");
+      $("#collapse-button").removeClass("collapsed");
+      $("#toolbar").removeClass("collapsed");
+      $(".spacer").removeClass("collapsed");
+    } else {
+      $("#collapse-button").html("<i class='fas fa-angle-double-right'></i>");
+      $("#sidebar").addClass("collapsed");
+      $("#collapse-button").addClass("collapsed");
+      $("#toolbar").addClass("collapsed");
+      $(".spacer").addClass("collapsed");
+    }
+  });
+});
+// If you just want a single color bg.
+$("#tab-3").on("click", function () {
+  $("#main-container").css("background-image", "none");
+  $("#main-container").css("background-color", $("#clr3").val());
+});
+$("#clr3").on("input", function () {
+  $("#main-container").css("background-color", $(this).val());
+});
+// Updating the editor window font & colors
+$("#fnt1").on("change", function () {
+  var selectedFont = $(this).val();
+  font1 = selectedFont;
+  selectedFont = selectedFont.replace(/\+/g, " ");
+  var fontName = selectedFont.split(":")[0];
+  var fontWeight = selectedFont.split(":")[1];
+  $(".editor").css("font-family", selectedFont + ",sans-serif");
+  $(".editor").css("font-family", fontName + ",sans-serif");
+  if (fontWeight) {
+    $(".editor").css("font-weight", fontWeight);
+  }
+});
+$("#fnt2").on("change", function () {
+  var selectedFont = $(this).val();
+  font2 = selectedFont;
+  selectedFont = selectedFont.replace(/\+/g, " ");
+  var fontName = selectedFont.split(":")[0];
+  var fontWeight = selectedFont.split(":")[1];
+  $("#main-container h1").css("font-family", selectedFont + ",sans-serif");
+  $("#main-container h1").css("font-family", fontName + ",sans-serif");
+  if (fontWeight) {
+    $("#main-container h1").css("font-weight", fontWeight);
+  }
+});
+$("#fnt3").on("change", function () {
+  var selectedFont = $(this).val();
+  font3 = selectedFont;
+  selectedFont = selectedFont.replace(/\+/g, " ");
+  var fontName = selectedFont.split(":")[0];
+  var fontWeight = selectedFont.split(":")[1];
+  $("#navbar .btn, #storage .btn").css("font-family", fontName + ",sans-serif");
+  if (fontWeight) {
+    $("#navbar .btn, #storage .btn").css("font-weight", fontWeight);
+  }
+});
+$("#fnt4").on("change", function () {
+  var selectedFont = $(this).val();
+  font4 = selectedFont;
+  selectedFont = selectedFont.replace(/\+/g, " ");
+  var fontName = selectedFont.split(":")[0];
+  var fontWeight = selectedFont.split(":")[1];
+  $(".editor h2").css("font-family", fontName + ",sans-serif");
+  if (fontWeight) {
+    $(".editor h2").css("font-weight", fontWeight);
+  }
+});
+$("#clr4").on("input", function () {
+  $("#main-container").css("color", $(this).val());
+});
+$("#clr5").on("input", function () {
+  $("#main-container h1").css("color", $(this).val());
+});
+// Sorting the editors into order. Mainly for if a user wants to scroll navigate.
+$(document).ready(function () {
+  function sortEditors() {
+    var editorElements = $("#sub-container .editor");
+    var nvbtnElements = $("#navbar .nvbtn");
+    var numbers = editorElements
+      .map(function () {
+        return parseInt(this.id.replace("editor-", ""));
+      })
+      .get();
+    numbers.sort(function (a, b) {
+      return a - b;
+    });
+
+    $.each(numbers, function (index, number) {
+      var editorId = "#editor-" + number;
+      var buttonId = "#nvbtn" + number;
+      var h1Id = "#h1-" + number;
+      $(editorId).appendTo("#sub-container");
+      $(buttonId).appendTo("#navbar");
+      $(h1Id).insertBefore(editorId);
+    });
+  }
+  $("#taboff").on("change", function () {
+    if (!$(this).is(":checked")) {
+      var elementIds = [
+        "h1-2",
+        "h1-3",
+        "h1-4",
+        "h1-5",
+        "h1-6",
+        "h1-7",
+        "h1-8",
+        "editor-2",
+        "editor-3",
+        "editor-4",
+        "editor-5",
+        "editor-6",
+        "editor-7",
+        "editor-8",
+        "nvbtn1",
+        "nvbtn2",
+        "nvbtn3",
+        "nvbtn4",
+        "nvbtn5",
+        "nvbtn6",
+        "nvbtn7",
+        "nvbtn8"
+      ];
+      for (var i = 0; i < elementIds.length; i++) {
+        $("#" + elementIds[i]).appendTo("#storage");
+      }
+      wdthStore = $("#navbar").css("width");
+      $("#navbar").css("width", "0");
+    } else {
+      var tabOnChecked = false;
+      for (var i = 2; i <= 7; i++) {
+        if ($("#tabOn-" + i).is(":checked")) {
+          tabOnChecked = true;
+          var editorId = "editor-" + i;
+          var h1Id = "h1-" + i;
+          var btnId = "nvbtn" + i;
+          $("#" + editorId).prependTo("#sub-container");
+          $("#" + h1Id).insertBefore("#" + editorId);
+          $("#" + btnId).appendTo("#navbar");
+          $("#navbar").css("width", wdthStore);
+          sortEditors();
+        }
+      }
+      if (!tabOnChecked) {
+        $(
+          "#nvbtn1, #nvbtn2, #nvbtn3, #nvbtn4, #nvbtn5, #nvbtn6, #nvbtn7, #nvbtn8"
+        ).appendTo("#storage");
+      }
+    }
+  });
+  $("[id^='tabOn-']").on("change", function () {
+    var number = this.id.slice(-1);
+    var editorId = "editor-" + number;
+    var h1Id = "h1-" + number;
+    var btnId = "nvbtn" + number;
+    var checkbox = $(this).prev("input[type='checkbox']");
+    if ($(this).prop("checked")) {
+      $("#" + editorId).prependTo("#sub-container");
+      $("#" + h1Id).insertBefore("#" + editorId);
+      $("#" + btnId).appendTo("#navbar");
+      sortEditors();
+    } else {
+      $("#" + editorId).appendTo("#storage");
+      $("#" + h1Id).appendTo("#storage");
+      $("#" + btnId).appendTo("#storage");
+    }
+
+    var tabOnChecked = false;
+    for (var i = 2; i <= 7; i++) {
+      if ($("#tabOn-" + i).is(":checked")) {
+        tabOnChecked = true;
+        break;
+      }
+    }
+
+    if (!tabOnChecked) {
+      $("#nvbtn1").appendTo("#storage");
+      $("#editor-1").css("display", "block");
+      $("#h1-1").css("display", "block");
+      var VisibilityReset = [
+        "h1-2",
+        "h1-3",
+        "h1-4",
+        "h1-5",
+        "h1-6",
+        "h1-7",
+        "h1-8",
+        "editor-2",
+        "editor-3",
+        "editor-4",
+        "editor-5",
+        "editor-6",
+        "editor-7",
+        "editor-8"
+      ];
+      for (var i = 0; i < VisibilityReset.length; i++) {
+        $("#" + VisibilityReset[i]).css("display", "none");
+      }
+    }
+  });
+});
+
+//Code for updating the navbar buttons.
+$("input[id^='6-tab'].form__input").change(function () {
+  var number = $(this).attr("id").split("6-tab")[1];
+  var newValue = $(this).val();
+
+  $("#h1-" + number).text(newValue);
+  if ((!$("#s-7-scr").is(":checked")) || (!$("#x-7-ico").is(":checked"))) {
+    $("#nvbtn" + number + " p").text(newValue);
+  }
+});
+var editors = $(".editor");
+//editors.on("input", function () {
+//  var img = $(this).find("img").not(".wrapped");
+//  if (img.length) {
+//    var url = img.attr("src");
+//    if (!img.is(":has(a)")) {
+//      var link = $("<a>").attr("href", url);
+//     img.wrap(link);
+//      img.addClass("wrapped");
+//    }
+//  }
+//});
+$("#x-7-ico").on("click", function () {
+  $("#main-container").off("DOMNodeInserted", visibilityBehaviour);
+  $(".editor").css("margin-bottom", "0");
+  $("#7-scr").css("display", "none");
+  $("#navbar").css("display", "inline-block");
+  //    $(".title").css("position", "absolute");
+  //  $(".editor").css("position", "absolute");
+  $(".btn p", "#navbar, #storage").empty();
+  $(".btn p", "#navbar, #storage").append("<i class='material-icons'></i>");
+
+  $(".btn", "#navbar, #storage").each(function () {
+    var buttonId = $(this).attr("id");
+    var bIconId = "#bIcon" + [buttonId.slice(-1)];
+    var bIconValue = $(bIconId).val();
+    $(this).find("i").text(bIconValue);
+    setMenuSize();
+  });
+  var VisibilityReset = [
+    "h1-2",
+    "h1-3",
+    "h1-4",
+    "h1-5",
+    "h1-6",
+    "h1-7",
+    "h1-8",
+    "editor-2",
+    "editor-3",
+    "editor-4",
+    "editor-5",
+    "editor-6",
+    "editor-7",
+    "editor-8"
+  ];
+  for (var i = 0; i < VisibilityReset.length; i++) {
+    $("#" + VisibilityReset[i]).css("display", "none");
+  }
+  $("[id^='tabOn-']").trigger("change");
+});
+$("#s-7-ico").on("click", function () {
+  $("#main-container").off("DOMNodeInserted", visibilityBehaviour);
+  $(".editor").css("margin-bottom", "0");
+  $("#navbar").css("display", "inline-block");
+  //  $(".title").css("position", "absolute");
+  //  $(".editor").css("position", "absolute");
+  $(".btn p i", "#navbar, #storage").remove();
+  $(".btn", "#navbar, #storage").each(function () {
+    var buttonId = $(this).attr("id");
+    var number = buttonId.slice(-1);
+    var tabValue = $("#6-tab" + number).val();
+    if (tabValue == "") tabValue = $("#6-tab" + number).attr("placeholder");
+    $(this).find("p").text(tabValue);
+  });
+  var VisibilityReset = [
+    "h1-2",
+    "h1-3",
+    "h1-4",
+    "h1-5",
+    "h1-6",
+    "h1-7",
+    "h1-8",
+    "editor-2",
+    "editor-3",
+    "editor-4",
+    "editor-5",
+    "editor-6",
+    "editor-7",
+    "editor-8"
+  ];
+  for (var i = 0; i < VisibilityReset.length; i++) {
+    $("#" + VisibilityReset[i]).css("display", "none");
+  }
+  $("[id^='tabOn-']").trigger("change");
+});
+var visibilityBehaviour = function (e) {
+  if ($(e.target).hasClass("title") || $(e.target).hasClass("editor")) {
+    $(e.target).css("display", "block");
+  } else if ($(e.target).hasClass("btn")) {
+    $(e.target).appendTo("#storage");
+  }
+};
+$("#s-7-scr").on("click", function () {
+  // Move all .btn elements inside #navbar to #storage
+  $("#navbar .btn").appendTo("#storage");
+  $("#navbar").css("display", "none");
+  //  $(".title").css("position", "inherit");
+  //  $(".editor").css("position", "inherit");
+  // Make all .title & .editor elements in #sub-container visible
+  $("#sub-container .title, #sub-container .editor").css("display", "block");
+
+  // Watch for new .title and .editor elements being added to sub-container and sets them to visible
+  $("#main-container").on("DOMNodeInserted", visibilityBehaviour);
+});
+$("#t-9-fix").on("click", function () {
+  if ($("#main-container").css("background-attachment") === "fixed") {
+    $("#main-container").css("background-attachment", "local");
+  } else {
+    $("#main-container").css("background-attachment", "fixed");
+  }
+});
+$("#mnu-left").on("click", function () {
+  mnuPos = 1;
+  setBtnPad();
+  setBtnSize();
+  $("#navbar").css("display", "block");
+  $("#main-container").css("display", "grid");
+  $("#sub-container").css("grid-column", "2 / 3");
+  $("#navbar").css("grid-column", "1 / 2");
+  $("#navbar").css("display", "block");
+});
+$("#mnu-right").on("click", function () {
+  mnuPos = 2;
+  setBtnSize();
+  setBtnPad();
+  $("#navbar").css("display", "block");
+  $("#main-container").css("display", "grid");
+  $("#navbar").css("grid-column", "2 / 3");
+  $("#sub-container").css("grid-column", "1 / 2");
+  $("#navbar").css("display", "block");
+});
+$("#mnu-top").on("click", function () {
+  mnuPos = 3;
+  setBtnPad();
+  setBtnSize();
+  $("#main-container").css("display", "flex");
+  $("#main-container").css("flex-direction", "column");
+  $("#navbar").css("display", "flex");
+  $("#navbar").css("justify-content", "center");
+  $("#navbar").css("flex-wrap", "wrap");
+});
+$("#t-11-not").on("click", function () {
+  if (!$("#btnShade").is(":checked")) {
+    var color = $("#clr7").val();
+    var primaryLight = chroma(color).brighten(2).saturate().hex();
+    var primaryDark = chroma(color).darken(2).saturate().hex();
+
+    $(".btn__primary", "#navbar, #storage").css(
+      "box-shadow",
+      "inset 0.2rem 0.2rem 1rem " +
+        primaryLight +
+        ", inset -0.2rem -0.2rem 1rem " +
+        primaryDark
+    );
+    $(".btn__primary:active", "#navbar, #storage").css(
+      "box-shadow",
+      "inset 0.2rem 0.2rem 1rem " +
+        primaryDark +
+        ", inset -0.2rem -0.2rem 1rem " +
+        primaryLight
+    );
+  } else {
+    $(".btn__primary:active", "#navbar, #storage").css("box-shadow", "none");
+    $(".btn__primary", "#navbar, #storage").css("box-shadow", "none");
+  }
+});
+$("#clr6").on("input", function () {
+  $(".btn p", "#navbar, #storage").css("color", $("#clr6").val());
+  $(".btn p i", "#navbar, #storage").css("color", $("#clr6").val());
+});
+$("#clr7").on("input", function () {
+  var color = $("#clr7").val();
+  var primaryLight = chroma(color).brighten(2).saturate().hex();
+  var primaryDark = chroma(color).darken(2).saturate().hex();
+  $(".btn", "#navbar, #storage").css("background-color", color);
+
+  if ($("#btnShade").is(":checked")) {
+    $(".btn__primary", "#navbar, #storage").css(
+      "box-shadow",
+      "inset 0.2rem 0.2rem 1rem " +
+        primaryLight +
+        ", inset -0.2rem -0.2rem 1rem " +
+        primaryDark
+    );
+    $(".btn__primary:active", "#navbar, #storage").css(
+      "box-shadow",
+      "inset 0.2rem 0.2rem 1rem " +
+        primaryDark +
+        ", inset -0.2rem -0.2rem 1rem " +
+        primaryLight
+    );
+  }
+});
+$("#clr8").on("input", function () {
+  var colorRGB = chroma($("#clr8").val()).rgb();
+  var alpha = $("#cntOpacity").data("value") / 100;
+  var color =
+    "rgba(" +
+    colorRGB[0] +
+    "," +
+    colorRGB[1] +
+    "," +
+    colorRGB[2] +
+    "," +
+    alpha +
+    ")";
+  $(".title").css("background-color", color);
+  $(".editor").css("background-color", color);
+});
+$("#clr9").on("input", function () {
+  tblLineThick = $("#tblBorder").data("value");
+  if (tblLineThick <= 0) {
+    $(".editTable td, .editTable th").css("border", "1px dashed #a495a3");
+  } else {
+    $(".editTable td, .editTable th").css(
+      "border",
+      tblLineThick + "px solid " + $("#clr9").val()
+    );
+  }
+});
+
+$("#clr10").on("input", function () {
+  $(".editTable").css("background-color", $("#clr10").val());
+});
+$("#clr12").on("input", function () {
+  $(".editor h2").css("color", $("#clr12").val());
+});
+$("#t-12-fix").on("click", function () {
+  if (imgLimit === "20rem") {
+    $(".editor img").css("height", "auto");
+    imgLimit = "auto";
+  } else {
+    $(".editor img").css("height", "20rem");
+    imgLimit = "20rem";
+  }
+});
+$("#txt-right").on("click", function () {
+  $("#navbar .btn").css("justify-content", "flex-end");
+  $("#storage .btn").css("justify-content", "flex-end");
+});
+$("#txt-left").on("click", function () {
+  $("#navbar .btn").css("justify-content", "flex-start");
+  $("#storage .btn").css("justify-content", "flex-start");
+});
+$("#txt-mid").on("click", function () {
+  $("#navbar .btn").css("justify-content", "center");
+  $("#storage .btn").css("justify-content", "center");
+});
+$("a[data-command='InsertTable']").on("click", function () {
+  var columns = prompt("Enter the number of columns for the table:");
+  var rows = prompt("Enter the number of rows for the table:");
+  if (isNaN(columns) || isNaN(rows)) {
+    alert("Please enter a number.");
+    return;
+  }
+  if (columns > 250 || rows > 250) {
+    alert("The number of columns or rows must be 250 or less.");
+    return;
+  }
+  if (columns > 100 || rows > 100) {
+    if (
+      !confirm(
+        "Creating a table with that many rows or columns may slow down the page. Do you want to continue?"
+      )
+    ) {
+      return;
+    }
+  }
+  var sel = window.getSelection();
+  var range = sel.getRangeAt(0);
+  var editor = range.startContainer.parentNode;
+
+  if (!$(editor).hasClass("editor")) {
+    editor = $(editor).closest(".editor");
+  }
+  if (editor.length === 0) {
+    alert("Cannot find the selected .editor element. Please try again.");
+    return;
+  }
+
+  var table = document.createElement("table");
+  $(table).attr("class", "editTable");
+  for (var i = 0; i < rows; i++) {
+    var row = document.createElement("tr");
+    for (var j = 0; j < columns; j++) {
+      var cell = document.createElement("td");
+      row.appendChild(cell);
+    }
+    table.appendChild(row);
+  }
+  range.insertNode(table);
+    $(table).colResizable({
+    resizeMode: "fit"
+  });
+});
+var pseudos = ["", ":hover", ":active"]; // Add the pseudo-selectors you want to include
+var pseudoSelectors = pseudos.join(", ");
+
+function getDescendants(element) {
+  var descendants = [];
+  var children = element.children;
+  for (var i = 0; i < children.length; i++) {
+    var child = children[i];
+    descendants.push(child);
+    descendants = descendants.concat(getDescendants(child));
+  }
+  return descendants;
+}
+$("#t-16-not").on("click", function () {
+  if ($("#navbar").css("background-color") === "rgba(0, 0, 0, 0)") {
+    $("#mnuClr").css("display", "inline-block");
+    $("#navbar").css("background", $("#clr11").val());
+  } else {
+    $("#navbar").css("background-color", "rgba(0, 0, 0, 0)");
+    $("#mnuClr").css("display", "none");
+    console.log($("#navbar").css("background"));
+  }
+});
+
+$("#getcode").on("click", function () {
+  var js = $("#takeout").html();
+;
+  //Show the box where the output code is displayed.
+  $("#code").css("display", "flex");
+  //Hide the editor toolbar.
+  $("#toolbar").hide();
+  //Get the html and put the code for it in the html box.
+  var classesToRemove = [".JCLRgrips"];
+  $("#main-container").clone().appendTo("#processing");
+  $(".editor", "#processing").removeAttr("contenteditable");
+  classesToRemove.forEach(function (classToRemove) {
+    $(classToRemove, "#processing").remove();
+  });
+  $("#deps").clone().prependTo("#processing");
+  if ($("#tri").hasClass("user")) {
+    $("#tri").clone().appendTo("#processing");
+  }
+  $("#main-container").attr("anim",anim);
+  
+  var html = $("#processing").html();
+  
+  var html = $("#processing").html() + js;
+const rex = /[\u{1f300}-\u{1f5ff}\u{1f900}-\u{1f9ff}\u{1f600}-\u{1f64f}\u{1f680}-\u{1f6ff}\u{2600}-\u{26ff}\u{2700}-\u{27bf}\u{1f1e6}-\u{1f1ff}\u{1f191}-\u{1f251}\u{1f004}\u{1f0cf}\u{1f170}-\u{1f171}\u{1f17e}-\u{1f17f}\u{1f18e}\u{3030}\u{2b50}\u{2b55}\u{2934}-\u{2935}\u{2b05}-\u{2b07}\u{2b1b}-\u{2b1c}\u{3297}\u{3299}\u{303d}\u{00a9}\u{00ae}\u{2122}\u{23f3}\u{24c2}\u{23e9}-\u{23ef}\u{25b6}\u{23f8}-\u{23fa}]/ug;
+html = html.replace(rex, match => `&#x${match.codePointAt(0).toString(16)};`);
+
+  $("#code-html").text(html);
+  $("#processing").empty();
+
+  var selectorsToRemove = ["#collapse-button, .container, html", ".container"];
+  var css = $("style").html();
+  $.each(selectorsToRemove, function (index, selector) {
+    css = css.replace(
+      new RegExp("(^|\\n)\\s*" + selector + "\\s*\\{[^\\}]*\\}", "g"),
+      ""
+    );
+  });
+  $("#code-css").text(css);
+
+  //We then add out own JS as a variable to the JS box.
+
+  $("#code-js").text(js);
+});
+jQuery("div").bind("dragover drop", function (event) {
+  event.preventDefault();
+  return false;
+});
+
+$("#copy1").on("click", function () {
+  navigator.clipboard.writeText($("#code-html").text());
+});
+$("#copy2").on("click", function () {
+  navigator.clipboard.writeText($("#code-css").text());
+});
+$("#copy3").on("click", function () {
+  navigator.clipboard.writeText($("#code-js").text());
+});
+$("#animoff").on("click", function () {
+  if (anim != 0) {
+    anim = 0;
+    $(".editor, .title").removeClass(
+      "fade-out fade-in slide-in slide-out scale-out scale-in"
+    );
+  } else {
+    if ($("tab-1d").is(":checked")) {
+      anim = "scale";
+      $(".editor, .title").addClass("scale-out scale-in");
+      $(".editor, .title").removeClass("fade-out fade-in slide-in slide-out");
+    } else if ($("tab-2d").is(":checked")) {
+      anim = "slide";
+      $(".editor, .title").addClass("slide-out slide-in");
+      $(".editor, .title").removeClass("fade-out fade-in scale-in scale-out");
+    } else if ($("tab-3d").is(":checked")) {
+      anim = "fade";
+      $(".editor, .title").addClass("fade-out fade-in");
+      $(".editor, .title").removeClass("slide-out slide-in scale-in scale-out");
+    }
+  }
+});
+$("#s-13-anim1").on("click", function () {
+  anim = "scale";
+  $(".editor, .title").addClass("scale-out scale-in");
+  $(".editor, .title").removeClass("fade-out fade-in slide-out slide-in");
+});
+$("#s-13-anim2").on("click", function () {
+  anim = "slide";
+  $(".editor, .title").addClass("slide-out slide-in");
+  $(".editor, .title").removeClass("fade-out fade-in scale-out scale-in");
+});
+$("#s-13-anim3").on("click", function () {
+  anim = "fade";
+  $(".editor, .title").addClass("fade-out fade-in");
+  $(".editor, .title").removeClass("slide-out slide-in scale-out scale-in");
+});
+$("[id^='nvbtn']").on("click", function () {
+  var number = this.id.slice(-1);
+  var h1Id = "#h1-" + number;
+  var editorId = "#editor-" + number;
+  var delay;
+  if (anim === 0) {
+    delay = 0;
+  } else {
+    delay = 300;
+  }
+  if ($(editorId).hasClass("shown")) {
+  } else {
+    $(".shown").removeClass("slide-in scale-in fade-in");
+    $(h1Id).removeClass("slide-in scale-in fade-in");
+    $(editorId).removeClass("slide-in scale-in fade-in");
+
+    setTimeout(function () {
+      $(".shown").hide();
+      $(".shown").removeClass("shown");
+      $(h1Id).show();
+      $(editorId).show();
+      setTimeout(function () {
+        $(h1Id).addClass("shown");
+        $(h1Id).addClass(anim + "-in");
+        $(editorId).addClass(anim + "-in");
+        $(editorId).addClass("shown");
+      }, delay / 10);
+    }, delay);
+  }
+});
+$(".editor").addClass("scale-out scale-in");
+$(".title").addClass("scale-out scale-in");
+interact("img")
+  .resizable({
+    // resize from all edges and corners
+    edges: { left: true, right: true, bottom: true, top: true },
+
+    listeners: {
+      move(event) {
+        var target = event.target;
+        var x = parseFloat(target.getAttribute("data-x")) || 0;
+        var y = parseFloat(target.getAttribute("data-y")) || 0;
+
+        // update the element's style
+        target.style.width = event.rect.width + "px";
+        target.style.height = event.rect.height + "px";
+
+        // translate when resizing from top or left edges
+        x += event.deltaRect.left;
+        y += event.deltaRect.top;
+
+        target.style.transform = "translate(" + x + "px," + y + "px)";
+
+        target.setAttribute("data-x", x);
+        target.setAttribute("data-y", y);
+        target.textContent =
+          Math.round(event.rect.width) +
+          "\u00D7" +
+          Math.round(event.rect.height);
+      }
+    },
+    modifiers: [
+      interact.modifiers.aspectRatio({
+        ratio: "preserve"
+      }),
+      interact.modifiers.restrictSize({
+        min: { width: 50, height: 50 }
+      })
+    ],
+
+    inertia: true
+  })
+  .draggable({
+    listeners: { move: window.dragMoveListener },
+    inertia: true,
+    modifiers: [
+      interact.modifiers.restrictRect({
+        restriction: "parent",
+        endOnly: true
+      })
+    ]
+  });
+
+</script>
+
+</html>
+	
