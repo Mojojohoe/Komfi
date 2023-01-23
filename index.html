@@ -1809,7 +1809,7 @@ a[data-command="ProfileImage"] {
           </div>
 
         </span>
-      </span>
+      </span><br>
     
       <h2>OTHER</h2>
       <div class="switch">
@@ -2066,10 +2066,10 @@ $("[id^='nvbtn']").on("click", function () {
 WebFont.load({
   google: {
     families: [
-      "Poppins:400,600,700",
-      "Poppins:400,600,700",
-      "Poppins:400,600,700",
-      "Poppins:400,600,700"
+      fnt1,
+      fnt2,
+      fnt3,
+      fnt4
     ]
   }
 });
@@ -4553,7 +4553,7 @@ $("#fnt1").on("change", function () {
   $(".editor").css("font-family", selectedFont + ",sans-serif");
   $(".editor").css("font-family", fontName + ",sans-serif");
   if (fontWeight) {
-    $(".editor").css("font-weight", fontWeight);
+   $(".editor").css("font-weight", fontWeight);
   }
 });
 $("#fnt2").on("change", function () {
@@ -4562,10 +4562,10 @@ $("#fnt2").on("change", function () {
   selectedFont = selectedFont.replace(/\+/g, " ");
   var fontName = selectedFont.split(":")[0];
   var fontWeight = selectedFont.split(":")[1];
-  $("#main-container h1").css("font-family", selectedFont + ",sans-serif");
-  $("#main-container h1").css("font-family", fontName + ",sans-serif");
+  $(".title").css("font-family", selectedFont + ",sans-serif");
+  $(".title").css("font-family", fontName + ",sans-serif");
   if (fontWeight) {
-    $("#main-container h1").css("font-weight", fontWeight);
+    $(".title").css("font-weight", fontWeight);
   }
 });
 $("#fnt3").on("change", function () {
@@ -4730,7 +4730,7 @@ $("input[id^='6-tab'].form__input").change(function () {
   var newValue = $(this).val();
 
   $("#h1-" + number).text(newValue);
-  if ((!$("#s-7-scr").is(":checked")) || (!$("#x-7-ico").is(":checked"))) {
+  if ((!$("#s-7-scr").is(":checked")) || ($("#x-7-ico").is(":checked"))) {
     $("#nvbtn" + number + " p").text(newValue);
   }
 });
@@ -5072,7 +5072,7 @@ $("#getcode").on("click", function () {
     $("#tri").clone().appendTo("#processing");
   }
   $("#main-container").attr("data-anim",anim);
-  $("[id^='tabOn-']").trigger("change");
+  $("#nvbtn1").trigger("change");
   var html = $("#processing").html();
   
   var html = $("#processing").html() + js;
