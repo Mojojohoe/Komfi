@@ -184,7 +184,7 @@ body {
   overflow: hidden;
 }
 .spacer.collapsed {
-  margin-right: 2rem;
+  margin-right: 6rem;
 }
 #collapse-button.collapsed {
   left: 0;
@@ -2084,6 +2084,12 @@ window.onload = function () {
     $(".profile-image").insertAfter(imgpoint);
     imgpoint.remove();
   }
+    $("body :not(#main-container)").each(function() {
+    var element = $(this);
+    var html = element.html();
+    var newHtml = html.replace(/&nbsp;/g, "");
+    element.html(newHtml);
+  });
 };
 </script>
 </div>
