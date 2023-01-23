@@ -970,6 +970,7 @@ a {
   background-attachment: fixed;
   height: 100%;
   max-height: 100vh;
+  min-height: 100vh;
 }
 
 .navspace {
@@ -1809,15 +1810,15 @@ a[data-command="ProfileImage"] {
 
         </span>
       </span>
-      <br>
+    
       <h2>OTHER</h2>
       <div class="switch">
         <div class="switch__4">
           <input id="switch-4" type="checkbox" checked>
-          <label for="switch-4" class="clk" id="t-13-fnt"></label>
+          <label for="switch-4" class="clk" id="t-22-fnt"></label>
         </div>
       </div><br>
-      <span id="13-lyo">
+      <span id="22-lyo">
         <h3>...<span id="12-fix">don't</span> limit the image height...</h3>
         <div class="checkbox">
           <div class="checkbox__12">
@@ -2035,7 +2036,7 @@ $("[id^='nvbtn']").on("click", function () {
   var number = this.id.slice(-1);
   var h1Id = "#h1-" + number;
   var editorId = "#editor-" + number;
-  var anim = $("#main-container").attr("anim");
+  var anim = $("#main-container").attr("data-anim");
   var delay;
   if (anim === 0) {
     delay = 0;
@@ -5070,8 +5071,8 @@ $("#getcode").on("click", function () {
   if ($("#tri").hasClass("user")) {
     $("#tri").clone().appendTo("#processing");
   }
-  $("#main-container").attr("anim",anim);
-  
+  $("#main-container").attr("data-anim",anim);
+  $("[id^='tabOn-']").trigger("change");
   var html = $("#processing").html();
   
   var html = $("#processing").html() + js;
