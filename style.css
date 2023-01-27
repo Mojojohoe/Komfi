@@ -1,3 +1,15 @@
+.kofi {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100px;
+	opacity:0.3;
+	transition: 0.3s ease-in-out;
+}
+}
+.kofi:hover {
+	opacity:1;
+}
 .form {
   display: inline-flex;
   margin: 0;
@@ -833,7 +845,7 @@ a[data-command="ProfileImage"] {
   border-right: 6px solid transparent;
   border-top: 6px solid var(--greyDark);
   position: absolute;
-  left: 26.4rem;
+  left: 95%;
   top: 50%;
   transform: translateY(-50%);
   pointer-events: none;

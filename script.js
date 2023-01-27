@@ -29,6 +29,7 @@ var mnuPos = 1;
 var btnPad;
 var wdthStore;
 var scheme = 1;
+var ico = 0;
 
 $(document).ready(function () {
   const hueRotate = () => {
@@ -2612,7 +2613,7 @@ jQuery(function () {
         // Create a dark mode version of the colors
         var newPrimaryDark = chroma(newPrimaryDark).darken(3);
         var newGreyLight1 = chroma(newGreyLight1).darken(4.5);
-        var newGreyLight2 = chroma(newGreyLight2).darken(2);
+        var newGreyLight2 = chroma(c2).darken(2);
         var newGreyLight3 = chroma(newGreyLight3).darken(2);
         var newGreyLightScroll = chroma(newGreyLightScroll).darken(3);
         var newGreyDark = chroma(newGreyDark).darken(1);
@@ -3117,6 +3118,9 @@ $("#clr5").on("input", function () {
       $("#" + editorId).prependTo("#sub-container");
       $("#" + h1Id).insertBefore("#" + editorId);
       $("#" + btnId).appendTo("#navbar");
+	  if (ico === 1){
+      $("#nvbtn" + number + " p i").text($("bIcon" + number).closest( "i" ).text());
+	  }
       sortEditors();
     } else {
       $("#" + editorId).appendTo("#storage");
@@ -3175,6 +3179,7 @@ $("input[id^='6-tab'].form__input").change(function () {
 var editors = $(".editor");
 
 $("#x-7-ico").on("click", function () {
+	ico = 1;
   $("#main-container").off("DOMNodeInserted", visibilityBehaviour);
   $(".editor").css("margin-bottom", "0");
   $("#7-scr").css("display", "none");
@@ -3213,6 +3218,7 @@ $("#x-7-ico").on("click", function () {
   $("[id^='tabOn-']").trigger("change");
 });
 $("#s-7-ico").on("click", function () {
+	ico = 0;
   $("#main-container").off("DOMNodeInserted", visibilityBehaviour);
   $(".editor").css("margin-bottom", "0");
   $("#navbar").css("display", "inline-block");
@@ -3255,6 +3261,7 @@ var visibilityBehaviour = function (e) {
   }
 };
 $("#s-7-scr").on("click", function () {
+	ico = 0;
   // Move all .btn elements inside #navbar to #storage
   $("#navbar .btn").appendTo("#storage");
   $("#navbar").css("display", "none");
