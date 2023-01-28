@@ -2778,11 +2778,13 @@ $("#customcss-box").on("input", function () {
   });
 });
 var timeout;
+var loading = 1;
 // Listen for changes to the page
 $(document).on("input change click", "body *", function () {
   clearTimeout(timeout);
   timeout = setTimeout(savePage, 2000);
 });
+if (loading === 0){
 function savePage() {
 	  console.log("We are about to save")
   var bodyData = $("#main-wrapper").html();
@@ -2818,9 +2820,11 @@ console.log("We have saved")
     setTimeout(function () {
       $("#saved").removeClass("saving");
     }, 2000);
+};
   };
 
 $(document).ready(function () {
+	loading = 1;
   // Check if data exists in local storage
   console.log("We are about to load")
   if (localStorage.getItem("bodyData") !== null) {
@@ -2862,6 +2866,7 @@ ico = localStorage.getItem("ico");
     $("#main-wrapper").html(bodyData);
     $("#tri").html(umbrella);
   console.log("We have loaded")
+  loading = 0;
   }
   
 });
