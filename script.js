@@ -274,12 +274,7 @@ $(".slider__box").each(function () {
     $btn.on("mouseout", function () {
       $tooltip.css("opacity", 0);
     });
-	function setMenuSize() {
-	$("#navbar .btn p").css("font-size", btnFont + "rem");
-	$("#storage .btn p").css("font-size", btnFont + "rem");
-	$("#navbar .btn p i").css("font-size", btnFont + "rem");
-	$("#storage .btn p i").css("font-size", btnFont + "rem");
-	}
+
     function onMouseMove(e) {
       e.preventDefault();
       let targetRect = $container[0].getBoundingClientRect();
@@ -329,7 +324,10 @@ $(".slider__box").each(function () {
           $tooltip.text(percentPosition.toFixed(2));
           $tooltip.attr("data-value", percentPosition.toFixed(2));
           btnFont = percentPosition;
-          setMenuSize();
+          	$("#navbar .btn p").css("font-size", btnFont + "rem");
+	$("#storage .btn p").css("font-size", btnFont + "rem");
+	$("#navbar .btn p i").css("font-size", btnFont + "rem");
+	$("#storage .btn p i").css("font-size", btnFont + "rem");
         } else if ($tooltip.hasClass("slider__padLeft")) {
           percentPosition = percentPosition - 3.09;
           $tooltip.text(percentPosition.toFixed(2));
@@ -3202,7 +3200,10 @@ $("#x-7-ico").on("click", function () {
     var bIconValue = $(bIconId).val();
     $(this).find("i").text(bIconValue);
 	console.log("We're setting the icons");
-    setMenuSize();
+    	$("#navbar .btn p").css("font-size", btnFont + "rem");
+	$("#storage .btn p").css("font-size", btnFont + "rem");
+	$("#navbar .btn p i").css("font-size", btnFont + "rem");
+	$("#storage .btn p i").css("font-size", btnFont + "rem");
   });
   var VisibilityReset = [
     "h1-2",
