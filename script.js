@@ -2834,9 +2834,10 @@ $(document).on("input change click", "body *", function () {
   timeout = setTimeout(savePage, 2000);
 });
 console.log("Checkin load status: " + loading);
-if (loading === 0){
+
 function savePage() {
-	  console.log("We are about to save")
+	if (loading === 0){
+	  console.log("We are saving")
   var bodyData = $("#main-wrapper").html();
   var umbrella = $("#tri").html();
   var customStyle = $("#customcss").html();
