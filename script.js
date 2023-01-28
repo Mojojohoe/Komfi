@@ -2756,19 +2756,20 @@ jQuery(function () {
      white
     );
   var sheet = document.getElementById("#defaultcss");
-  var newText = sheet.innerHTML
-						.replace(/--main-color:(.*);/g, "--primary: "+primary+";")
-                        .replace(/--secondary-color:(.*);/g, "--primary-scroll: "+primary+";");
-						.replace(/--secondary-color:(.*);/g, "--primary-light: "+primaryLight+";");
-						.replace(/--secondary-color:(.*);/g, "--primary-dark: "+primaryDark+";");
-						.replace(/--secondary-color:(.*);/g, "--greyLight-1: "+greyLight1+";");
-						.replace(/--secondary-color:(.*);/g, "--greyLight-2: "+greyLight2+";");
-						.replace(/--secondary-color:(.*);/g, "--greyLight-3: "+greyLight3+";");
-						.replace(/--secondary-color:(.*);/g, "--greyLight-scroll: "+greyLightScroll+";");
-						.replace(/--secondary-color:(.*);/g, "--greyDark: "+greyDark+";");
-						.replace(/--secondary-color:(.*);/g, "--white: "+white+";");
+var newText = sheet.innerHTML
+						.replace(/--primary:(.*);/g, "--primary: "+primary+";")
+                        .replace(/--primary-scroll:(.*);/g, "--primary-scroll: "+primary+";")
+						.replace(/--primary-light:(.*);/g, "--primary-light: "+primaryLight+";")
+						.replace(/--primary-dark:(.*);/g, "--primary-dark: "+primaryDark+";")
+						.replace(/--greyLight-1:(.*);/g, "--greyLight-1: "+greyLight1+";")
+						.replace(/--greyLight-2:(.*);/g, "--greyLight-2: "+greyLight2+";")
+						.replace(/--greyLight-3:(.*);/g, "--greyLight-3: "+greyLight3+";")
+						.replace(/--greyLight-scroll:(.*);/g, "--greyLight-scroll: "+greyLightScroll+";")
+						.replace(/--greyDark:(.*);/g, "--greyDark: "+greyDark+";")
+						.replace(/--white:(.*);/g, "--white: "+white+";");
   sheet.innerHTML = newText;
-  });
+});
+
 });
 $("#customcss-box").on("input", function () {
   var customCSS = $(this).val();
