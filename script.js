@@ -102,7 +102,7 @@ $(document).ready(function () {
 
   $("[id^='bIcon']").on("click", function () {
 	  storedPicker = $(this).attr("id");
-  }
+  });
 // Function to set the BG image to cover.
 function setCover() {
   $("#main-container").css("background-size", "cover");
