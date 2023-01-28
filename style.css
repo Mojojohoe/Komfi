@@ -2,13 +2,14 @@
     position: absolute;
     right: 0;
     top: 0;
-    height: 100px;
+    height: 50px;
 	opacity:0.3;
 	transition: 0.3s ease-in-out;
 }
-}
 .kofi:hover {
 	opacity:1;
+	height: 100px;
+	animation: spin 2s;
 }
 .form {
   display: inline-flex;

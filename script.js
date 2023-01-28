@@ -2926,6 +2926,7 @@ $("a[data-command='InsertUmbrella']").on("click", function () {
       url = prompt("Enter your word/s here." + "☂️", "Leave blank to remove");
       if (url === "Leave blank to remove" || url === "") {
         $(".triangle-container").removeClass("user");
+		$(".triangle-text").text("Enabled ;)");
       } else {
         $(".triangle-text").text(url);
       }
@@ -3496,7 +3497,7 @@ $(window).on('load', function() {
   setupToolbar()
   $("#loading").css("opacity",0);
       setTimeout(function () {
-      $$("#loading").css("display","none");
+      $("#loading").css("display","none");
     }, 500);
 });
 
