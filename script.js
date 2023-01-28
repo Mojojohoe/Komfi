@@ -3126,8 +3126,8 @@ $("#clr5").on("input", function () {
 	  if (ico === 1){
       $("#nvbtn" + number + " p i").text($("bIcon" + number).closest( "i" ).text());
 ["#bIcon1","#bIcon2","#bIcon3","#bIcon4","#bIcon5","#bIcon6","#bIcon7"].forEach(function (icon) {
-      getIcon = $(this).val();
-      var number = [buttonId.slice(-1)]
+      getIcon = $(icon).val();
+      var number = [icon.slice(-1)]
       $("#nvbtn" + number + " p i").text(getIcon);
   });
 	  }
@@ -3208,9 +3208,8 @@ $("#x-7-ico").on("click", function () {
 	$("#storage .btn p i").css("font-size", btnFont + "rem");
   });
 ["#bIcon1","#bIcon2","#bIcon3","#bIcon4","#bIcon5","#bIcon6","#bIcon7"].forEach(function (icon) {
-      var getIcon = $(icon).val();
-	  var destId = $(icon).attr("id");
-      var number = [destId.slice(-1)]
+      getIcon = $(icon).val();
+      var number = [icon.slice(-1)]
       $("#nvbtn" + number + " p i").text(getIcon);
   });
   
