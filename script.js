@@ -256,59 +256,7 @@ function setBtnSize() {
     $("#navbar").css("height", "auto");
   }
 }
-var visibilityBehaviour = function (e) {
-  if ($(e.target).hasClass("title") || $(e.target).hasClass("editor")) {
-    $(e.target).css("display", "block");
-  } else if ($(e.target).hasClass("btn")) {
-    $(e.target).appendTo("#storage");
-  }
-};
 // The sliders control a few different things. Here I lazily just shoehorn in cases for different sliders.
-	function setMenuSize() {
-	$("#navbar .btn p").css("font-size", btnFont + "rem");
-	$("#storage .btn p").css("font-size", btnFont + "rem");
-	$("#navbar .btn p i").css("font-size", btnFont + "rem");
-	$("#storage .btn p i").css("font-size", btnFont + "rem");
-	}
-$("#x-7-ico").on("click", function () {
-	ico = 1;
-  $("#main-container").off("DOMNodeInserted", visibilityBehaviour);
-  $(".editor").css("margin-bottom", "0");
-  $("#7-scr").css("display", "none");
-  $("#navbar").css("display", "inline-block");
-  //    $(".title").css("position", "absolute");
-  //  $(".editor").css("position", "absolute");
-  $(".btn p", "#navbar, #storage").empty();
-  $(".btn p", "#navbar, #storage").append("<i class='material-icons'></i>");
-
-  $(".btn", "#navbar, #storage").each(function () {
-    var buttonId = $(this).attr("id");
-    var bIconId = "#bIcon" + [buttonId.slice(-1)];
-    var bIconValue = $(bIconId).val();
-    $(this).find("i").text(bIconValue);
-    setMenuSize();
-  });
-  var VisibilityReset = [
-    "h1-2",
-    "h1-3",
-    "h1-4",
-    "h1-5",
-    "h1-6",
-    "h1-7",
-    "h1-8",
-    "editor-2",
-    "editor-3",
-    "editor-4",
-    "editor-5",
-    "editor-6",
-    "editor-7",
-    "editor-8",
-  ];
-  for (var i = 0; i < VisibilityReset.length; i++) {
-    $("#" + VisibilityReset[i]).css("display", "none");
-  }
-  $("[id^='tabOn-']").trigger("change");
-});
 $(".slider__box").each(function () {
   $(this).on("mousedown", function (e) {
     if (!$(e.target).hasClass("slider__btn")) return;
@@ -326,7 +274,12 @@ $(".slider__box").each(function () {
     $btn.on("mouseout", function () {
       $tooltip.css("opacity", 0);
     });
-
+	function setMenuSize() {
+	$("#navbar .btn p").css("font-size", btnFont + "rem");
+	$("#storage .btn p").css("font-size", btnFont + "rem");
+	$("#navbar .btn p i").css("font-size", btnFont + "rem");
+	$("#storage .btn p i").css("font-size", btnFont + "rem");
+	}
     function onMouseMove(e) {
       e.preventDefault();
       let targetRect = $container[0].getBoundingClientRect();
@@ -3215,13 +3168,7 @@ $("#clr5").on("input", function () {
       }
     }
   });
-var visibilityBehaviour = function (e) {
-  if ($(e.target).hasClass("title") || $(e.target).hasClass("editor")) {
-    $(e.target).css("display", "block");
-  } else if ($(e.target).hasClass("btn")) {
-    $(e.target).appendTo("#storage");
-  }
-};
+
 //Code for updating the navbar buttons.
 $("input[id^='6-tab'].form__input").change(function () {
   var number = $(this).attr("id").split("6-tab")[1];
@@ -3238,6 +3185,46 @@ $("input[id^='6-tab'].form__input").change(function () {
 });
 var editors = $(".editor");
 
+$("#x-7-ico").on("click", function () {
+	ico = 1;
+  $("#main-container").off("DOMNodeInserted", visibilityBehaviour);
+  $(".editor").css("margin-bottom", "0");
+  $("#7-scr").css("display", "none");
+  $("#navbar").css("display", "inline-block");
+  //    $(".title").css("position", "absolute");
+  //  $(".editor").css("position", "absolute");
+  $(".btn p", "#navbar, #storage").empty();
+  $(".btn p", "#navbar, #storage").append("<i class='material-icons'></i>");
+
+  $(".btn", "#navbar, #storage").each(function () {
+    var buttonId = $(this).attr("id");
+    var bIconId = "#bIcon" + [buttonId.slice(-1)];
+    var bIconValue = $(bIconId).val();
+    $(this).find("i").text(bIconValue);
+	console.log("We're setting the icons");
+    setMenuSize();
+  });
+  var VisibilityReset = [
+    "h1-2",
+    "h1-3",
+    "h1-4",
+    "h1-5",
+    "h1-6",
+    "h1-7",
+    "h1-8",
+    "editor-2",
+    "editor-3",
+    "editor-4",
+    "editor-5",
+    "editor-6",
+    "editor-7",
+    "editor-8",
+  ];
+  for (var i = 0; i < VisibilityReset.length; i++) {
+    $("#" + VisibilityReset[i]).css("display", "none");
+  }
+  $("[id^='tabOn-']").trigger("change");
+});
 $("#s-7-ico").on("click", function () {
 	ico = 0;
   $("#main-container").off("DOMNodeInserted", visibilityBehaviour);
@@ -3274,7 +3261,13 @@ $("#s-7-ico").on("click", function () {
   }
   $("[id^='tabOn-']").trigger("change");
 });
-
+var visibilityBehaviour = function (e) {
+  if ($(e.target).hasClass("title") || $(e.target).hasClass("editor")) {
+    $(e.target).css("display", "block");
+  } else if ($(e.target).hasClass("btn")) {
+    $(e.target).appendTo("#storage");
+  }
+};
 $("#s-7-scr").on("click", function () {
 	ico = 0;
   // Move all .btn elements inside #navbar to #storage

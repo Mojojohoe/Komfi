@@ -9,7 +9,7 @@
 }
 .kofi:hover {
 	opacity:1;
-	width: 5px;
+	width: 50px;
 	animation: spin 3s infinite;
 }
 .kofi img{
