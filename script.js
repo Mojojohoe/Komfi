@@ -3125,11 +3125,11 @@ $("#clr5").on("input", function () {
       $("#" + btnId).appendTo("#navbar");
 	  if (ico === 1){
       $("#nvbtn" + number + " p i").text($("bIcon" + number).closest( "i" ).text());
-["#bIcon1","#bIcon2","#bIcon3","#bIcon4","#bIcon5","#bIcon6","#bIcon7"].forEach(function (icon) {
-      getIcon = $(icon).val();
-      var number = [icon.slice(-1)]
-      $("#nvbtn" + number + " p i").text(getIcon);
-  });
+["#bIcon1","#bIcon2","#bIcon3","#bIcon4","#bIcon5","#bIcon6","#bIcon7"].forEach(function (icon, index) {
+    var getIcon = $(icon).val();
+    var number = index + 1;
+    $("#nvbtn" + number + " p i").text(getIcon);
+});
 	  }
       sortEditors();
     } else {
@@ -3207,11 +3207,11 @@ $("#x-7-ico").on("click", function () {
 	$("#navbar .btn p i").css("font-size", btnFont + "rem");
 	$("#storage .btn p i").css("font-size", btnFont + "rem");
   });
-["#bIcon1","#bIcon2","#bIcon3","#bIcon4","#bIcon5","#bIcon6","#bIcon7"].forEach(function (icon) {
-      getIcon = $(icon).val();
-      var number = [icon.slice(-1)]
-      $("#nvbtn" + number + " p i").text(getIcon);
-  });
+["#bIcon1","#bIcon2","#bIcon3","#bIcon4","#bIcon5","#bIcon6","#bIcon7"].forEach(function (icon, index) {
+    var getIcon = $(icon).val();
+    var number = index + 1;
+    $("#nvbtn" + number + " p i").text(getIcon);
+});
   
  
   
