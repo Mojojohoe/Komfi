@@ -571,12 +571,6 @@ $(".slider__box").each(function () {
             $(this).css("display", "none");
           }
         });
-		  
-        if ($(this).css("display") === "none") {
-
-        } else {
-          $(this).css("display", "none");
-        }
       });
     } else if (behavior === "s") {
       if ($(this).hasClass("show-n")) {
