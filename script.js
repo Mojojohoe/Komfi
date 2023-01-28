@@ -5,6 +5,10 @@ That's not suppose to go there. I swear...
 and the recursive if statements... 
 the if statements are just temporary...
 until I have time to do it properly. I swear!
+
+- Switching to buttons and then back to icons breaks icons size.
+- Also breaks tab layout
+- Buttons also don't work
 */
 var loadText = ["Fluffing pillows and propping cushions...","Stitching buttons to the HTML thingy doodad...","Napping... just for like... 2 seconds...","Another quick snooze...Zzzzzzzzzzzzz","Tufting upholstery...","Having a midnight snack...","Making the bed...","Oiling sliders so they don't squeak...","Deleting System32... Just kidding! Haha","Wow, okay this is taking a while...","Knitting all the preference sliders...","Making sure the matress is comfy...","Checking to see why everything is taking so long...","Getting a cup of hot coco and marshmallows...","Eating the last few packing peanuts...","Daydreaming..."]
 var currentIndex = 0;
@@ -96,7 +100,9 @@ $(document).ready(function () {
   };
   hueRotate();
 
-
+  $("[id^='bIcon']").on("click", function () {
+	  storedPicker = $(this).attr("id");
+  }
 // Function to set the BG image to cover.
 function setCover() {
   $("#main-container").css("background-size", "cover");
@@ -3151,6 +3157,7 @@ $("#clr5").on("input", function () {
       }
     }
   });
+
   $("[id^='tabOn-']").on("change", function () {
     var number = this.id.slice(-1);
     var editorId = "editor-" + number;
