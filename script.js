@@ -2778,51 +2778,7 @@ $("#customcss-box").on("input", function () {
   });
 });
 var timeout;
-var loading = 1;
-// Listen for changes to the page
-$(document).on("input change click", "body *", function () {
-  clearTimeout(timeout);
-  timeout = setTimeout(savePage, 2000);
-});
-if (loading === 0){
-function savePage() {
-	  console.log("We are about to save")
-  var bodyData = $("#main-wrapper").html();
-  var umbrella = $("#tri").html();
-  var customStyle = $("#customcss").html();
-  var appliedStyle = $("#defaultcss").html();
-localStorage.setItem("imgWidth",imgWidth);
-localStorage.setItem("gradAngle",gradAngle);
-localStorage.setItem("btnFont",btnFont);
-localStorage.setItem("tabSpace",tabSpace);
-localStorage.setItem("storedPicker",storedPicker);
-localStorage.setItem("btnW",btnW);
-localStorage.setItem("btnH",btnH);
-localStorage.setItem("btnBvl",btnBvl);
-localStorage.setItem("btnClr",btnClr);
-localStorage.setItem("tgl",tgl);
-localStorage.setItem("imgLimit",imgLimit);
-localStorage.setItem("tblLineThick",tblLineThick);
-localStorage.setItem("anim",anim);
-localStorage.setItem("font1",font1);
-localStorage.setItem("font2",font2);
-localStorage.setItem("font3",font3);
-localStorage.setItem("font4",font4);
-localStorage.setItem("mnuPos",mnuPos);
-localStorage.setItem("btnPad",btnPad);
-localStorage.setItem("wdthStore",wdthStore);
-localStorage.setItem("scheme",scheme);
-localStorage.setItem("ico",ico);
-localStorage.setItem("css1",customStyle);
-localStorage.setItem("css2",appliedStyle);
-console.log("We have saved")
-    $("#saved").addClass("saving");
-    setTimeout(function () {
-      $("#saved").removeClass("saving");
-    }, 2000);
-};
-  };
-
+var loading = 0;
 $(document).ready(function () {
 	loading = 1;
   // Check if data exists in local storage
@@ -2870,6 +2826,51 @@ ico = localStorage.getItem("ico");
   }
   
 });
+// Listen for changes to the page
+$(document).on("input change click", "body *", function () {
+  clearTimeout(timeout);
+  timeout = setTimeout(savePage, 2000);
+});
+if (loading === 0){
+function savePage() {
+	  console.log("We are about to save")
+  var bodyData = $("#main-wrapper").html();
+  var umbrella = $("#tri").html();
+  var customStyle = $("#customcss").html();
+  var appliedStyle = $("#defaultcss").html();
+localStorage.setItem("imgWidth",imgWidth);
+localStorage.setItem("gradAngle",gradAngle);
+localStorage.setItem("btnFont",btnFont);
+localStorage.setItem("tabSpace",tabSpace);
+localStorage.setItem("storedPicker",storedPicker);
+localStorage.setItem("btnW",btnW);
+localStorage.setItem("btnH",btnH);
+localStorage.setItem("btnBvl",btnBvl);
+localStorage.setItem("btnClr",btnClr);
+localStorage.setItem("tgl",tgl);
+localStorage.setItem("imgLimit",imgLimit);
+localStorage.setItem("tblLineThick",tblLineThick);
+localStorage.setItem("anim",anim);
+localStorage.setItem("font1",font1);
+localStorage.setItem("font2",font2);
+localStorage.setItem("font3",font3);
+localStorage.setItem("font4",font4);
+localStorage.setItem("mnuPos",mnuPos);
+localStorage.setItem("btnPad",btnPad);
+localStorage.setItem("wdthStore",wdthStore);
+localStorage.setItem("scheme",scheme);
+localStorage.setItem("ico",ico);
+localStorage.setItem("css1",customStyle);
+localStorage.setItem("css2",appliedStyle);
+console.log("We have saved")
+    $("#saved").addClass("saving");
+    setTimeout(function () {
+      $("#saved").removeClass("saving");
+    }, 2000);
+};
+  };
+
+
 function setupToolbar() {
   // Get references to the color picker inputs
   let backPicker = $("#back-color-picker");
