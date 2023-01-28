@@ -221,7 +221,12 @@ h3 span {
   grid-column: 1 / 2;
   grid-row: 1 / 3;
 }
-
+html,
+body {
+  height: 100vh;
+  padding: 0;
+  width: 100%;
+}
 #body,
 .fullstart .slider__color,
 .header,
@@ -1292,11 +1297,11 @@ a {
         imgpoint.remove();
       }
       $("body :not(#main-container)").each(function() {
-        var element = $(this);
-        var html = element.html();
-        var newHtml = html.replace(/&nbsp;/g, "");
-        element.html(newHtml);
-      });
+    var element = $(this);
+    var html = element.html();
+    var newHtml = html.replace(/&nbsp;/g, "");
+    element.html(newHtml);
+});
     };
 </div>
   </body>

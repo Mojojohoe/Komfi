@@ -221,12 +221,7 @@ html {
   box-sizing: border-box;
   font-size: 62.5%;
 }
-html,
-body {
-  height: 100vh;
-  padding: 0;
-  width: 100%;
-}
+
 
 .components h3 {
   font-size: 1.4rem;
@@ -497,9 +492,9 @@ body {
   filter: drop-shadow(5px 5px 3px rgba(17, 21, 28, 0.3));
   display: inline-flex;
   font-size: 2rem;
-  color: var(--greyDark);
+  color: black !important;
   transition: 0.5s;
-  background: var(--greyLight-2);
+  background: white !important;
   margin: 0.1rem;
 }
 .slider__tooltip,
