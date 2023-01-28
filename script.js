@@ -3711,6 +3711,7 @@ $("#getcode").on("click", function () {
               .replace(/@fnt3/g, fnt3)
               .replace(/@fnt4/g, fnt4);
 });
+ js = "<script>" + js + "</script>";
   //Show the box where the output code is displayed.
   $("#code").css("display", "flex");
   //Hide the editor toolbar.
