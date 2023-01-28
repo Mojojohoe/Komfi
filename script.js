@@ -2771,8 +2771,7 @@ function savePage() {
   var umbrella = $("#tri").html();
   var customStyle = $("#customcss").html();
   var appliedStyle = $("#defaultcss").html();
-localStorage.setItem("imgWidth",imgWidth
-localStorage.setItem("imgSize",imgSize);
+localStorage.setItem("imgWidth",imgWidth);
 localStorage.setItem("gradAngle",gradAngle);
 localStorage.setItem("btnFont",btnFont);
 localStorage.setItem("tabSpace",tabSpace);
