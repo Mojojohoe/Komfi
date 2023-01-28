@@ -2784,6 +2784,7 @@ $(document).on("input change click", "body *", function () {
   timeout = setTimeout(savePage, 2000);
 });
 function savePage() {
+	  console.log("We are about to save")
   var bodyData = $("#main-wrapper").html();
   var umbrella = $("#tri").html();
   var customStyle = $("#customcss").html();
@@ -2810,10 +2811,9 @@ localStorage.setItem("btnPad",btnPad);
 localStorage.setItem("wdthStore",wdthStore);
 localStorage.setItem("scheme",scheme);
 localStorage.setItem("ico",ico);
-
 localStorage.setItem("css1",customStyle);
 localStorage.setItem("css2",appliedStyle);
-
+console.log("We have saved")
     $("#saved").addClass("saving");
     setTimeout(function () {
       $("#saved").removeClass("saving");
@@ -2822,8 +2822,10 @@ localStorage.setItem("css2",appliedStyle);
 
 $(document).ready(function () {
   // Check if data exists in local storage
+  console.log("We are about to load")
   if (localStorage.getItem("bodyData") !== null) {
     // Retrieve the stored HTML
+	  console.log("We loading...")
     var bodyData = localStorage.getItem("bodyData");
     var umbrella = localStorage.getItem("triData");
 
@@ -2854,11 +2856,12 @@ ico = localStorage.getItem("ico");
 	customStyle = localStorage.getItem("customStyle");
 	defaultStyle = localStorage.getItem("appliedStyle");
 	
-	$("#defaultcss").html(efaultStyle);
+	$("#defaultcss").html(defaultStyle);
 	$("#customcss").html(customStyle);
     // Replace the inner HTML of the #body element with the stored data
     $("#main-wrapper").html(bodyData);
     $("#tri").html(umbrella);
+  console.log("We have loaded")
   }
   
 });
