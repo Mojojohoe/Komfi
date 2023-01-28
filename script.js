@@ -2779,6 +2779,7 @@ $("#customcss-box").on("input", function () {
 });
 var timeout;
 // Listen for changes to the page
+function loadDone () {
 $(document).on("input change click", "body *", function () {
   clearTimeout(timeout);
   timeout = setTimeout(savePage, 2000);
@@ -2790,7 +2791,11 @@ function savePage() {
   var appliedStyle = $("#defaultcss").html();
 
 localStorage.setItem("bodyData",bodyData);
-localStorage.setItem("umbrella",triData); 
+localStorage.setItem("triData",umbrella); 
+
+localStorage.setItem("css1",customStyle);
+localStorage.setItem("css2",appliedStyle);
+
 localStorage.setItem("imgWidth",imgWidth);
 localStorage.setItem("gradAngle",gradAngle);  
 localStorage.setItem("imgWidth",imgWidth);
@@ -2816,15 +2821,12 @@ localStorage.setItem("wdthStore",wdthStore);
 localStorage.setItem("scheme",scheme);
 localStorage.setItem("ico",ico);
 
-localStorage.setItem("css1",customStyle);
-localStorage.setItem("css2",appliedStyle);
-
     $("#saved").addClass("saving");
     setTimeout(function () {
       $("#saved").removeClass("saving");
     }, 2000);
   };
-
+}
 $(document).ready(function () {
   // Check if data exists in local storage
 
@@ -2832,6 +2834,9 @@ $(document).ready(function () {
     // Retrieve the stored HTML
     var bodyData = localStorage.getItem("bodyData");
     var umbrella = localStorage.getItem("triData");
+	
+	var customStyle = localStorage.getItem("css1");
+	var defaultStyle = localStorage.getItem("css2");
 
 imgWidth = localStorage.getItem("imgWidth");
 imgSize = localStorage.getItem("imgSize");
@@ -2857,16 +2862,13 @@ wdthStore = localStorage.getItem("wdthStore");
 scheme = localStorage.getItem("scheme");
 ico = localStorage.getItem("ico");
 	
-	customStyle = localStorage.getItem("css1");
-	defaultStyle = localStorage.getItem("css2");
-	
 	$("#defaultcss").html(defaultStyle);
 	$("#customcss").html(customStyle);
     // Replace the inner HTML of the #body element with the stored data
     $("#main-wrapper").html(bodyData);
     $("#tri").html(umbrella);
   }
-  
+  loadDone();
 });
 function setupToolbar() {
   // Get references to the color picker inputs
