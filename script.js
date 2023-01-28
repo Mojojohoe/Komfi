@@ -3189,8 +3189,6 @@ $("#x-7-ico").on("click", function () {
   $(".editor").css("margin-bottom", "0");
   $("#7-scr").css("display", "none");
   $("#navbar").css("display", "inline-block");
-  //    $(".title").css("position", "absolute");
-  //  $(".editor").css("position", "absolute");
   $(".btn p", "#navbar, #storage").empty();
   $(".btn p", "#navbar, #storage").append("<i class='material-icons'></i>");
 
@@ -3200,11 +3198,22 @@ $("#x-7-ico").on("click", function () {
     var bIconValue = $(bIconId).val();
     $(this).find("i").text(bIconValue);
 	console.log("We're setting the icons");
-    	$("#navbar .btn p").css("font-size", btnFont + "rem");
+    $("#navbar .btn p").css("font-size", btnFont + "rem");
 	$("#storage .btn p").css("font-size", btnFont + "rem");
 	$("#navbar .btn p i").css("font-size", btnFont + "rem");
 	$("#storage .btn p i").css("font-size", btnFont + "rem");
   });
+   var iconRefresh = ["#bIcon1","#bIcon2","#bIcon3","#bIcon4","#bIcon5","#bIcon6","#bIcon7"];
+
+  iconRefresh.forEach(function (icon) {
+      getIcon = $(this).val();
+      $(this).trigger("change");
+      var number = [buttonId.slice(-1)]
+      $("#nvbtn" + number + " p i").text(getIcon);
+  });
+  
+ 
+  
   var VisibilityReset = [
     "h1-2",
     "h1-3",
