@@ -2778,7 +2778,7 @@ $("#customcss-box").on("input", function () {
   });
 });
 var timeout;
-var loading = 0;
+var loading = 1;
 $(document).ready(function () {
 	loading = 1;
   // Check if data exists in local storage
