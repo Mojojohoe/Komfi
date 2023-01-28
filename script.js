@@ -214,12 +214,6 @@ $("#clr11").on("input", function () {
   $("#navbar").css("background-color", $("#clr11").val());
 });
 // This sets the font size of buttons (or icons)
-function setMenuSize() {
-  $("#navbar .btn p").css("font-size", btnFont + "rem");
-  $("#storage .btn p").css("font-size", btnFont + "rem");
-  $("#navbar .btn p i").css("font-size", btnFont + "rem");
-  $("#storage .btn p i").css("font-size", btnFont + "rem");
-}
 function setBtnPad() {
   if (mnuPos === 3) {
     $("#navbar .btn, #storage .btn").css("margin-left", btnPad + "rem");
@@ -280,7 +274,12 @@ $(".slider__box").each(function () {
     $btn.on("mouseout", function () {
       $tooltip.css("opacity", 0);
     });
-
+	function setMenuSize() {
+	$("#navbar .btn p").css("font-size", btnFont + "rem");
+	$("#storage .btn p").css("font-size", btnFont + "rem");
+	$("#navbar .btn p i").css("font-size", btnFont + "rem");
+	$("#storage .btn p i").css("font-size", btnFont + "rem");
+	}
     function onMouseMove(e) {
       e.preventDefault();
       let targetRect = $container[0].getBoundingClientRect();
