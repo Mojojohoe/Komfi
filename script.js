@@ -2824,14 +2824,17 @@ ico = localStorage.getItem("ico");
   console.log("We have loaded")
   
   }
+  console.log("setting loading which is currently : " + loading)
  loading = 0; 
+ console.log("loading set to " + loading)
 });
 // Listen for changes to the page
 $(document).on("input change click", "body *", function () {
   clearTimeout(timeout);
   timeout = setTimeout(savePage, 2000);
 });
-if (loading === 0){
+console.log(loading)
+if ("Checkign load status: " + loading === 0){
 function savePage() {
 	  console.log("We are about to save")
   var bodyData = $("#main-wrapper").html();
