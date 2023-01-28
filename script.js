@@ -6,6 +6,13 @@ and the recursive if statements...
 the if statements are just temporary...
 until I have time to do it properly. I swear!
 */
+var loadText = ["Fluffing pillows and propping cushions...","Stitching buttons to the HTML thingy doodad...","Napping... just for like... 2 seconds...","Another quick snooze...Zzzzzzzzzzzzz","Tufting upholstery...","Having a midnight snack...","Making the bed...","Oiling sliders so they don't squeak...","Deleting System32... Just kidding! Haha","Wow, okay this is taking a while...","Knitting all the preference sliders...","Making sure the matress is comfy...","Checking to see why everything is taking so long...","Getting a cup of hot coco and marshmallows...","Eating the last few packing peanuts...","Daydreaming..."]
+var currentIndex = 0;
+setInterval(function() {
+    var randomIndex = Math.floor(Math.random() * loadText.length);
+    var randomText = loadText[randomIndex];
+    $("#loadtext").text(randomText);
+}, 5000);
 
 var imgWidth;
 var imgSize = 100;
@@ -3487,5 +3494,9 @@ jQuery("div").bind("dragover drop", function (event) {
 };
 $(window).on('load', function() {
   setupToolbar()
+  $("#loading").css("opacity",0);
+      setTimeout(function () {
+      $$("#loading").css("display","none");
+    }, 500);
 });
 
