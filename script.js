@@ -571,7 +571,6 @@ $(".slider__box").each(function () {
             $(this).css("display", "none");
           }
         });
-      };
     } else if (behavior === "s") {
       if ($(this).hasClass("show-n")) {
         $("#1-n").css("display", "inline-block");
