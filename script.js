@@ -2370,36 +2370,7 @@ $("#clearcache").on("click", function () {
     }
 });
 
-$("[id^='nvbtn']").on("click", function () {
-  var number = this.id.slice(-1);
-  var h1Id = "#h1-" + number;
-  var editorId = "#editor-" + number;
-  var delay;
-  if (anim === 0) {
-    delay = 0;
-  } else {
-    delay = 300;
-  }
-  if ($(editorId).hasClass("shown")) {
-  } else {
-    $(".shown").removeClass("slide-in scale-in fade-in");
-    $(h1Id).removeClass("slide-in scale-in fade-in");
-    $(editorId).removeClass("slide-in scale-in fade-in");
 
-    setTimeout(function () {
-      $(".shown").hide();
-      $(".shown").removeClass("shown");
-      $(h1Id).show();
-      $(editorId).show();
-      setTimeout(function () {
-        $(h1Id).addClass("shown");
-        $(h1Id).addClass(anim + "-in");
-        $(editorId).addClass(anim + "-in");
-        $(editorId).addClass("shown");
-      }, delay / 10);
-    }, delay);
-  }
-});
 $(".editor").addClass("scale-out scale-in");
 $(".title").addClass("scale-out scale-in");
 interact("img")
@@ -2885,6 +2856,36 @@ ico = localStorage.getItem("ico");
   loadDone();
 });
 function setupToolbar() {
+	$("[id^='nvbtn']").on("click", function () {
+  var number = this.id.slice(-1);
+  var h1Id = "#h1-" + number;
+  var editorId = "#editor-" + number;
+  var delay;
+  if (anim === 0) {
+    delay = 0;
+  } else {
+    delay = 300;
+  }
+  if ($(editorId).hasClass("shown")) {
+  } else {
+    $(".shown").removeClass("slide-in scale-in fade-in");
+    $(h1Id).removeClass("slide-in scale-in fade-in");
+    $(editorId).removeClass("slide-in scale-in fade-in");
+
+    setTimeout(function () {
+      $(".shown").hide();
+      $(".shown").removeClass("shown");
+      $(h1Id).show();
+      $(editorId).show();
+      setTimeout(function () {
+        $(h1Id).addClass("shown");
+        $(h1Id).addClass(anim + "-in");
+        $(editorId).addClass(anim + "-in");
+        $(editorId).addClass("shown");
+      }, delay / 10);
+    }, delay);
+  }
+});
   // Get references to the color picker inputs
   let backPicker = $("#back-color-picker");
   let forePicker = $("#fore-color-picker");
