@@ -214,48 +214,8 @@ $("#clr11").on("input", function () {
   $("#navbar").css("background-color", $("#clr11").val());
 });
 // This sets the font size of buttons (or icons)
-function setBtnPad() {
-  if (mnuPos === 3) {
-    $("#navbar .btn, #storage .btn").css("margin-left", btnPad + "rem");
-    $("#navbar .btn, #storage .btn").css("margin-right", btnPad + "rem");
-    $("#navbar .btn, #storage .btn").css("margin-top", "0rem");
-    $("#navbar .btn, #storage .btn").css("margin-bottom", "0rem");
-  } else {
-    $("#navbar .btn, #storage .btn").css("margin-top", btnPad + "rem");
-    $("#navbar .btn, #storage .btn").css("margin-bottom", btnPad + "rem");
-    $("#navbar .btn, #storage .btn").css("margin-left", "0rem");
-    $("#navbar .btn, #storage .btn").css("margin-right", "0rem");
-  }
-}
-function setBtnSize() {
-  $("#navbar .btn").css("height", btnH + "rem");
-  $("#storage .btn").css("height", btnH + "rem");
-  $("#navbar .btn").css("border-radius", btnBvl + "rem");
-  $("#storage .btn").css("border-radius", btnBvl + "rem");
-  var menuSize = btnW.toFixed(2);
-  var contSize = 100 - menuSize;
-  if (mnuPos === 1) {
-    $("#main-container").css(
-      "grid-template-columns",
-      menuSize + "% " + contSize + "%"
-    );
-    $("#navbar .btn").css("width", "100%");
-    $("#navbar").css("height", "100%");
-  } else if (mnuPos === 2) {
-    var temp = contSize;
-    contSize = menuSize;
-    menuSize = temp;
-    $("#main-container").css(
-      "grid-template-columns",
-      menuSize + "% " + contSize + "%"
-    );
-    $("#navbar .btn").css("width", "100%");
-    $("#navbar").css("height", "100%");
-  } else if (mnuPos === 3) {
-    $("#navbar .btn").css("width", menuSize + "%");
-    $("#navbar").css("height", "auto");
-  }
-}
+
+
 // The sliders control a few different things. Here I lazily just shoehorn in cases for different sliders.
 $(".slider__box").each(function () {
   $(this).on("mousedown", function (e) {
@@ -429,7 +389,33 @@ $(".slider__box").each(function () {
           $tooltip.text(percentPosition.toFixed(2));
           $tooltip.attr("data-value", percentPosition.toFixed(2));
           btnW = percentPosition;
-          setBtnSize();
+            $("#navbar .btn").css("height", btnH + "rem");
+  $("#storage .btn").css("height", btnH + "rem");
+  $("#navbar .btn").css("border-radius", btnBvl + "rem");
+  $("#storage .btn").css("border-radius", btnBvl + "rem");
+  var menuSize = btnW.toFixed(2);
+  var contSize = 100 - menuSize;
+  if (mnuPos === 1) {
+    $("#main-container").css(
+      "grid-template-columns",
+      menuSize + "% " + contSize + "%"
+    );
+    $("#navbar .btn").css("width", "100%");
+    $("#navbar").css("height", "100%");
+  } else if (mnuPos === 2) {
+    var temp = contSize;
+    contSize = menuSize;
+    menuSize = temp;
+    $("#main-container").css(
+      "grid-template-columns",
+      menuSize + "% " + contSize + "%"
+    );
+    $("#navbar .btn").css("width", "100%");
+    $("#navbar").css("height", "100%");
+  } else if (mnuPos === 3) {
+    $("#navbar .btn").css("width", menuSize + "%");
+    $("#navbar").css("height", "auto");
+  }
         } else if ($tooltip.hasClass("slider__opacity")) {
           percentPosition = percentPosition - 3;
           $tooltip.text(Math.round(percentPosition) + "%");
@@ -475,13 +461,65 @@ $(".slider__box").each(function () {
           $tooltip.text(percentPosition.toFixed(2));
           $tooltip.attr("data-value", percentPosition.toFixed(2));
           btnH = percentPosition;
-          setBtnSize();
+            $("#navbar .btn").css("height", btnH + "rem");
+  $("#storage .btn").css("height", btnH + "rem");
+  $("#navbar .btn").css("border-radius", btnBvl + "rem");
+  $("#storage .btn").css("border-radius", btnBvl + "rem");
+  var menuSize = btnW.toFixed(2);
+  var contSize = 100 - menuSize;
+  if (mnuPos === 1) {
+    $("#main-container").css(
+      "grid-template-columns",
+      menuSize + "% " + contSize + "%"
+    );
+    $("#navbar .btn").css("width", "100%");
+    $("#navbar").css("height", "100%");
+  } else if (mnuPos === 2) {
+    var temp = contSize;
+    contSize = menuSize;
+    menuSize = temp;
+    $("#main-container").css(
+      "grid-template-columns",
+      menuSize + "% " + contSize + "%"
+    );
+    $("#navbar .btn").css("width", "100%");
+    $("#navbar").css("height", "100%");
+  } else if (mnuPos === 3) {
+    $("#navbar .btn").css("width", menuSize + "%");
+    $("#navbar").css("height", "auto");
+  }
         } else if ($tooltip.hasClass("slider__btnBvl")) {
           percentPosition = percentPosition / 10 - 0.31;
           $tooltip.text(percentPosition.toFixed(2));
           $tooltip.attr("data-value", percentPosition.toFixed(2));
           btnBvl = percentPosition;
-          setBtnSize();
+            $("#navbar .btn").css("height", btnH + "rem");
+  $("#storage .btn").css("height", btnH + "rem");
+  $("#navbar .btn").css("border-radius", btnBvl + "rem");
+  $("#storage .btn").css("border-radius", btnBvl + "rem");
+  var menuSize = btnW.toFixed(2);
+  var contSize = 100 - menuSize;
+  if (mnuPos === 1) {
+    $("#main-container").css(
+      "grid-template-columns",
+      menuSize + "% " + contSize + "%"
+    );
+    $("#navbar .btn").css("width", "100%");
+    $("#navbar").css("height", "100%");
+  } else if (mnuPos === 2) {
+    var temp = contSize;
+    contSize = menuSize;
+    menuSize = temp;
+    $("#main-container").css(
+      "grid-template-columns",
+      menuSize + "% " + contSize + "%"
+    );
+    $("#navbar .btn").css("width", "100%");
+    $("#navbar").css("height", "100%");
+  } else if (mnuPos === 3) {
+    $("#navbar .btn").css("width", menuSize + "%");
+    $("#navbar").css("height", "auto");
+  }
         } else if ($tooltip.hasClass("slider__space")) {
           percentPosition = percentPosition / 3 - 1.03;
           $tooltip.text(percentPosition.toFixed(2));
@@ -3301,8 +3339,44 @@ $("#t-9-fix").on("click", function () {
 });
 $("#mnu-left").on("click", function () {
   mnuPos = 1;
-  setBtnPad();
-  setBtnSize();
+    if (mnuPos === 3) {
+    $("#navbar .btn, #storage .btn").css("margin-left", btnPad + "rem");
+    $("#navbar .btn, #storage .btn").css("margin-right", btnPad + "rem");
+    $("#navbar .btn, #storage .btn").css("margin-top", "0rem");
+    $("#navbar .btn, #storage .btn").css("margin-bottom", "0rem");
+  } else {
+    $("#navbar .btn, #storage .btn").css("margin-top", btnPad + "rem");
+    $("#navbar .btn, #storage .btn").css("margin-bottom", btnPad + "rem");
+    $("#navbar .btn, #storage .btn").css("margin-left", "0rem");
+    $("#navbar .btn, #storage .btn").css("margin-right", "0rem");
+  }
+    $("#navbar .btn").css("height", btnH + "rem");
+  $("#storage .btn").css("height", btnH + "rem");
+  $("#navbar .btn").css("border-radius", btnBvl + "rem");
+  $("#storage .btn").css("border-radius", btnBvl + "rem");
+  var menuSize = btnW.toFixed(2);
+  var contSize = 100 - menuSize;
+  if (mnuPos === 1) {
+    $("#main-container").css(
+      "grid-template-columns",
+      menuSize + "% " + contSize + "%"
+    );
+    $("#navbar .btn").css("width", "100%");
+    $("#navbar").css("height", "100%");
+  } else if (mnuPos === 2) {
+    var temp = contSize;
+    contSize = menuSize;
+    menuSize = temp;
+    $("#main-container").css(
+      "grid-template-columns",
+      menuSize + "% " + contSize + "%"
+    );
+    $("#navbar .btn").css("width", "100%");
+    $("#navbar").css("height", "100%");
+  } else if (mnuPos === 3) {
+    $("#navbar .btn").css("width", menuSize + "%");
+    $("#navbar").css("height", "auto");
+  }
   $("#navbar").css("display", "block");
   $("#main-container").css("display", "grid");
   $("#sub-container").css("grid-column", "2 / 3");
@@ -3311,8 +3385,44 @@ $("#mnu-left").on("click", function () {
 });
 $("#mnu-right").on("click", function () {
   mnuPos = 2;
-  setBtnSize();
-  setBtnPad();
+    $("#navbar .btn").css("height", btnH + "rem");
+  $("#storage .btn").css("height", btnH + "rem");
+  $("#navbar .btn").css("border-radius", btnBvl + "rem");
+  $("#storage .btn").css("border-radius", btnBvl + "rem");
+  var menuSize = btnW.toFixed(2);
+  var contSize = 100 - menuSize;
+  if (mnuPos === 1) {
+    $("#main-container").css(
+      "grid-template-columns",
+      menuSize + "% " + contSize + "%"
+    );
+    $("#navbar .btn").css("width", "100%");
+    $("#navbar").css("height", "100%");
+  } else if (mnuPos === 2) {
+    var temp = contSize;
+    contSize = menuSize;
+    menuSize = temp;
+    $("#main-container").css(
+      "grid-template-columns",
+      menuSize + "% " + contSize + "%"
+    );
+    $("#navbar .btn").css("width", "100%");
+    $("#navbar").css("height", "100%");
+  } else if (mnuPos === 3) {
+    $("#navbar .btn").css("width", menuSize + "%");
+    $("#navbar").css("height", "auto");
+  }
+    if (mnuPos === 3) {
+    $("#navbar .btn, #storage .btn").css("margin-left", btnPad + "rem");
+    $("#navbar .btn, #storage .btn").css("margin-right", btnPad + "rem");
+    $("#navbar .btn, #storage .btn").css("margin-top", "0rem");
+    $("#navbar .btn, #storage .btn").css("margin-bottom", "0rem");
+  } else {
+    $("#navbar .btn, #storage .btn").css("margin-top", btnPad + "rem");
+    $("#navbar .btn, #storage .btn").css("margin-bottom", btnPad + "rem");
+    $("#navbar .btn, #storage .btn").css("margin-left", "0rem");
+    $("#navbar .btn, #storage .btn").css("margin-right", "0rem");
+  }
   $("#navbar").css("display", "block");
   $("#main-container").css("display", "grid");
   $("#navbar").css("grid-column", "2 / 3");
@@ -3321,8 +3431,44 @@ $("#mnu-right").on("click", function () {
 });
 $("#mnu-top").on("click", function () {
   mnuPos = 3;
-  setBtnPad();
-  setBtnSize();
+    if (mnuPos === 3) {
+    $("#navbar .btn, #storage .btn").css("margin-left", btnPad + "rem");
+    $("#navbar .btn, #storage .btn").css("margin-right", btnPad + "rem");
+    $("#navbar .btn, #storage .btn").css("margin-top", "0rem");
+    $("#navbar .btn, #storage .btn").css("margin-bottom", "0rem");
+  } else {
+    $("#navbar .btn, #storage .btn").css("margin-top", btnPad + "rem");
+    $("#navbar .btn, #storage .btn").css("margin-bottom", btnPad + "rem");
+    $("#navbar .btn, #storage .btn").css("margin-left", "0rem");
+    $("#navbar .btn, #storage .btn").css("margin-right", "0rem");
+  }
+    $("#navbar .btn").css("height", btnH + "rem");
+  $("#storage .btn").css("height", btnH + "rem");
+  $("#navbar .btn").css("border-radius", btnBvl + "rem");
+  $("#storage .btn").css("border-radius", btnBvl + "rem");
+  var menuSize = btnW.toFixed(2);
+  var contSize = 100 - menuSize;
+  if (mnuPos === 1) {
+    $("#main-container").css(
+      "grid-template-columns",
+      menuSize + "% " + contSize + "%"
+    );
+    $("#navbar .btn").css("width", "100%");
+    $("#navbar").css("height", "100%");
+  } else if (mnuPos === 2) {
+    var temp = contSize;
+    contSize = menuSize;
+    menuSize = temp;
+    $("#main-container").css(
+      "grid-template-columns",
+      menuSize + "% " + contSize + "%"
+    );
+    $("#navbar .btn").css("width", "100%");
+    $("#navbar").css("height", "100%");
+  } else if (mnuPos === 3) {
+    $("#navbar .btn").css("width", menuSize + "%");
+    $("#navbar").css("height", "auto");
+  }
   $("#main-container").css("display", "flex");
   $("#main-container").css("flex-direction", "column");
   $("#navbar").css("display", "flex");
