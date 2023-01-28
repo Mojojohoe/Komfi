@@ -3713,12 +3713,11 @@ $("#t-16-not").on("click", function () {
 
 $("#getcode").on("click", function () {
   var js = $("#takeout").html();
-  js.text(function(_,txt) {
-    return txt.replace(/@fnt1/g, fnt1)
-              .replace(/@fnt2/g, fnt2)
-              .replace(/@fnt3/g, fnt3)
-              .replace(/@fnt4/g, fnt4);
-});
+  js = js.replace(/@fnt1/g, fnt1)
+        .replace(/@fnt2/g, fnt2)
+        .replace(/@fnt3/g, fnt3)
+        .replace(/@fnt4/g, fnt4);
+		
  js = "<script>" + js + "</script>";
   //Show the box where the output code is displayed.
   $("#code").css("display", "flex");
