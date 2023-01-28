@@ -8,7 +8,11 @@ until I have time to do it properly. I swear!
 
 - Switching to buttons and then back to icons breaks icons size.
 - Also breaks tab layout
-- Buttons also don't work
+- Buttons also don't work after a certain point
+- Animation issue on scrolling causes o width elements and funky behavior when switching of scroll 
+- $("#" + storedPicker) needs to be fixed
+- Comfi overlay is not in correct place
+- set fonts when empty
 */
 var loadText = ["Fluffing pillows and propping cushions...","Stitching buttons to the HTML thingy doodad...","Napping... just for like... 2 seconds...","Another quick snooze...Zzzzzzzzzzzzz","Tufting upholstery...","Having a midnight snack...","Making the bed...","Oiling sliders so they don't squeak...","Deleting System32... Just kidding! Haha","Wow, okay this is taking a while...","Knitting all the preference sliders...","Making sure the matress is comfy...","Checking to see why everything is taking so long...","Getting a cup of hot coco and marshmallows...","Eating the last few packing peanuts...","Daydreaming..."]
 var currentIndex = 0;
@@ -2765,8 +2769,35 @@ $(document).on("input change click", "body *", function () {
 function savePage() {
   var bodyData = $("#main-wrapper").html();
   var umbrella = $("#tri").html();
-  localStorage.setItem("bodyData", bodyData);
-  localStorage.setItem("triData", bodyData);
+  var customStyle = $("#customcss").html();
+  var appliedStyle = $("#defaultcss").html();
+localStorage.setItem("imgWidth",imgWidth
+localStorage.setItem("imgSize",imgSize);
+localStorage.setItem("gradAngle",gradAngle);
+localStorage.setItem("btnFont",btnFont);
+localStorage.setItem("tabSpace",tabSpace);
+localStorage.setItem("storedPicker",storedPicker);
+localStorage.setItem("btnW",btnW);
+localStorage.setItem("btnH",btnH);
+localStorage.setItem("btnBvl",btnBvl);
+localStorage.setItem("btnClr",btnClr);
+localStorage.setItem("tgl",tgl);
+localStorage.setItem("imgLimit",imgLimit);
+localStorage.setItem("tblLineThick",tblLineThick);
+localStorage.setItem("anim",anim);
+localStorage.setItem("font1",font1);
+localStorage.setItem("font2",font2);
+localStorage.setItem("font3",font3);
+localStorage.setItem("font4",font4);
+localStorage.setItem("mnuPos",mnuPos);
+localStorage.setItem("btnPad",btnPad);
+localStorage.setItem("wdthStore",wdthStore);
+localStorage.setItem("scheme",scheme);
+localStorage.setItem("ico",ico);
+
+localStorage.setItem("css1",customStyle);
+localStorage.setItem("css2",appliedStyle);
+
     $("#saved").addClass("saving");
     setTimeout(function () {
       $("#saved").removeClass("saving");
@@ -2779,6 +2810,36 @@ $(document).ready(function () {
     // Retrieve the stored HTML
     var bodyData = localStorage.getItem("bodyData");
     var umbrella = localStorage.getItem("triData");
+
+imgWidth = localStorage.getItem("imgWidth");
+imgSize = localStorage.getItem("imgSize");
+gradAngle = localStorage.getItem("gradAngle");
+btnFont = localStorage.getItem("btnFont");
+tabSpace = localStorage.getItem("tabSpace");
+storedPicker = localStorage.getItem("storedPicker");
+btnW = localStorage.getItem("btnW");
+btnH = localStorage.getItem("btnH");
+btnBvl = localStorage.getItem("btnBvl");
+btnClr = localStorage.getItem("btnClr");
+tgl = localStorage.getItem("tgl");
+imgLimit = localStorage.getItem("imgLimit ");
+tblLineThick = localStorage.getItem("tblLineThick");
+anim = localStorage.getItem("anim");
+font1 = localStorage.getItem("font1");
+font2 = localStorage.getItem("font2");
+font3 = localStorage.getItem("font3");
+font4 = localStorage.getItem("font4");
+mnuPos = localStorage.getItem("mnuPos");
+btnPad = localStorage.getItem("btnPad ");
+wdthStore = localStorage.getItem("wdthStore");
+scheme = localStorage.getItem("scheme");
+ico = localStorage.getItem("ico");
+	
+	customStyle = localStorage.getItem("customStyle");
+	defaultStyle = localStorage.getItem("appliedStyle");
+	
+	$("#defaultcss").html(efaultStyle);
+	$("#customcss").html(customStyle);
     // Replace the inner HTML of the #body element with the stored data
     $("#main-wrapper").html(bodyData);
     $("#tri").html(umbrella);
@@ -2989,7 +3050,7 @@ $("a[data-command='InsertUmbrella']").on("click", function () {
   $popupClose.on("click", function () {
     // Hide the modal by setting the display property to 'none'
     $modal.css("display", "none");
-    $("#toolbar").css("display", "flex");
+    $("#toolbar").css("display", "block");
   });
 
 // Folding menu.
@@ -3637,15 +3698,15 @@ $("#getcode").on("click", function () {
 
   $("#code-html").text(html);
   $("#processing").empty();
-
-  var selectorsToRemove = ["#collapse-button, .container, html", ".container"];
+/*  var selectorsToRemove = ["#collapse-button, .container, html", ".container"];
   var css = $("style").html();
   $.each(selectorsToRemove, function (index, selector) {
     css = css.replace(
       new RegExp("(^|\\n)\\s*" + selector + "\\s*\\{[^\\}]*\\}", "g"),
       ""
     );
-  });
+  });*/
+  var css = $("#defaultcss").html() + $("#customcss").html();
   $("#code-css").text(css);
 
   //We then add out own JS as a variable to the JS box.
