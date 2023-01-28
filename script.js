@@ -10,9 +10,6 @@ until I have time to do it properly. I swear!
 - Also breaks tab layout
 - Buttons also don't work after a certain point
 - Animation issue on scrolling causes o width elements and funky behavior when switching of scroll 
-- $("#" + storedPicker) needs to be fixed
-- Comfi overlay is not in correct place
-- set fonts when empty
 */
 var loadText = ["Fluffing pillows and propping cushions...","Stitching buttons to the HTML thingy doodad...","Napping... just for like... 2 seconds...","Another quick snooze...Zzzzzzzzzzzzz","Tufting upholstery...","Having a midnight snack...","Making the bed...","Oiling sliders so they don't squeak...","Deleting System32... Just kidding! Haha","Wow, okay this is taking a while...","Knitting all the preference sliders...","Making sure the matress is comfy...","Checking to see why everything is taking so long...","Getting a cup of hot coco and marshmallows...","Eating the last few packing peanuts...","Daydreaming..."]
 var currentIndex = 0;
@@ -420,7 +417,7 @@ $(".slider__box").each(function () {
           $tooltip.text(percentPosition.toFixed(2));
           $tooltip.attr("data-value", percentPosition.toFixed(2));
           btnW = percentPosition;
-          $("#navbar .btn").css("height", btnH + "rem");
+$("#navbar .btn").css("height", btnH + "rem");
   $("#storage .btn").css("height", btnH + "rem");
   $("#navbar .btn").css("border-radius", btnBvl + "rem");
   $("#storage .btn").css("border-radius", btnBvl + "rem");
@@ -446,6 +443,7 @@ $(".slider__box").each(function () {
     $("#navbar").css("height", "100%");
   } else if (mnuPos === 3) {
     $("#navbar .btn").css("width", menuSize + "%");
+	$("#storage .btn").css("width", menuSize + "%");
     $("#navbar").css("height", "auto");
   }
         } else if ($tooltip.hasClass("slider__opacity")) {
