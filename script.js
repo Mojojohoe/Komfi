@@ -2822,9 +2822,9 @@ ico = localStorage.getItem("ico");
     $("#main-wrapper").html(bodyData);
     $("#tri").html(umbrella);
   console.log("We have loaded")
-  loading = 0;
-  }
   
+  }
+ loading = 0; 
 });
 // Listen for changes to the page
 $(document).on("input change click", "body *", function () {
