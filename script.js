@@ -2778,14 +2778,58 @@ $("#customcss-box").on("input", function () {
   });
 });
 var timeout;
-var loading = 1;
+// Listen for changes to the page
+$(document).on("input change click", "body *", function () {
+  clearTimeout(timeout);
+  timeout = setTimeout(savePage, 2000);
+});
+function savePage() {
+  var bodyData = $("#main-wrapper").html();
+  var umbrella = $("#tri").html();
+  var customStyle = $("#customcss").html();
+  var appliedStyle = $("#defaultcss").html();
+
+localStorage.setItem("bodyData",bodyData);
+localStorage.setItem("umbrella",triData); 
+localStorage.setItem("imgWidth",imgWidth);
+localStorage.setItem("gradAngle",gradAngle);  
+localStorage.setItem("imgWidth",imgWidth);
+localStorage.setItem("gradAngle",gradAngle);
+localStorage.setItem("btnFont",btnFont);
+localStorage.setItem("tabSpace",tabSpace);
+localStorage.setItem("storedPicker",storedPicker);
+localStorage.setItem("btnW",btnW);
+localStorage.setItem("btnH",btnH);
+localStorage.setItem("btnBvl",btnBvl);
+localStorage.setItem("btnClr",btnClr);
+localStorage.setItem("tgl",tgl);
+localStorage.setItem("imgLimit",imgLimit);
+localStorage.setItem("tblLineThick",tblLineThick);
+localStorage.setItem("anim",anim);
+localStorage.setItem("font1",font1);
+localStorage.setItem("font2",font2);
+localStorage.setItem("font3",font3);
+localStorage.setItem("font4",font4);
+localStorage.setItem("mnuPos",mnuPos);
+localStorage.setItem("btnPad",btnPad);
+localStorage.setItem("wdthStore",wdthStore);
+localStorage.setItem("scheme",scheme);
+localStorage.setItem("ico",ico);
+
+localStorage.setItem("css1",customStyle);
+localStorage.setItem("css2",appliedStyle);
+
+    $("#saved").addClass("saving");
+    setTimeout(function () {
+      $("#saved").removeClass("saving");
+    }, 2000);
+  };
+
 $(document).ready(function () {
-	loading = 1;
   // Check if data exists in local storage
-  console.log("We are about to load")
+
   if (localStorage.getItem("bodyData") !== null) {
     // Retrieve the stored HTML
-	  console.log("We loading...")
     var bodyData = localStorage.getItem("bodyData");
     var umbrella = localStorage.getItem("triData");
 
@@ -2813,68 +2857,17 @@ wdthStore = localStorage.getItem("wdthStore");
 scheme = localStorage.getItem("scheme");
 ico = localStorage.getItem("ico");
 	
-	customStyle = localStorage.getItem("customStyle");
-	defaultStyle = localStorage.getItem("appliedStyle");
+	customStyle = localStorage.getItem("css1");
+	defaultStyle = localStorage.getItem("css2");
 	
 	$("#defaultcss").html(defaultStyle);
 	$("#customcss").html(customStyle);
     // Replace the inner HTML of the #body element with the stored data
     $("#main-wrapper").html(bodyData);
     $("#tri").html(umbrella);
-  console.log("We have loaded")
-  
   }
-  console.log("setting loading which is currently : " + loading)
- loading = 0; 
- console.log("loading set to " + loading)
+  
 });
-// Listen for changes to the page
-$(document).on("input change click", "body *", function () {
-  clearTimeout(timeout);
-  timeout = setTimeout(savePage, 2000);
-});
-console.log("Checkin load status: " + loading);
-
-function savePage() {
-	if (loading === 0){
-	  console.log("We are saving")
-  var bodyData = $("#main-wrapper").html();
-  var umbrella = $("#tri").html();
-  var customStyle = $("#customcss").html();
-  var appliedStyle = $("#defaultcss").html();
-localStorage.setItem("imgWidth",imgWidth);
-localStorage.setItem("gradAngle",gradAngle);
-localStorage.setItem("btnFont",btnFont);
-localStorage.setItem("tabSpace",tabSpace);
-localStorage.setItem("storedPicker",storedPicker);
-localStorage.setItem("btnW",btnW);
-localStorage.setItem("btnH",btnH);
-localStorage.setItem("btnBvl",btnBvl);
-localStorage.setItem("btnClr",btnClr);
-localStorage.setItem("tgl",tgl);
-localStorage.setItem("imgLimit",imgLimit);
-localStorage.setItem("tblLineThick",tblLineThick);
-localStorage.setItem("anim",anim);
-localStorage.setItem("font1",font1);
-localStorage.setItem("font2",font2);
-localStorage.setItem("font3",font3);
-localStorage.setItem("font4",font4);
-localStorage.setItem("mnuPos",mnuPos);
-localStorage.setItem("btnPad",btnPad);
-localStorage.setItem("wdthStore",wdthStore);
-localStorage.setItem("scheme",scheme);
-localStorage.setItem("ico",ico);
-localStorage.setItem("css1",customStyle);
-localStorage.setItem("css2",appliedStyle);
-console.log("We have saved")
-    $("#saved").addClass("saving");
-    setTimeout(function () {
-      $("#saved").removeClass("saving");
-    }, 2000);
-};
-  };
-
-
 function setupToolbar() {
   // Get references to the color picker inputs
   let backPicker = $("#back-color-picker");
