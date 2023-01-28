@@ -2755,7 +2755,7 @@ jQuery(function () {
       "--white",
      white
     );
-  var sheet = document.getElementById("#defaultcss");
+var sheet = document.getElementById("defaultcss");
 var newText = sheet.innerHTML
 						.replace(/--primary:(.*);/g, "--primary: "+primary+";")
                         .replace(/--primary-scroll:(.*);/g, "--primary-scroll: "+primary+";")
