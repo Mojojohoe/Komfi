@@ -256,6 +256,13 @@ function setBtnSize() {
     $("#navbar").css("height", "auto");
   }
 }
+var visibilityBehaviour = function (e) {
+  if ($(e.target).hasClass("title") || $(e.target).hasClass("editor")) {
+    $(e.target).css("display", "block");
+  } else if ($(e.target).hasClass("btn")) {
+    $(e.target).appendTo("#storage");
+  }
+};
 // The sliders control a few different things. Here I lazily just shoehorn in cases for different sliders.
 	function setMenuSize() {
 	$("#navbar .btn p").css("font-size", btnFont + "rem");
