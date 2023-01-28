@@ -3316,7 +3316,13 @@ $("#x-7-ico").on("click", function () {
   $("#main-container").off("DOMNodeInserted", visibilityBehaviour);
   $(".editor").css("margin-bottom", "0");
   $("#7-scr").css("display", "none");
-  $("#navbar").css("display", "inline-block");
+  
+  if(mnuPos === 3) {
+	  $("#navbar").css("display", "flex");
+  } else {
+	  $("#navbar").css("display", "inline-block");
+  }
+  
   $(".btn p", "#navbar, #storage").empty();
   $(".btn p", "#navbar, #storage").append("<i class='material-icons'></i>");
 
@@ -3699,6 +3705,12 @@ $("#t-16-not").on("click", function () {
 
 $("#getcode").on("click", function () {
   var js = $("#takeout").html();
+  js.text(function(_,txt) {
+    return txt.replace(/@fnt1/g, fnt1)
+              .replace(/@fnt2/g, fnt2)
+              .replace(/@fnt3/g, fnt3)
+              .replace(/@fnt4/g, fnt4);
+});
   //Show the box where the output code is displayed.
   $("#code").css("display", "flex");
   //Hide the editor toolbar.
