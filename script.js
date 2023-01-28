@@ -2833,8 +2833,8 @@ $(document).on("input change click", "body *", function () {
   clearTimeout(timeout);
   timeout = setTimeout(savePage, 2000);
 });
-console.log(loading)
-if ("Checkign load status: " + loading === 0){
+console.log("Checkin load status: " + loading);
+if (loading === 0){
 function savePage() {
 	  console.log("We are about to save")
   var bodyData = $("#main-wrapper").html();
