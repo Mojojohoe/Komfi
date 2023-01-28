@@ -3125,6 +3125,14 @@ $("#clr5").on("input", function () {
       $("#" + btnId).appendTo("#navbar");
 	  if (ico === 1){
       $("#nvbtn" + number + " p i").text($("bIcon" + number).closest( "i" ).text());
+	     var iconRefresh = ["#bIcon1","#bIcon2","#bIcon3","#bIcon4","#bIcon5","#bIcon6","#bIcon7"];
+
+  iconRefresh.forEach(function (icon) {
+      getIcon = $(this).val();
+      $(this).trigger("change");
+      var number = [buttonId.slice(-1)]
+      $("#nvbtn" + number + " p i").text(getIcon);
+  });
 	  }
       sortEditors();
     } else {
