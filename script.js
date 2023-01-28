@@ -3208,7 +3208,13 @@ $("#clr5").on("input", function () {
       }
     }
   });
-
+var visibilityBehaviour = function (e) {
+  if ($(e.target).hasClass("title") || $(e.target).hasClass("editor")) {
+    $(e.target).css("display", "block");
+  } else if ($(e.target).hasClass("btn")) {
+    $(e.target).appendTo("#storage");
+  }
+};
 //Code for updating the navbar buttons.
 $("input[id^='6-tab'].form__input").change(function () {
   var number = $(this).attr("id").split("6-tab")[1];
@@ -3261,13 +3267,7 @@ $("#s-7-ico").on("click", function () {
   }
   $("[id^='tabOn-']").trigger("change");
 });
-var visibilityBehaviour = function (e) {
-  if ($(e.target).hasClass("title") || $(e.target).hasClass("editor")) {
-    $(e.target).css("display", "block");
-  } else if ($(e.target).hasClass("btn")) {
-    $(e.target).appendTo("#storage");
-  }
-};
+
 $("#s-7-scr").on("click", function () {
 	ico = 0;
   // Move all .btn elements inside #navbar to #storage
