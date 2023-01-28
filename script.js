@@ -561,14 +561,19 @@ $(".slider__box").each(function () {
     const reference = idParts[2];
 
     if (behavior === "t") {
-      $(`[id^="${group}-"]`).each(function () {
-        if ($(this).css("display") === "none") {
-          if ($(this).attr("id") === "5-tabs") {
-            $(this).css("display", "flex");
-            $(this).css("flex-wrap", "wrap");
-          } else {
-            $(this).css("display", "inline-block");
+		$(`[id^="${group}-"]`).each(function () {
+		   if ($(this).attr("id") === "5-tabs") {
+              $(this).css("display", "flex");
+              $(this).css("flex-wrap", "wrap");
+            } else if ($(this).css("display") === "none") {
+              $(this).css("display", "inline-block");
+            } else {
+            $(this).css("display", "none");
           }
+        });
+		  
+        if ($(this).css("display") === "none") {
+
         } else {
           $(this).css("display", "none");
         }
@@ -3595,6 +3600,9 @@ $("#clr7").on("input", function () {
   }
 });
 
+$("#clr11").on("input", function () {
+$(".editor h2").css("color",$("#clr11").val());
+});
 
 $("a[data-command='InsertTable']").on("click", function () {
   var columns = prompt("Enter the number of columns for the table:");
