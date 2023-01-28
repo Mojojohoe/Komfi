@@ -3181,13 +3181,12 @@ $("input[id^='6-tab'].form__input").change(function () {
   var newValue = $(this).val();
 
   $("#h1-" + number).text(newValue);
-  if (!$("#s-7-scr").is(":checked") || $("#x-7-ico").is(":checked")) {
-    $("#nvbtn" + number + " p").text(newValue);
+  if (ico === 1) {
+    
+  } else {
+	  $("#nvbtn" + number + " p").text(newValue);
   }
-  if ($("#s-7-scr").is(":checked")) {
-  }
-  if ($("#x-7-scr").is(":checked")) {
-  }
+
 });
 var editors = $(".editor");
 
