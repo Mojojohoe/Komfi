@@ -966,6 +966,10 @@ input[type="color"]::-webkit-color-swatch {
 #loading{
   display:block;
 }
+#loading .logo-back,#loading .logo-front{
+  width:60%;
+  max-width:1000px;
+}
 #loading h1 {
   white-space: nowrap;
 	overflow: hidden;
