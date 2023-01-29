@@ -242,6 +242,10 @@ $("#clr1, #clr2").on("input", function () {
 $("#clr11").on("input", function () {
   $("#navbar").css("background-color", $("#clr11").val());
 });
+$("#clr8").on("input", function () {
+  $(".editor").css("background-color", $("#clr8").val());
+  $(".title").css("background-color", $("#clr8").val());
+});
 // This sets the font size of buttons (or icons)
 
 
@@ -3189,7 +3193,7 @@ $("#clr5").on("input", function () {
   $("#main-container h1").css("color", $(this).val());
 });
 $("#clr12").on("input", function () {
-$(".editor h2").css("color",$("#clr11").val());
+$(".editor h2").css("color",$("#clr12").val());
 });
 // Sorting the editors into order. Mainly for if a user wants to scroll navigate.
   function sortEditors() {
@@ -3661,8 +3665,8 @@ $("#clr7").on("input", function () {
   }
 });
 
-$("#clr11").on("input", function () {
-$(".editor h2").css("color",$("#clr11").val());
+$("#clr12").on("input", function () {
+$(".editor h2").css("color",$("#clr12").val());
 });
 
 $("a[data-command='InsertTable']").on("click", function () {
@@ -3736,6 +3740,8 @@ $("#t-16-not").on("click", function () {
 });
 
 $("#getcode").on("click", function () {
+$("#main-container").attr("data-anim", anim);	
+	
   var js = $("#takeout").html();
   js = js.replace(/@fnt1/g, fnt1)
         .replace(/@fnt2/g, fnt2)
@@ -3758,7 +3764,7 @@ $("#getcode").on("click", function () {
   if ($("#tri").hasClass("user")) {
     $("#tri").clone().appendTo("#processing");
   }
-  $("#main-container").attr("data-anim", anim);
+  
   $("#nvbtn1").trigger("change");
   var html = $("#processing").html();
 
