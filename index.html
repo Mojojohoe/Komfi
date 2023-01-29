@@ -224,7 +224,7 @@ h3 span {
 html,
 body {
   height: 100vh;
-  padding: 0;
+  padding: 0 !important;
   width: 100%;
 }
 #body,
@@ -1296,12 +1296,9 @@ a {
         $(".profile-image").insertAfter(imgpoint);
         imgpoint.remove();
       }
-      $("body :not(#main-container)").each(function() {
-    var element = $(this);
-    var html = element.html();
-    var newHtml = html.replace(/&nbsp;/g, "");
-    element.html(newHtml);
-});
+$("body").contents().filter(function() {
+    return this.nodeType === 3; // check if the element is a text node
+}).remove();
     };
 </div>
   </body>

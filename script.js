@@ -99,8 +99,9 @@ $(document).ready(function () {
       );
     });
   };
+  if (localStorage.getItem("bodyData") == null) {
   hueRotate();
-
+  }
   $("[id^='bIcon']").on("click", function () {
 	  storedPicker = $(this).attr("id");
   });
