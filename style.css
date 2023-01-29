@@ -963,6 +963,9 @@ input[type="color"]::-webkit-color-swatch {
   display:block;
   background: white !important;
 }
+#loadtext{
+  color:#6d5dfc;
+}
 #loading .logo-back,#loading .logo-front{
   width:60%;
   max-width:1000px;

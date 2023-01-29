@@ -8,8 +8,6 @@ until I have time to do it properly. I swear!
 
 - Switching to buttons and then back to icons breaks icons size.
 - Also breaks tab layout
-- Buttons also don't work after a certain point
-- Animation issue on scrolling causes o width elements and funky behavior when switching of scroll 
 */
 var loadText = ["Fluffing pillows and propping cushions...","Stitching buttons to the HTML thingy doodad...","Napping... just for like... 2 seconds...","Another quick snooze...Zzzzzzzzzzzzz","Tufting upholstery...","Having a midnight snack...","Making the bed...","Oiling sliders so they don't squeak...","Deleting System32... Just kidding! Haha","Wow, okay this is taking a while...","Knitting all the preference sliders...","Making sure the matress is comfy...","Checking to see why everything is taking so long...","Getting a cup of hot coco and marshmallows...","Eating the last few packing peanuts...","Daydreaming..."]
 var currentIndex = 0;
@@ -101,6 +99,11 @@ $(document).ready(function () {
   };
   if (localStorage.getItem("bodyData") == null) {
   hueRotate();
+  var imgUrl = $("#imgurl").val();
+if (imgUrl == "") imgUrl = $("#imgurl").attr("placeholder");
+$("#main-container").css("background-image", "url(" + imgUrl + ")");
+$(".editor").addClass("scale-out scale-in");
+$(".title").addClass("scale-out scale-in");
   }
   $("[id^='bIcon']").on("click", function () {
 	  storedPicker = $(this).attr("id");
@@ -145,10 +148,6 @@ function setTile() {
   $("#main-container").css("background-repeat", "repeat");
 }
 // On load we get the placeholder and set that up. Again becase I'm lazy.
-
-var imgUrl = $("#imgurl").val();
-if (imgUrl == "") imgUrl = $("#imgurl").attr("placeholder");
-$("#main-container").css("background-image", "url(" + imgUrl + ")");
 //This will check the state of the #tab-1a, #tab-2a, #tab-3a on page load, and trigger the corresponding function.
 $("#txt-left").on("click", function () {
   $("#navbar .btn").css("display","flex");
@@ -579,7 +578,7 @@ $("#navbar .btn").css("height", btnH + "rem");
   });
 });
 // This uses a method to relate id references to buttons so we can more easily add and hide content based on what the user is choosing.
-;
+
   $(document).ready(function () {
   $(".clk").on("click", function (event) {
     const $target = $(event.target);
@@ -2380,9 +2379,6 @@ $("#clearcache").on("click", function () {
     }
 });
 
-
-$(".editor").addClass("scale-out scale-in");
-$(".title").addClass("scale-out scale-in");
 interact("img")
   .resizable({
     // resize from all edges and corners
@@ -3448,6 +3444,7 @@ $("#s-7-scr").on("click", function () {
   // Move all .btn elements inside #navbar to #storage
   $("#navbar .btn").appendTo("#storage");
   $("#navbar").css("display", "none");
+  $("#animoff").trigger("click");
   //  $(".title").css("position", "inherit");
   //  $(".editor").css("position", "inherit");
   // Make all .title & .editor elements in #sub-container visible
