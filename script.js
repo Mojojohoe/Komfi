@@ -332,6 +332,11 @@ $(".slider__box").each(function () {
           $tooltip.text(percentPosition.toFixed(2));
           $tooltip.attr("data-value", percentPosition.toFixed(2) + "%");
           $("#navbar").css("padding-top", percentPosition + "%");
+        } else if ($tooltip.hasClass("slider__mnuBot")) {
+          percentPosition = percentPosition - 3.09;
+          $tooltip.text(percentPosition.toFixed(2));
+          $tooltip.attr("data-value", percentPosition.toFixed(2) + "%");
+          $("#navbar").css("padding-bottom", percentPosition + "%");
         } else if ($tooltip.hasClass("slider__padBtn")) {
           percentPosition = percentPosition / 10 / 2 - 0.15;
           $tooltip.text(percentPosition.toFixed(2));
@@ -2433,8 +2438,8 @@ jQuery(function () {
     }
 
     // Check if value starts with a # and remove leading space if present
-    if (value[0] === "#") {
-      if (value[1] === " ") {
+    if (value[0] === " ") {
+      if (value[1] === "#") {
         value = value.slice(1);
       }
       return value;
@@ -2607,8 +2612,8 @@ jQuery(function () {
         var newGreyLight1 = chroma(TopClr).brighten(1).desaturate(0.4);
         var newGreyLightScroll = newGreyLight1;
         var newGreyLight2 = chroma(newGreyLight1).darken(0.3).desaturate(0.8);
-        var newGreyLight3 = chroma(newGreyLight2).darken(0.3).desaturate(0.8);
-        var newGreyDark = chroma(newGreyLight3).saturate(0.35).darken(1);
+        var newGreyLight3 = chroma(colors[1]).darken(0.3).desaturate(0.8);
+        var newGreyDark = chroma(colors[2]).darken(2);
         var newWhite = chroma(newGreyLight1).brighten(1).desaturate(0.5);
 
         newPrimary = chroma(newPrimary).hsl();
@@ -3182,6 +3187,9 @@ $("#clr4").on("input", function () {
 });
 $("#clr5").on("input", function () {
   $("#main-container h1").css("color", $(this).val());
+});
+$("#clr12").on("input", function () {
+$(".editor h2").css("color",$("#clr11").val());
 });
 // Sorting the editors into order. Mainly for if a user wants to scroll navigate.
   function sortEditors() {
