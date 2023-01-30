@@ -3560,12 +3560,11 @@ function setupToolbar() {
             $("#storage .btn").css("width", "100%");
             $("#navbar").css("height", "100%");
         } else if (mnuPos === 2) {
-            var temp = contSize;
-            contSize = menuSize;
-            menuSize = temp;
+            menuSize = $("#btnSizeW").data("value");
             $("#main-container").css(
                 "grid-template-columns",
-                menuSize + "% " + contSize + "%"
+                contSize + "% " + menuSize  + "%"
+				console.log(contSize + " " + menuSize);
             );
             $("#navbar .btn").css("width", "100%");
             $("#storage .btn").css("width", "100%");
