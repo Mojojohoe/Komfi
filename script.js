@@ -3563,9 +3563,8 @@ function setupToolbar() {
             menuSize = $("#btnSizeW").data("value");
             $("#main-container").css(
                 "grid-template-columns",
-                contSize + "% " + menuSize  + "%")
+                contSize + "% " + menuSize  + "%");
 				console.log(contSize + " " + menuSize);
-            );
             $("#navbar .btn").css("width", "100%");
             $("#storage .btn").css("width", "100%");
             $("#navbar").css("height", "100%");
