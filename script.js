@@ -504,7 +504,8 @@ $("#navbar .btn").css("height", btnH + "rem");
   $("#storage .btn").css("height", btnH + "rem");
   $("#navbar .btn").css("border-radius", btnBvl + "rem");
   $("#storage .btn").css("border-radius", btnBvl + "rem");
-  var menuSize = btnW.toFixed(2);
+var gridTemplateColumns = $("#main-container").css("grid-template-columns");
+var menuSize = gridTemplateColumns.split(" ")[0];
   var contSize = 100 - menuSize;
   if (mnuPos === 1) {
     $("#main-container").css(
@@ -538,13 +539,6 @@ var menuSize = gridTemplateColumns.split(" ")[0];
   $("#navbar .btn").css("border-radius", btnBvl + "rem");
   $("#storage .btn").css("border-radius", btnBvl + "rem");
   
-  var menuSize = btnW.toFixed(2);
-  var contSize = 100 - menuSize;
-  if (mnuPos === 1) {
-    $("#main-container").css(
-      "grid-template-columns",
-      menuSize + "% " + contSize + "%"
-    );
     $("#navbar .btn").css("width", "100%");
     $("#navbar").css("height", "100%");
   } else if (mnuPos === 2) {

@@ -332,7 +332,9 @@ a {
 }
 
 .triangle i,
-.triangle-container {
+.triangle-container,
+.triangle-container svg,
+.triangle-container svg polygon {
   cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'  width='40' height='48' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>☂️</text></svg>")
       16 0,
     auto;
@@ -1090,8 +1092,6 @@ a {
     </div>
     <div id="body">
       <div class="toolbar" id="toolbar">
-        <a href="#" data-command='undo' class="icon__"><i class='fa fa-undo' title="Undo"></i></a>
-        <a href="#" data-command='redo' class="icon__"><i class='fa fa-repeat' title="Redo"></i></a>
         <a href="#"><input type="color" id="fore-color-picker" class="back-pallet" value="#BC5DA8" title="Font color"></a>
         <a href="#"><input type="color" id="back-color-picker" class="fore-pallet" value="#BC5DA8" title="Font highlight"></a>
         <a href="#" data-command='bold' class="icon__"><i class='fa fa-bold' title="Bold"></i></a>
