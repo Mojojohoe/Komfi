@@ -3508,7 +3508,7 @@ function setupToolbar() {
         $("#storage .btn").css("height", btnH + "rem");
         $("#navbar .btn").css("border-radius", btnBvl + "rem");
         $("#storage .btn").css("border-radius", btnBvl + "rem");
-        var menuSize = btnW.toFixed(2);
+
         var contSize = 100 - menuSize;
         if (mnuPos === 1) {
             $("#main-container").css(
@@ -3549,7 +3549,7 @@ function setupToolbar() {
         $("#storage .btn").css("height", btnH + "rem");
         $("#navbar .btn").css("border-radius", btnBvl + "rem");
         $("#storage .btn").css("border-radius", btnBvl + "rem");
-        var menuSize = btnW.toFixed(2);
+
         var contSize = 100 - menuSize;
         if (mnuPos === 1) {
             $("#main-container").css(
@@ -3613,8 +3613,6 @@ function setupToolbar() {
         $("#navbar .btn").css("border-radius", btnBvl + "rem");
         $("#storage .btn").css("border-radius", btnBvl + "rem");
         console.log("Menu size is " + btnW);
-        var menuSize = btnW.toFixed(2);
-
         var contSize = 100 - menuSize;
         if (mnuPos === 1) {
             $("#main-container").css(
