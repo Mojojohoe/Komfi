@@ -3542,46 +3542,19 @@ function setupToolbar() {
     });
     $("#mnu-right").on("click", function() {
         mnuPos = 2;
-		menuSize = $("#btnSizeW").data("value");
+		menuSize = $("#btnSizeW").data("value")
         $("#navbar .btn").css("height", btnH + "rem");
         $("#storage .btn").css("height", btnH + "rem");
         $("#navbar .btn").css("border-radius", btnBvl + "rem");
         $("#storage .btn").css("border-radius", btnBvl + "rem");
 
-        var contSize = 100 - menuSize;
-        if (mnuPos === 1) {
-            $("#main-container").css(
-                "grid-template-columns",
-                menuSize + "% " + contSize + "%"
-            );
-            $("#navbar .btn").css("width", "100%");
-            $("#storage .btn").css("width", "100%");
-            $("#navbar").css("height", "100%");
-        } else if (mnuPos === 2) {
-            
-            $("#main-container").css(
+		$("#main-container").css(
                 "grid-template-columns",
                 contSize + "% " + menuSize  + "%");
 				console.log(contSize + " " + menuSize);
             $("#navbar .btn").css("width", "100%");
             $("#storage .btn").css("width", "100%");
             $("#navbar").css("height", "100%");
-        } else if (mnuPos === 3) {
-            $("#navbar .btn").css("width", menuSize + "%");
-            $("#storage .btn").css("width", menuSize + "%");
-            $("#navbar").css("height", "auto");
-        }
-        if (mnuPos === 3) {
-            $("#navbar .btn, #storage .btn").css("margin-left", btnPad + "rem");
-            $("#navbar .btn, #storage .btn").css("margin-right", btnPad + "rem");
-            $("#navbar .btn, #storage .btn").css("margin-top", "0rem");
-            $("#navbar .btn, #storage .btn").css("margin-bottom", "0rem");
-        } else {
-            $("#navbar .btn, #storage .btn").css("margin-top", btnPad + "rem");
-            $("#navbar .btn, #storage .btn").css("margin-bottom", btnPad + "rem");
-            $("#navbar .btn, #storage .btn").css("margin-left", "0rem");
-            $("#navbar .btn, #storage .btn").css("margin-right", "0rem");
-        }
         $("#navbar").css("display", "block");
         $("#main-container").css("display", "grid");
         $("#navbar").css("grid-column", "2 / 3");
