@@ -3559,7 +3559,7 @@ function setupToolbar() {
         } else if (mnuPos === 2) {
             $("#main-container").css(
                 "grid-template-columns",
-                menuSize + "% " + contSize + "%"
+                contSize + "% " + menuSize + "%"
             );
             $("#navbar .btn").css("width", "100%");
             $("#storage .btn").css("width", "100%");
