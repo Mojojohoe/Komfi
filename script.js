@@ -430,8 +430,10 @@ $("#navbar .btn").css("height", btnH + "rem");
   $("#storage .btn").css("height", btnH + "rem");
   $("#navbar .btn").css("border-radius", btnBvl + "rem");
   $("#storage .btn").css("border-radius", btnBvl + "rem");
-  var menuSize = btnW.toFixed(2);
+  var gridTemplateColumns = $("#main-container").css("grid-template-columns");
+  var menuSize = gridTemplateColumns.split(" ")[0];
   var contSize = 100 - menuSize;
+
   if (mnuPos === 1) {
     $("#main-container").css(
       "grid-template-columns",
@@ -3488,7 +3490,8 @@ $("#mnu-left").on("click", function () {
   $("#storage .btn").css("height", btnH + "rem");
   $("#navbar .btn").css("border-radius", btnBvl + "rem");
   $("#storage .btn").css("border-radius", btnBvl + "rem");
-
+    var gridTemplateColumns = $("#main-container").css("grid-template-columns");
+  var menuSize = gridTemplateColumns.split(" ")[0];
   if (mnuPos === 1) {
     $("#main-container").css(
       "grid-template-columns",
@@ -3525,7 +3528,8 @@ $("#mnu-right").on("click", function () {
   $("#storage .btn").css("height", btnH + "rem");
   $("#navbar .btn").css("border-radius", btnBvl + "rem");
   $("#storage .btn").css("border-radius", btnBvl + "rem");
-
+    var gridTemplateColumns = $("#main-container").css("grid-template-columns");
+  var menuSize = gridTemplateColumns.split(" ")[0];
   if (mnuPos === 1) {
     $("#main-container").css(
       "grid-template-columns",
@@ -3580,11 +3584,14 @@ $("#mnu-top").on("click", function () {
     $("#navbar .btn, #storage .btn").css("margin-left", "0rem");
     $("#navbar .btn, #storage .btn").css("margin-right", "0rem");
   }
-  $("#navbar .btn").css("height", btnH + "rem");
+    $("#navbar .btn").css("height", btnH + "rem");
   $("#storage .btn").css("height", btnH + "rem");
   $("#navbar .btn").css("border-radius", btnBvl + "rem");
   $("#storage .btn").css("border-radius", btnBvl + "rem");
-
+    var gridTemplateColumns = $("#main-container").css("grid-template-columns");
+  var menuSize = gridTemplateColumns.split(" ")[0];
+  
+  var contSize = 100 - menuSize;
   if (mnuPos === 1) {
     $("#main-container").css(
       "grid-template-columns",
