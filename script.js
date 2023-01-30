@@ -525,7 +525,7 @@ var menuSize = gridTemplateColumns.split(" ")[0];
     );
     $("#navbar .btn").css("width", "100%");
     $("#navbar").css("height", "100%");
-  } else if (mnuPos === 3) {
+  } else {
     $("#navbar .btn").css("width", menuSize + "%");
     $("#navbar").css("height", "auto");
   }
