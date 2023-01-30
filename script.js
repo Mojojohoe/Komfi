@@ -3543,6 +3543,7 @@ function setupToolbar() {
     $("#mnu-right").on("click", function() {
         mnuPos = 2;
 		menuSize = $("#btnSizeW").data("value")
+		var contSize = 100 - menuSize;
         $("#navbar .btn").css("height", btnH + "rem");
         $("#storage .btn").css("height", btnH + "rem");
         $("#navbar .btn").css("border-radius", btnBvl + "rem");
