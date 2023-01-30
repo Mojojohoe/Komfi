@@ -3560,9 +3560,6 @@ function setupToolbar() {
             $("#storage .btn").css("width", "100%");
             $("#navbar").css("height", "100%");
         } else if (mnuPos === 2) {
-            var temp = contSize;
-            contSize = menuSize;
-            menuSize = temp;
             $("#main-container").css(
                 "grid-template-columns",
                 menuSize + "% " + contSize + "%"

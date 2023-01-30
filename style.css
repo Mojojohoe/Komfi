@@ -31,7 +31,7 @@
   min-height: 25px;
   padding: 0.5rem;
 }
-img {
+img:not(.logo-back, .logo-front) {
 border: 1px dashed #a495a3;
 }	
 .form2 {
