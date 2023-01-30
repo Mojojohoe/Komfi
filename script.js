@@ -3056,11 +3056,14 @@ $("a[data-command='ProfileImage']").on("click", function () {
     return;
   }
   var newRange = range.cloneRange();
-  var icon = document.createElement("i");
-  icon.classList.add("fa", "fa-id-badge");
+  var icon = document.createElement("img");
   icon.setAttribute(
     "title",
     "A copy of the image you uploaded to your profile will be inserted here."
+  );
+    icon.setAttribute(
+    "src",
+    "/tempimg.png"
   );
   icon.setAttribute("id", "imgpoint");
   newRange.insertNode(icon);
