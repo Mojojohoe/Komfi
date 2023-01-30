@@ -3612,7 +3612,6 @@ function setupToolbar() {
         $("#storage .btn").css("height", btnH + "rem");
         $("#navbar .btn").css("border-radius", btnBvl + "rem");
         $("#storage .btn").css("border-radius", btnBvl + "rem");
-        console.log("Menu size is " + btnW);
         var contSize = 100 - menuSize;
         if (mnuPos === 1) {
             $("#main-container").css(
@@ -3623,9 +3622,7 @@ function setupToolbar() {
             $("#storage .btn").css("width", "100%");
             $("#navbar").css("height", "100%");
         } else if (mnuPos === 2) {
-            var temp = contSize;
-            contSize = menuSize;
-            menuSize = temp;
+
             $("#main-container").css(
                 "grid-template-columns",
                 menuSize + "% " + contSize + "%"
@@ -3634,6 +3631,7 @@ function setupToolbar() {
             $("#storage .btn").css("width", "100%");
             $("#navbar").css("height", "100%");
         } else if (mnuPos === 3) {
+			menuSize = $("#btnSizeW").data("value");
             $("#navbar .btn").css("width", menuSize + "%");
             $("#storage .btn").css("width", menuSize + "%");
             $("#navbar").css("height", "auto");
