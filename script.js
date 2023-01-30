@@ -3065,7 +3065,7 @@ $("a[data-command='ProfileImage']").on("click", function () {
   );
     icon.setAttribute(
     "src",
-    "/tempimg.png"
+    "tempimg.png"
   );
   icon.setAttribute("id", "imgpoint");
   newRange.insertNode(icon);
