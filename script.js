@@ -3541,7 +3541,10 @@ function setupToolbar() {
         $("#navbar").css("display", "block");
     });
     $("#mnu-right").on("click", function() {
-        menuSize = $("#btnSizeW").data("value");
+        mnuPos = 2;
+		var gridTemplateColumns = $("#main-container").css("grid-template-columns");
+		menuSize = gridTemplateColumns.split(" ")[0];
+		var btnW = menuSize;
         $("#navbar .btn").css("height", btnH + "rem");
         $("#storage .btn").css("height", btnH + "rem");
         $("#navbar .btn").css("border-radius", btnBvl + "rem");
@@ -3557,9 +3560,12 @@ function setupToolbar() {
             $("#storage .btn").css("width", "100%");
             $("#navbar").css("height", "100%");
         } else if (mnuPos === 2) {
+            var temp = contSize;
+            contSize = menuSize;
+            menuSize = temp;
             $("#main-container").css(
                 "grid-template-columns",
-                contSize + "% " + menuSize + "%"
+                menuSize + "% " + contSize + "%"
             );
             $("#navbar .btn").css("width", "100%");
             $("#storage .btn").css("width", "100%");
@@ -3616,16 +3622,18 @@ function setupToolbar() {
             $("#storage .btn").css("width", "100%");
             $("#navbar").css("height", "100%");
         } else if (mnuPos === 2) {
-
+            var temp = contSize;
+            contSize = menuSize;
+            menuSize = temp;
             $("#main-container").css(
                 "grid-template-columns",
-                contSize + "% " + menuSize + "%"
+                menuSize + "% " + contSize + "%"
             );
             $("#navbar .btn").css("width", "100%");
             $("#storage .btn").css("width", "100%");
             $("#navbar").css("height", "100%");
         } else if (mnuPos === 3) {
-			menuSize = $("#btnSizeW").data("value");
+			menuSize = $("#btnSizeW").data("value")
             $("#navbar .btn").css("width", menuSize + "%");
             $("#storage .btn").css("width", menuSize + "%");
             $("#navbar").css("height", "auto");
