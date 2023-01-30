@@ -3017,7 +3017,10 @@ $("a[data-command='insertimage']").on("click", function () {
   var sel = window.getSelection();
   var range = sel.getRangeAt(0);
   var editor = range.startContainer.parentNode;
-
+  
+  if (!$(editor).hasClass("editor")) {
+    editor = $(editor).closest(".editor");
+  }
   if (editor.length === 0) {
     alert(
       "Cannot find where you want the profile image to be placed. Please make sure you are selecting an area inside the editor window before pressing the button. Please try again."
@@ -3400,7 +3403,11 @@ $("#s-7-ico").on("click", function () {
 	ico = 0;
   $("#main-container").off("DOMNodeInserted", visibilityBehaviour);
   $(".editor").css("margin-bottom", "0");
-  $("#navbar").css("display", "inline-block");
+  if(mnuPos === 3){
+  $("#navbar").css("display", "flex");
+  } else {
+	  $("#navbar").css("display", "inline-block");  
+  }
   //  $(".title").css("position", "absolute");
   //  $(".editor").css("position", "absolute");
   $(".btn p i", "#navbar, #storage").remove();
