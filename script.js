@@ -515,8 +515,7 @@ $("#navbar .btn").css("height", btnH + "rem");
     $("#navbar .btn").css("width", "100%");
     $("#navbar").css("height", "100%");
   } else if (mnuPos === 2) {
-    var temp = contSize;
-    
+
 var gridTemplateColumns = $("#main-container").css("grid-template-columns");
 var menuSize = gridTemplateColumns.split(" ")[0];
 var contSize = menuSize;
