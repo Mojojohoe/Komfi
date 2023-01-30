@@ -516,7 +516,8 @@ $("#navbar .btn").css("height", btnH + "rem");
   } else if (mnuPos === 2) {
     var temp = contSize;
     contSize = menuSize;
-    menuSize = temp;
+var gridTemplateColumns = $("#main-container").css("grid-template-columns");
+var menuSize = gridTemplateColumns.split(" ")[0];
     $("#main-container").css(
       "grid-template-columns",
       menuSize + "% " + contSize + "%"
@@ -536,6 +537,7 @@ $("#navbar .btn").css("height", btnH + "rem");
   $("#storage .btn").css("height", btnH + "rem");
   $("#navbar .btn").css("border-radius", btnBvl + "rem");
   $("#storage .btn").css("border-radius", btnBvl + "rem");
+  
   var menuSize = btnW.toFixed(2);
   var contSize = 100 - menuSize;
   if (mnuPos === 1) {
