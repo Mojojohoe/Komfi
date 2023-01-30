@@ -3556,7 +3556,7 @@ function setupToolbar() {
             $("#navbar .btn").css("width", "100%");
             $("#storage .btn").css("width", "100%");
             $("#navbar").css("height", "100%");
-        } else if (mnuPos === 2) {
+        } else if (mnuPos === 3) {
             $("#main-container").css(
                 "grid-template-columns",
                 contSize + "% " + menuSize + "%"
@@ -3564,7 +3564,7 @@ function setupToolbar() {
             $("#navbar .btn").css("width", "100%");
             $("#storage .btn").css("width", "100%");
             $("#navbar").css("height", "100%");
-        } else if (mnuPos === 3) {
+        } else if (mnuPos === 2) {
             $("#navbar .btn").css("width", menuSize + "%");
             $("#storage .btn").css("width", menuSize + "%");
             $("#navbar").css("height", "auto");
