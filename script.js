@@ -3541,10 +3541,7 @@ function setupToolbar() {
         $("#navbar").css("display", "block");
     });
     $("#mnu-right").on("click", function() {
-        mnuPos = 2;
-		var gridTemplateColumns = $("#main-container").css("grid-template-columns");
-		menuSize = gridTemplateColumns.split(" ")[0];
-		var btnW = menuSize;
+        menuSize = $("#btnSizeW").data("value");
         $("#navbar .btn").css("height", btnH + "rem");
         $("#storage .btn").css("height", btnH + "rem");
         $("#navbar .btn").css("border-radius", btnBvl + "rem");
