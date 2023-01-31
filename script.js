@@ -2677,10 +2677,10 @@ jQuery(function() {
                 // Create a dark mode version of the colors
                 var newPrimaryDark = chroma(newPrimaryDark).darken(3);
                 var newGreyLight1 = chroma(newGreyLight1).darken(4.5);
-                var newGreyLight2 = chroma(c2).darken(2);
+                var newGreyLight2 = chroma(newGreyLight2).darken(2);
                 var newGreyLight3 = chroma(newGreyLight3).darken(2);
                 var newGreyLightScroll = chroma(newGreyLightScroll).darken(3);
-                var newGreyDark = chroma(newGreyDark).darken(1);
+                var newGreyDark = chroma(c2).saturate().darken(1);
 
         }
         primaryLight = chroma(chroma.hsl(newPrimaryLight).hex());
