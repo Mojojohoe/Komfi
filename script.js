@@ -2972,6 +2972,7 @@ function setupToolbar() {
         var command = $(this).data("command");
         if (command == "h1" || command == "h2" || command == "p") {
             document.execCommand("formatBlock", false, command);
+			var selectedText = window.getSelection().toString();
         }
         if (command == "forecolor" || command == "backcolor") {
             document.execCommand(
@@ -3220,7 +3221,7 @@ function setupToolbar() {
         }
 		var sheet = document.getElementById("defaultcss");
         var newText = sheet.innerHTML
-            .replace(/--fnt1Css:(.*);/g, "--fnt2Css: " + fontName + ";")
+            .replace(/--fnt2Css:(.*);/g, "--fnt2Css: " + fontName + ";")
         sheet.innerHTML = newText;
     });
     $("#fnt3").on("change", function() {
@@ -3235,7 +3236,7 @@ function setupToolbar() {
         }
 		var sheet = document.getElementById("defaultcss");
         var newText = sheet.innerHTML
-            .replace(/--fnt1Css:(.*);/g, "--fnt3Css: " + fontName + ";")
+            .replace(/--fnt3Css:(.*);/g, "--fnt3Css: " + fontName + ";")
         sheet.innerHTML = newText;
     });
     $("#fnt4").on("change", function() {
@@ -3251,7 +3252,7 @@ function setupToolbar() {
         }
 		var sheet = document.getElementById("defaultcss");
         var newText = sheet.innerHTML
-            .replace(/--fnt1Css:(.*);/g, "--fnt4Css: " + fontName + ";")
+            .replace(/--fnt4Css:(.*);/g, "--fnt4Css: " + fontName + ";")
         sheet.innerHTML = newText;
     });
     $("#clr4").on("input", function() {
