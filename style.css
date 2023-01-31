@@ -31,7 +31,7 @@
   min-height: 25px;
   padding: 0.5rem;
 }
-img:not(.logo-back, .logo-front) {
+img:not(.logo-back, .logo-front, .kofi img) {
 border: 1px dashed #a495a3;
 }	
 .form2 {
