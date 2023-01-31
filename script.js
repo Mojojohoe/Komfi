@@ -2972,7 +2972,16 @@ function setupToolbar() {
         var command = $(this).data("command");
         if (command == "h1" || command == "h2" || command == "p") {
             document.execCommand("formatBlock", false, command);
-			var selectedText = window.getSelection().toString();
+			if (command == "h1"){
+				document.execCommand("fontName", false, fnt2);
+			}
+			if (command == "h2"){
+				document.execCommand("fontName", false, fnt3);
+			}
+			if (command == "p"){
+				document.execCommand("fontName", false, fnt1);
+			}
+			
         }
         if (command == "forecolor" || command == "backcolor") {
             document.execCommand(
