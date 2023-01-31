@@ -3495,7 +3495,7 @@ function setupToolbar() {
         $("#storage .btn").css("height", btnH + "rem");
         $("#navbar .btn").css("border-radius", btnBvl + "rem");
         $("#storage .btn").css("border-radius", btnBvl + "rem");
-		menuSize = $("#btnSizeW").data("value")
+		menuSize = $("#btnSizeW").attr("data-value");
         var contSize = 100 - menuSize;
         $("#main-container").css("grid-template-columns",menuSize + "% " + contSize + "%");
         $("#navbar .btn").css("width", "100%");
@@ -3509,7 +3509,7 @@ function setupToolbar() {
     });
     $("#mnu-right").on("click", function() {
         mnuPos = 2;
-		menuSize = $("#btnSizeW").data("value")
+		menuSize = $("#btnSizeW").attr("data-value");
 		console.log(menuSize);
 		var contSize = 100 - menuSize;
         $("#navbar .btn").css("height", btnH + "rem");
