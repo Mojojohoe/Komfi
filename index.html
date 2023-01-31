@@ -1292,7 +1292,9 @@ a {
       }
       if ($(".profile-image").length) {
         var imgpoint = $("#imgpoint");
+		var width = $("#imgpoint").css("width");
         $(".profile-image").insertAfter(imgpoint);
+		$(".profile-image").css("width",width);
         imgpoint.remove();
       }
 $("body").contents().filter(function() {
