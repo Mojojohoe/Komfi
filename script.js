@@ -2391,10 +2391,10 @@ $(document).ready(function() {
         .resizable({
             // resize from all edges and corners
             edges: {
-                left: true,
+                left: false,
                 right: true,
                 bottom: true,
-                top: true
+                top: false
             },
 
             listeners: {
@@ -2478,13 +2478,16 @@ var activeColorPicker;
 
 $(document).on('click', 'input[type="color"]', function() {
   activeColorPicker = $(this);
+  console.log("You are clicking " + activeColorPicker)
 });
 
 $(document).on('keydown', function(e) {
+	console.log("Key pressed")
   if (!activeColorPicker) return;
 
   if (e.ctrlKey && e.keyCode === 67) { // Ctrl + C
     // Store the current color
+	console.log("Storing copy value...")
     storedColor = activeColorPicker.val();
   }
   if (e.ctrlKey && e.keyCode === 86) { // Ctrl + V
