@@ -3490,50 +3490,17 @@ function setupToolbar() {
     });
     $("#mnu-left").on("click", function() {
         mnuPos = 1;
-		var gridTemplateColumns = $("#main-container").css("grid-template-columns");
-		menuSize = gridTemplateColumns.split(" ")[0];
-		var btnW = menuSize;
-        if (mnuPos === 3) {
-            $("#navbar .btn, #storage .btn").css("margin-left", btnPad + "rem");
-            $("#navbar .btn, #storage .btn").css("margin-right", btnPad + "rem");
-            $("#navbar .btn, #storage .btn").css("margin-top", "0rem");
-            $("#navbar .btn, #storage .btn").css("margin-bottom", "0rem");
-        } else {
-            $("#navbar .btn, #storage .btn").css("margin-top", btnPad + "rem");
-            $("#navbar .btn, #storage .btn").css("margin-bottom", btnPad + "rem");
-            $("#navbar .btn, #storage .btn").css("margin-left", "0rem");
-            $("#navbar .btn, #storage .btn").css("margin-right", "0rem");
-        }
+        
         $("#navbar .btn").css("height", btnH + "rem");
         $("#storage .btn").css("height", btnH + "rem");
         $("#navbar .btn").css("border-radius", btnBvl + "rem");
         $("#storage .btn").css("border-radius", btnBvl + "rem");
-
+		menuSize = $("#btnSizeW").data("value")
         var contSize = 100 - menuSize;
-        if (mnuPos === 1) {
-            $("#main-container").css(
-                "grid-template-columns",
-                menuSize + "% " + contSize + "%"
-            );
-            $("#navbar .btn").css("width", "100%");
-            $("#storage .btn").css("width", "100%");
-            $("#navbar").css("height", "100%");
-        } else if (mnuPos === 2) {
-            var temp = contSize;
-            contSize = menuSize;
-            menuSize = temp;
-            $("#main-container").css(
-                "grid-template-columns",
-                menuSize + "% " + contSize + "%"
-            );
-            $("#navbar .btn").css("width", "100%");
-            $("#storage .btn").css("width", "100%");
-            $("#navbar").css("height", "100%");
-        } else if (mnuPos === 3) {
-            $("#navbar .btn").css("width", menuSize + "%");
-            $("#storage .btn").css("width", menuSize + "%");
-            $("#navbar").css("height", "auto");
-        }
+        $("#main-container").css("grid-template-columns",menuSize + "% " + contSize + "%");
+        $("#navbar .btn").css("width", "100%");
+        $("#storage .btn").css("width", "100%");
+        $("#navbar").css("height", "100%");
         $("#navbar").css("display", "block");
         $("#main-container").css("display", "grid");
         $("#sub-container").css("grid-column", "2 / 3");
@@ -3543,6 +3510,7 @@ function setupToolbar() {
     $("#mnu-right").on("click", function() {
         mnuPos = 2;
 		menuSize = $("#btnSizeW").data("value")
+		console.log(menuSize);
 		var contSize = 100 - menuSize;
         $("#navbar .btn").css("height", btnH + "rem");
         $("#storage .btn").css("height", btnH + "rem");
