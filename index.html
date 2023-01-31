@@ -24,6 +24,10 @@
   --greyLight-3:#bec8e4;
   --greyLight-scroll:#e4ebf5;
   --greyDark:#9baacf;
+  --fnt1Css:Poppins, sans-serif;
+  --fnt2Css:Poppins, sans-serif;
+  --fnt3Css:Poppins, sans-serif;
+  --fnt4Css:Poppins, sans-serif;
 }
   #collapse-button,
 .container,
@@ -42,7 +46,18 @@ html {
   min-height: 100vh;
   font-family: Poppins, sans-serif;
 }
-
+#main-container h1{
+font-family: var(fnt2Css);
+}
+#main-container h2{
+font-family: var(fnt3Css);
+}
+#navbar p{
+font-family: var(fnt4Css);
+}
+.editor{
+font-family: var(fnt1Css);
+}
 #fore-color-picker:after,
 .edittable td {
   color: inherit;
@@ -940,17 +955,17 @@ a {
             <input type=color value="#5E7CC5" id="clr6" class="picker"><br>
             <h3>align the button text...</h3>
             <div class="segmented-control">
-              <input type="radio" name="radio3" value="20" id="tab-6e" checked />
+              <input type="radio" name="radio55" value="20" id="tab-6e" checked />
               <label for="tab-1e" class="segmented-control__20" id="txt-left">
                 <p>Left</p>
               </label>
 
-              <input type="radio" name="radio3" value="21" id="tab-2e" />
+              <input type="radio" name="radio55" value="21" id="tab-2e" />
               <label for="tab-2e" class="segmented-control__21" id="txt-right">
                 <p>Right</p>
               </label>
 
-              <input type="radio" name="radio3" value="22" id="tab-3e" />
+              <input type="radio" name="radio55" value="22" id="tab-3e" />
               <label for="tab-3e" class="segmented-control__22" id="txt-mid">
                 <p>Center</p>
               </label>

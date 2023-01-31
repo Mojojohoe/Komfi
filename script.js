@@ -2472,6 +2472,37 @@ jQuery(function() {
         // Throw an error if value is not a valid color
         throw new Error(`Error: couldn't check & convert the value: ${value}`);
     }
+	
+var storedColor;
+var activeColorPicker;
+
+$(document).on('click', 'input[type="color"]', function() {
+  activeColorPicker = $(this);
+});
+
+$(document).on('keydown', function(e) {
+  if (!activeColorPicker) return;
+
+  if (e.ctrlKey && e.keyCode === 67) { // Ctrl + C
+    // Store the current color
+    storedColor = activeColorPicker.val();
+  }
+  if (e.ctrlKey && e.keyCode === 86) { // Ctrl + V
+    // Get the value from the clipboard
+    var clipboardData = window.clipboardData.getData('Text');
+    // If there's a stored color, set the picker to that color
+    if (storedColor) {
+      activeColorPicker.val(storedColor);
+    } else {
+      // Call the handleColor function with the clipboard data
+      var color = handleColor(clipboardData);
+      if (color) {
+        activeColorPicker.val(color);
+      }
+    }
+  }
+});
+	
     var OprimaryLight = getComputedStyle(
         document.documentElement
     ).getPropertyValue("--primary-light");
@@ -3166,11 +3197,15 @@ function setupToolbar() {
         selectedFont = selectedFont.replace(/\+/g, " ");
         var fontName = selectedFont.split(":")[0];
         var fontWeight = selectedFont.split(":")[1];
-        $(".editor").css("font-family", selectedFont + ",sans-serif");
         $(".editor").css("font-family", fontName + ",sans-serif");
+		$("#storage .editor").css("font-family", fontName + ",sans-serif");
         if (fontWeight) {
             $(".editor").css("font-weight", fontWeight);
         }
+		var sheet = document.getElementById("defaultcss");
+        var newText = sheet.innerHTML
+            .replace(/--fnt1Css:(.*);/g, "--fnt1Css: " + fontName + ";")
+        sheet.innerHTML = newText;
     });
     $("#fnt2").on("change", function() {
         var selectedFont = $(this).val();
@@ -3178,11 +3213,15 @@ function setupToolbar() {
         selectedFont = selectedFont.replace(/\+/g, " ");
         var fontName = selectedFont.split(":")[0];
         var fontWeight = selectedFont.split(":")[1];
-        $(".title").css("font-family", selectedFont + ",sans-serif");
         $(".title").css("font-family", fontName + ",sans-serif");
+		$("#storage .title").css("font-family", fontName + ",sans-serif");
         if (fontWeight) {
             $(".title").css("font-weight", fontWeight);
         }
+		var sheet = document.getElementById("defaultcss");
+        var newText = sheet.innerHTML
+            .replace(/--fnt1Css:(.*);/g, "--fnt2Css: " + fontName + ";")
+        sheet.innerHTML = newText;
     });
     $("#fnt3").on("change", function() {
         var selectedFont = $(this).val();
@@ -3194,6 +3233,10 @@ function setupToolbar() {
         if (fontWeight) {
             $("#navbar .btn, #storage .btn").css("font-weight", fontWeight);
         }
+		var sheet = document.getElementById("defaultcss");
+        var newText = sheet.innerHTML
+            .replace(/--fnt1Css:(.*);/g, "--fnt3Css: " + fontName + ";")
+        sheet.innerHTML = newText;
     });
     $("#fnt4").on("change", function() {
         var selectedFont = $(this).val();
@@ -3202,9 +3245,14 @@ function setupToolbar() {
         var fontName = selectedFont.split(":")[0];
         var fontWeight = selectedFont.split(":")[1];
         $(".editor h2").css("font-family", fontName + ",sans-serif");
+		$("#storage h2").css("font-family", fontName + ",sans-serif");
         if (fontWeight) {
             $(".editor h2").css("font-weight", fontWeight);
         }
+		var sheet = document.getElementById("defaultcss");
+        var newText = sheet.innerHTML
+            .replace(/--fnt1Css:(.*);/g, "--fnt4Css: " + fontName + ";")
+        sheet.innerHTML = newText;
     });
     $("#clr4").on("input", function() {
         $("#main-container").css("color", $(this).val());
