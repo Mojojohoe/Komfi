@@ -698,7 +698,7 @@ a[data-command="ProfileImage"] {
   cursor: pointer;
   position: absolute;
   top: -2rem;
-  right: -rem;
+  right: -1rem;
 }
 .components .btn {
   margin: auto;
