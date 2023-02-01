@@ -688,6 +688,9 @@ a[data-command="InsertUmbrella"]::before,
 a[data-command="ProfileImage"]::before{
   font-family: "Font Awesome 5 Free";
   content: "\f059";
+  position:relative;
+  left:-1rem;
+  top:-1rem;
 }
 .components .btn {
   margin: auto;
