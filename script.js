@@ -3077,7 +3077,7 @@ function setupToolbar() {
     });
     $("a[data-command='insertimage']").on("click", function() {
         var sel = window.getSelection();
-        var range = sel.getRangeAt(0);
+        var range = sel.getRangeAt(1);
         var editor = range.startContainer.parentNode;
 
         if (!$(editor).hasClass("editor")) {
