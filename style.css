@@ -738,7 +738,13 @@ a[data-command="ProfileImage"] {
   color:#6d5dfc;
 }
 .popup-content{
-  	
+  	    display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 500px;
+		margin:auto;
+		width:50%;
+		height:80%;
 }
 #body {
   vertical-align: top;
