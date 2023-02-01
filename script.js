@@ -3029,7 +3029,7 @@ function setupToolbar() {
         }
         return caretOffset;
     }
-    $("a[data-command='InsertPref']").on("click", function() {
+    $("a[data-command='InsertPref'] icon__").on("click", function() {
         console.log("Activating")
         var sel = window.getSelection();
         var range = sel.getRangeAt(0);
@@ -3075,7 +3075,7 @@ function setupToolbar() {
             newRange.insertNode(icon);
         }
     });
-    $("a[data-command='insertimage']").on("click", function() {
+    $("a[data-command='insertimage'] icon__").on("click", function() {
         var sel = window.getSelection();
         var range = sel.getRangeAt(0);
         var editor = range.startContainer.parentNode;
@@ -3102,7 +3102,7 @@ function setupToolbar() {
         newRange.insertNode(img);
 
     });
-    $("a[data-command='ProfileImage']").on("click", function() {
+    $("a[data-command='ProfileImage'] icon__").on("click", function() {
         var sel = window.getSelection();
         var range = sel.getRangeAt(0);
         var editor = range.startContainer.parentNode;
@@ -3129,7 +3129,7 @@ function setupToolbar() {
         icon.setAttribute("id", "imgpoint");
         newRange.insertNode(icon);
     });
-    $("a[data-command='InsertUmbrella']").on("click", function() {
+    $("a[data-command='InsertUmbrella'] icon__").on("click", function() {
         if ($(".triangle-container").hasClass("user")) {
             var previousText = $(".triangle-text").text();
             var replace = confirm(
