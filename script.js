@@ -3102,7 +3102,6 @@ function setupToolbar() {
         newRange.insertNode(img);
 
     });
-
     $("a[data-command='ProfileImage']").on("click", function() {
         var sel = window.getSelection();
         var range = sel.getRangeAt(0);
@@ -3152,6 +3151,63 @@ function setupToolbar() {
             $(".triangle-text").text("☂️" + url);
         }
         $(".triangle-container").addClass("user");
+    });
+    // Popup stuff for closing the code window.
+
+    $("a[data-command='InsertPref']").on("click", function() {
+        console.log("Activating")
+        var sel = window.getSelection();
+        var range = sel.getRangeAt(0);
+        var editor = range.startContainer.parentNode;
+
+        if (!$(editor).hasClass("editor")) {
+            editor = $(editor).closest(".editor");
+        }
+        if (editor.length === 0) {
+            alert(
+                "Cannot find where you want the preferences to be placed. Please make sure you are selecting an area inside the editor window before pressing the button. Please try again."
+            );
+            return;
+        }
+
+        var prefpoint = $("#body i[class='fa fa-sliders'][id='prefpoint']");
+        if (prefpoint.length > 0) {
+            if (
+                confirm(
+                    "You already have the preferences placeholder on the page. Would you like to move it to the newly selected location?"
+                )
+            ) {
+                prefpoint.remove();
+                var newRange = range.cloneRange();
+                var icon = document.createElement("i");
+                icon.classList.add("fa", "fa-sliders");
+                icon.setAttribute("id", "prefpoint");
+                icon.setAttribute(
+                    "title",
+                    "Preferences will be inserted wherever this icon is."
+                );
+                newRange.insertNode(icon);
+            }
+        } else {
+            var newRange = range.cloneRange();
+            var icon = document.createElement("i");
+            icon.classList.add("fa", "fa-sliders");
+            icon.setAttribute("id", "prefpoint");
+            icon.setAttribute(
+                "title",
+                "Preferences will be inserted wherever this icon is."
+            );
+            newRange.insertNode(icon);
+        }
+    });
+    $("a[data-command='InsertPref'] .icon__help").on("click", function() {
+    $("#helppref").show();
+    });
+    $("a[data-command='ProfileImage'] .icon__help").on("click", function() {
+    $("#helpumbrella").show();
+    });
+    $("a[data-command='InsertUmbrella'] .icon__help").on("click", function() {
+    $("#helpimage").show();
     });
     // Popup stuff for closing the code window.
 
