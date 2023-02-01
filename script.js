@@ -3102,7 +3102,8 @@ function setupToolbar() {
         newRange.insertNode(img);
 
     });
-    $("a[data-command='ProfileImage'] .icon__").on("click", function() {
+    $("a[data-command='ProfileImage']").on("click", function() {
+		event.stopPropagation();
         var sel = window.getSelection();
         var range = sel.getRangeAt(0);
         var editor = range.startContainer.parentNode;
@@ -3129,7 +3130,8 @@ function setupToolbar() {
         icon.setAttribute("id", "imgpoint");
         newRange.insertNode(icon);
     });
-    $("a[data-command='InsertUmbrella'] .icon__").on("click", function() {
+    $("a[data-command='InsertUmbrella']").on("click", function() {
+		event.stopPropagation();
         if ($(".triangle-container").hasClass("user")) {
             var previousText = $(".triangle-text").text();
             var replace = confirm(
@@ -3155,7 +3157,8 @@ function setupToolbar() {
     // Popup stuff for closing the code window.
 
     $("a[data-command='InsertPref']").on("click", function() {
-        console.log("Activating")
+		
+		event.stopPropagation();
         var sel = window.getSelection();
         var range = sel.getRangeAt(0);
         var editor = range.startContainer.parentNode;
@@ -3201,13 +3204,16 @@ function setupToolbar() {
         }
     });
     $("a[data-command='InsertPref'] .icon__help").on("click", function() {
-    $("#helppref").show();
+		event.stopPropagation();
+    $("#helpprefs").show();
     });
     $("a[data-command='ProfileImage'] .icon__help").on("click", function() {
-    $("#helpumbrella").show();
+		event.stopPropagation();
+    $("#helpimage").show();
     });
     $("a[data-command='InsertUmbrella'] .icon__help").on("click", function() {
-    $("#helpimage").show();
+		event.stopPropagation();
+    $("#helpumbrella").show();
     });
     // Popup stuff for closing the code window.
 
