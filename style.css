@@ -697,8 +697,8 @@ a[data-command="ProfileImage"] {
   align-items: center;
   cursor: pointer;
   position: absolute;
-  top: -2rem;
-  right: -1rem;
+  top: -1.5rem;
+  right: -0.5rem;
 }
 .components .btn {
   margin: auto;
