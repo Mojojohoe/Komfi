@@ -700,6 +700,9 @@ a[data-command="ProfileImage"] {
   top: -1.5rem;
   right: -0.5rem;
 }
+.icon__help:hover {
+  filter: brightness(1.1) contrast(1.2);
+}
 .components .btn {
   margin: auto;
   display:flex;
