@@ -491,7 +491,6 @@ html {
 #copy3,
 #fore-color-picker,
 .popup-close,
-.icon__::before,
 [class^="icon__"] {
   width: 4rem;
   height: 4rem;
@@ -683,14 +682,23 @@ a[data-command="ProfileImage"] {
   background: var(--primary-light);
   color: var(--primary-dark);
 }
-a[data-command="InsertPref"]::before,
-a[data-command="InsertUmbrella"]::before,
-a[data-command="ProfileImage"]::before{
-  font-family: "Font Awesome 5 Free";
-  content: "\f059";
-  position:relative;
-  left:-1rem;
-  top:-1rem;
+.icon__help {
+  border-radius: 50%;
+  filter: drop-shadow(2px 2px 1px rgba(17, 21, 28, 0.3));
+  display: inline-flex;
+  font-size: 1rem;
+  color: var(--greyDark);
+  transition: 0.5s;
+  background: var(--greyLight-2);
+  margin: 0.1rem;
+  width: 2rem;
+  height: 2rem;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 .components .btn {
   margin: auto;
