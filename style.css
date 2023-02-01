@@ -491,6 +491,7 @@ html {
 #copy3,
 #fore-color-picker,
 .popup-close,
+.icon__::before,
 [class^="icon__"] {
   width: 4rem;
   height: 4rem;
@@ -682,7 +683,12 @@ a[data-command="ProfileImage"] {
   background: var(--primary-light);
   color: var(--primary-dark);
 }
-
+a[data-command="InsertPref"]::before,
+a[data-command="InsertUmbrella"]::before,
+a[data-command="ProfileImage"]::before{
+  font-family: "Font Awesome 5 Free";
+  content: "\f059";
+}
 .components .btn {
   margin: auto;
   display:flex;
