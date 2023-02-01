@@ -745,9 +745,12 @@ a[data-command="ProfileImage"] {
 		margin:auto;
 		width:50%;
 		height:80%;
+		flex-direction: column;
+		text-align:center;
 }
 .popup-content img{
   	    max-width:1000px;
+		
 }
 #body {
   vertical-align: top;
