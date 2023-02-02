@@ -2911,8 +2911,11 @@ $(document).ready(function() {
         // Replace the inner HTML of the #body element with the stored data
         $("#main-wrapper").html(bodyData);
         $("#tri").html(umbrella);
-    }
+    } else {
+		$("#introduction").show();
+	}
     loadDone();
+	
 });
 
 function setupToolbar() {
