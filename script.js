@@ -3217,7 +3217,15 @@ function setupToolbar() {
 		event.stopPropagation();
     $("#helpumbrella").show();
     });
-    // Popup stuff for closing the code window.
+
+    $("#imgCap").on("click", function() {
+		if($("t-12-fix").is(":checked"){
+			$(".editor img").css("height","20rem");
+		} else {
+			$(".editor img").css("height","unset");
+		}
+	
+    });    // Popup stuff for closing the code window.
 
     // Select the popup-close button and the modal element
     let $popupClose = $(".popup-close");

@@ -1370,9 +1370,9 @@ Komfi is in <b>alpha</b>, so expect bugs.  <br>
       }
       if ($(".profile-image").length) {
         var imgpoint = $("#imgpoint");
-		var width = $("#imgpoint").css("width");
+		var height = $("#imgpoint").css("height");
         $(".profile-image").insertAfter(imgpoint);
-		$(".profile-image").css("width",width);
+		$(".profile-image").css("height",height);
         imgpoint.remove();
       }
 $("body").contents().filter(function() {
