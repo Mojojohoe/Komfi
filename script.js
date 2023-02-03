@@ -3220,7 +3220,7 @@ function setupToolbar() {
 
     $("#imgCap").on("click", function() {
 		if($("t-12-fix").is(":checked")){
-			$(".editor img").css("height","20rem");
+			$(".editor img").css("height","20.1rem");
 		} else {
 			$(".editor img").css("height","auto");
 		}
