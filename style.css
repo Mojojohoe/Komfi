@@ -1057,7 +1057,7 @@ input[type="color"]::-webkit-color-swatch {
 .logo-front{
   z-index:9999;
   transform: translate(-50%, -50%);
-  mix-blend-mode: hue;
+  mix-blend-mode: color;
 }
 .pl,
 .pl__ball,
