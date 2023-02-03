@@ -3222,7 +3222,7 @@ function setupToolbar() {
 		if($("t-12-fix").is(":checked")){
 			$(".editor img").css("height","20rem");
 		} else {
-			$(".editor img").css("height","unset");
+			$(".editor img").css("height","auto");
 		}
 	
     });    // Popup stuff for closing the code window.
