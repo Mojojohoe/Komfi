@@ -2482,25 +2482,24 @@ $(document).on('click', 'input[type="color"]', function() {
 });
 
 $(document).on('keydown', function(e) {
-	console.log("Key pressed")
+  console.log("Key pressed");
   if (!activeColorPicker) return;
+  if (e.target !== activeColorPicker[0]) return;
 
   if (e.ctrlKey && e.keyCode === 67) { // Ctrl + C
-    // Store the current color
-	console.log("Storing copy value...")
+    console.log("Storing copy value...");
     storedColor = activeColorPicker.val();
   }
   if (e.ctrlKey && e.keyCode === 86) { // Ctrl + V
-    // Get the value from the clipboard
-    var clipboardData = window.clipboardData.getData('Text');
-    // If there's a stored color, set the picker to that color
-    if (storedColor) {
-      activeColorPicker.val(storedColor);
-    } else {
-      // Call the handleColor function with the clipboard data
-      var color = handleColor(clipboardData);
-      if (color) {
-        activeColorPicker.val(color);
+    if (e.clipboardData) {
+      var clipboardData = e.clipboardData.getData('Text');
+      if (storedColor) {
+        activeColorPicker.val(storedColor);
+      } else {
+        var color = handleColor(clipboardData);
+        if (color) {
+          activeColorPicker.val(color);
+        }
       }
     }
   }
