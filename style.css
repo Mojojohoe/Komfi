@@ -747,6 +747,7 @@ a[data-command="ProfileImage"] {
 		height:80%;
 		flex-direction: column;
 		text-align:center;
+		overflow:scroll;
 }
 .popup-content img{
   	    max-width:1000px;
