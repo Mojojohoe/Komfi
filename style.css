@@ -739,15 +739,16 @@ a[data-command="ProfileImage"] {
 }
 .popup-content{
   	    display: flex;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
         height: 500px;
 		margin:auto;
+		margin-top:10%;
 		width:50%;
 		height:80%;
 		flex-direction: column;
 		text-align:center;
-		overflow:scroll;
+		overflow-y:scroll;
 }
 .popup-content img{
   	    max-width:1000px;
