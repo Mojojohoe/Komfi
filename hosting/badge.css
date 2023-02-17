@@ -1,3 +1,10 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
 .bb-image-wrapper {
 	 height: 110px;
 	 width: 110px;
@@ -5,8 +12,12 @@
 	 position:absolute;
 	 right:0%;
 	 top:0%;
+	 display: -webkit-box;
+	 display: -ms-flexbox;
 	 display: flex;
-	 align-items: center;
+	 -webkit-box-align: center;
+	     -ms-flex-align: center;
+	         align-items: center;
 	 text-align: center;
 	 line-height: 1.6;
 }
@@ -15,6 +26,8 @@
 	 max-width: 100%;
 }
  .bb-shine::before {
+	 background: -webkit-gradient(linear, left top, right top, from(rgba(255, 255, 255, 0)), to(rgba(255, 255, 255, 0.5)));
+	 background: -o-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 100%);
 	 background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 100%);
 	 background-repeat:no-repeat;
 	 background-size:cover;
@@ -27,19 +40,54 @@
 	 blend-mode:lighten;
 	 top: 0;
 	 z-index: 2;
-	 mask-image: url("https://i.imgur.com/ZjK1Iyi.png");
-	 mask-size: 110px 110px;
+	 -webkit-mask-image: url("https://i.imgur.com/ZjK1Iyi.png");
+	         mask-image: url("https://i.imgur.com/ZjK1Iyi.png");
+	 -webkit-mask-size: 110px 110px;
+	         mask-size: 110px 110px;
 }
  .bb-shine:hover::before, .bb-shine:focus::before {
-	 animation: bb-shine 0.85s;
+	 -webkit-animation: bb-shine 0.85s;
+	         animation: bb-shine 0.85s;
 }
 .bb-image-wrapper:hover{
-	animation: .5s linear 0.85s infinite alternate bb-jello-vertical;
+	-webkit-animation: .5s linear 0.85s infinite alternate bb-jello-vertical;
+	        animation: .5s linear 0.85s infinite alternate bb-jello-vertical;
+}
+ @-webkit-keyframes bb-shine {
+	 100% {
+		 background-position: 220px 220px;
+	}
 }
  @keyframes bb-shine {
 	 100% {
 		 background-position: 220px 220px;
 	}
+}
+ @-webkit-keyframes bb-jello-vertical {
+  16.65% {
+    -webkit-transform: rotate(-12deg);
+    transform: rotate(-12deg);
+  }
+  33.3% {
+    -webkit-transform: rotate(10deg);
+    transform: rotate(10deg);
+  }
+  49.95% {
+    -webkit-transform: rotate(-6deg);
+    transform: rotate(-6deg);
+  }
+  66.6% {
+    -webkit-transform: rotate(4deg);
+    transform: rotate(4deg);
+  }
+  83.25% {
+    -webkit-transform: rotate(-2deg);
+    transform: rotate(-2deg);
+  }
+  100% {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
 }
  @keyframes bb-jello-vertical {
   16.65% {
